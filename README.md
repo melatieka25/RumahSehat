@@ -7,28 +7,29 @@
 * **Faris Haidar Zuhdi** - *2006597336* - *C*
 
 ---
-**Kontrak Pembagian Penanggung Jawab Tugas Akhir**
+**Kontrak Tahap 1 Tugas Akhir (Pembagian peran/tanggung jawab)**
 
-| NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
+| NPM        | Nama Lengkap | Peran/Tanggung Jawab |
 |------------| --- |------------------------------| 
 | 2006597216 | Ardelia Syahira Yudiva | Project Manager              |                       
-| 2006523400 | Melisa Ayu Angelina | Integration                  |                    
+| 2006523400 | Melisa Ayu Angelina | Integration  Tester            |                    
 | 1906398894 | Alfred Prasetio | Database (Data Modeling)     |                                              
-| 2006464266 | Melati Eka Putri | Gitlab                       |                        
+| 2006464266 | Melati Eka Putri | Gitlab Master                 |                        
 | 2006597336 | Faris Haidar Zuhdi | DevOps                       |                                               
 ---
-**Kontrak Tahap 1 (Progress 2) Tugas Akhir**
+**Kontrak Tahap 2 Tugas Akhir**
 
 | NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
 |------------| --- |------------------------------| 
-| 2006597216 | Ardelia Syahira Yudiva | 1 2 3 |                       
-| 2006523400 | Melisa Ayu Angelina | 11 12 13 |                    
-| 1906398894 | Alfred Prasetio | 6 7 8 |                                              |
-| 2006464266 | Melati Eka Putri | 4 5  |                        
-| 2006597336 | Faris Haidar Zuhdi | 9 10 |                                               |
+| 2006597216 | Ardelia Syahira Yudiva | 1, 2, 3 |                       
+| 2006523400 | Melisa Ayu Angelina | 9, 10, 11 |                    
+| 1906398894 | Alfred Prasetio | 6, 7, 8 |                                              |
+| 2006464266 | Melati Eka Putri | 4, 5  |                        
+| 2006597336 | Faris Haidar Zuhdi | 14, 15 |                                               |
 ---
-**Kontrak Tahap 2 (Progress 3) Tugas Akhir**
+**Kontrak Tahap 3 Tugas Akhir**
 
+Fitur yang akan diselesaikan pada tahap 3: 12, 13, 16, 17, 18, 21, microservice (optional) 
 | NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
 |------------| --- |------------------------------| 
 | 2006597216 | Ardelia Syahira Yudiva | Belum dibagikan              |                       
