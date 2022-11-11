@@ -25,7 +25,7 @@ cd RumahSehatWeb
 ```
 # Pertama, build JAR aplikasi
 cd RumahSehatWeb
-./gradlew clean build
+./gradlew clean build -x test
 
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
@@ -35,7 +35,7 @@ docker-compose up --build -d
 ```
 # Pertama, build JAR aplikasi
 cd RumahSehatWeb
-.\gradlew.bat clean build
+.\gradlew.bat clean build -x test
 
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
