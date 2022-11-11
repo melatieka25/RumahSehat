@@ -9,6 +9,7 @@
 ---
 ## RumahSehat Web App Deployment
 Untuk men-*deploy* aplikasi ini, terdapat dua cara yang direkomendasikan, yaitu langsung melalui `gradle` (untuk keperluan *debugging*), dan menggunakan Docker.
+
 **Gradle (tanpa Docker, Unix/Linux):**
 ```
 cd RumahSehatWeb
@@ -40,6 +41,8 @@ cd RumahSehatWeb
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
 ```
+
+## Kontrak
 
 ---
 **Kontrak Tahap 1 Tugas Akhir (Pembagian peran/tanggung jawab)**
