@@ -29,12 +29,10 @@
 ---
 **Kontrak Tahap 3 Tugas Akhir**
 
-Fitur yang akan diselesaikan pada tahap 3: 12, 13, 16, 17, 18, 21, microservice (optional) 
 | NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
-|------------| --- |------------------------------| 
-| 2006597216 | Ardelia Syahira Yudiva | Belum dibagikan              |                       
-| 2006523400 | Melisa Ayu Angelina | Belum dibagikan              |                    
-| 1906398894 | Alfred Prasetio | Belum dibagikan              |                                              |
-| 2006464266 | Melati Eka Putri | Belum dibagikan              |                        
-| 2006597336 | Faris Haidar Zuhdi | Belum dibagikan              |  
----
+|------------| --- |------------------------------|
+| 2006597216 | Ardelia Syahira Yudiva | 18                           |                       
+| 2006523400 | Melisa Ayu Angelina | 17                           |                    
+| 1906398894 | Alfred Prasetio | 12,13                        |                                              |
+| 2006464266 | Melati Eka Putri | 16                           |                        
+| 2006597336 | Faris Haidar Zuhdi | 21                           |
