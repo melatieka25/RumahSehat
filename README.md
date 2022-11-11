@@ -30,10 +30,9 @@
 **Kontrak Tahap 3 Tugas Akhir**
 
 | NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
-|------------| --- |------------------------------| 
+|------------| --- |------------------------------|
 | 2006597216 | Ardelia Syahira Yudiva | 18                           |                       
 | 2006523400 | Melisa Ayu Angelina | 17                           |                    
 | 1906398894 | Alfred Prasetio | 12,13                        |                                              |
 | 2006464266 | Melati Eka Putri | 16                           |                        
-| 2006597336 | Faris Haidar Zuhdi | 21                           |  
----
+| 2006597336 | Faris Haidar Zuhdi | 21                           |
