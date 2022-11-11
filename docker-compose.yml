@@ -1,0 +1,33 @@
+version: '2'
+services:
+  rumah-sehat-web:
+    build:
+      context: ./RumahSehatWeb
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./RumahSehatWeb/file-storage:/file-storage
+      - ./RumahSehatWeb/log:/log
+    env_file:
+      - db.env
+    depends_on:
+      - db
+    networks:
+      - frontend-network
+      - backend-network
+      
+  db:
+    image: mariadb:10.4.24
+    restart: always
+    env_file:
+      - db.env
+    volumes:
+      - .data/mysql:/var/lib/mysql
+    networks:
+      - backend-network
+
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:

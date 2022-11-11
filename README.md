@@ -7,6 +7,41 @@
 * **Faris Haidar Zuhdi** - *2006597336* - *C*
 
 ---
+## RumahSehat Web App Deployment
+Untuk men-*deploy* aplikasi ini, terdapat dua cara yang direkomendasikan, yaitu langsung melalui `gradle` (untuk keperluan *debugging*), dan menggunakan Docker.
+**Gradle (tanpa Docker, Unix/Linux):**
+```
+cd RumahSehatWeb
+./gradlew bootRun
+```
+
+**Gradle (tanpa Docker, Windows):**
+```
+cd RumahSehatWeb
+.\gradlew.bat bootRun
+```
+
+**Docker Compose (Unix/Linux):**
+```
+# Pertama, build JAR aplikasi
+cd RumahSehatWeb
+./gradlew clean build
+
+# Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
+docker-compose up --build -d
+```
+
+**Docker Compose (Windows):**
+```
+# Pertama, build JAR aplikasi
+cd RumahSehatWeb
+.\gradlew.bat clean build
+
+# Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
+docker-compose up --build -d
+```
+
+---
 **Kontrak Tahap 1 Tugas Akhir (Pembagian peran/tanggung jawab)**
 
 | NPM        | Nama Lengkap | Peran/Tanggung Jawab |
