@@ -1,5 +1,6 @@
 package TA_C_SHA_90.RumahSehatWeb.controller;
 
+import TA_C_SHA_90.RumahSehatWeb.PasswordManager;
 import TA_C_SHA_90.RumahSehatWeb.model.DokterModel;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.service.DokterService;
@@ -41,9 +42,14 @@ public class DokterController {
 
         //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
-            dokterService.addDokter(dokter);
-            redirectAttrs.addFlashAttribute("message", "Dokter dengan username " + dokter.getUsername() + " telah berhasil ditambahkan!");
-            return "redirect:/dokter";
+            if (PasswordManager.validationChecker(dokter.getPassword())){
+                dokterService.addDokter(dokter);
+                redirectAttrs.addFlashAttribute("message", "Dokter dengan username " + dokter.getUsername() + " telah berhasil ditambahkan!");
+                return "redirect:/dokter";
+            } else {
+                redirectAttrs.addFlashAttribute("error", "Password tidak mengandung huruf besar/huruf kecil/angka/simbol atau kurang dari 8 karakter.");
+                return "redirect:/dokter/create-dokter";
+            }
         } else if (sameUsername != null) {
             redirectAttrs.addFlashAttribute("error", "User dengan username " + dokter.getUsername() + " sudah pernah ditambahkan sebelumnya. Coba lagi dengan username lain!");
             return "redirect:/dokter/create-dokter";

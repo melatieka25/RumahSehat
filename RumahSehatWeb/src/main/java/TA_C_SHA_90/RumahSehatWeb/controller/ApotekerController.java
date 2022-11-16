@@ -1,5 +1,6 @@
 package TA_C_SHA_90.RumahSehatWeb.controller;
 
+import TA_C_SHA_90.RumahSehatWeb.PasswordManager;
 import TA_C_SHA_90.RumahSehatWeb.model.ApotekerModel;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.service.ApotekerService;
@@ -41,9 +42,14 @@ public class ApotekerController {
 
         //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
-            apotekerService.addApoteker(apoteker);
-            redirectAttrs.addFlashAttribute("message", "Apoteker dengan username " + apoteker.getUsername() + " telah berhasil ditambahkan!");
-            return "redirect:/apoteker";
+            if (PasswordManager.validationChecker(apoteker.getPassword())){
+                apotekerService.addApoteker(apoteker);
+                redirectAttrs.addFlashAttribute("message", "Apoteker dengan username " + apoteker.getUsername() + " telah berhasil ditambahkan!");
+                return "redirect:/apoteker";
+            } else {
+                redirectAttrs.addFlashAttribute("error", "Password tidak mengandung huruf besar/huruf kecil/angka/simbol atau kurang dari 8 karakter.");
+                return "redirect:/apoteker/create-apoteker";
+            }
         } else if (sameUsername != null) {
             redirectAttrs.addFlashAttribute("error", "User dengan username " + apoteker.getUsername() + " sudah pernah ditambahkan sebelumnya. Coba lagi dengan username lain!");
             return "redirect:/apoteker/create-apoteker";
@@ -60,4 +66,6 @@ public class ApotekerController {
         model.addAttribute("listApoteker", listApoteker);
         return "apoteker/list-apoteker";
     }
+
+
 }

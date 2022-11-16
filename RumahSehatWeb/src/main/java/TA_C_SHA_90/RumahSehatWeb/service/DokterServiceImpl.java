@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static TA_C_SHA_90.RumahSehatWeb.PasswordManager.encrypt;
+
 @Service
 @Transactional
 public class DokterServiceImpl implements DokterService {
@@ -16,6 +18,8 @@ public class DokterServiceImpl implements DokterService {
 
     @Override
     public void addDokter(DokterModel dokter) {
+        String pass = encrypt(dokter.getPassword());
+        dokter.setPassword(pass);
         dokterDb.save(dokter);
     }
 
