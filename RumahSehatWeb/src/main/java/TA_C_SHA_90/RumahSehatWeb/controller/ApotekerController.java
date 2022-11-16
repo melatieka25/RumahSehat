@@ -1,10 +1,8 @@
 package TA_C_SHA_90.RumahSehatWeb.controller;
 
 import TA_C_SHA_90.RumahSehatWeb.model.ApotekerModel;
-import TA_C_SHA_90.RumahSehatWeb.model.DokterModel;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.service.ApotekerService;
-import TA_C_SHA_90.RumahSehatWeb.service.DokterService;
 import TA_C_SHA_90.RumahSehatWeb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
