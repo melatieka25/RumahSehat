@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <title>List Dokter RumahSehat</title>
+    <title>List Apoteker RumahSehat</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar (${'dokter'})"></nav>
+<nav th:replace="fragments/fragment :: navbar (${'apoteker'})"></nav>
 <div class="container" style="width:75%; padding-top:50px;">
     <div class="justify-content-center">
         <div style="margin: auto; padding-top: 10px; width: 80%; padding: 20px; text-align: center">
             <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message}"></div>
-            <h2 style="font-weight: bold; padding-top: 10px;" >List Dokter</h2>
+            <h2 style="font-weight: bold; padding-top: 10px;" >List Apoteker</h2>
             <div style="padding-top: 20px;">
-                <a class="btn btn-primary" href="/dokter/create-dokter" style="margin: 12px;background-color: #258a85; font-weight: bold; border: none; width:30%;">+ Tambah Dokter</a>
+                <a class="btn btn-primary" href="/apoteker/create-apoteker" style="margin: 12px;background-color: #258a85; font-weight: bold; border: none; width:30%;">+ Tambah Apoteker</a>
             </div>
             <br>
         </div>
@@ -26,18 +26,16 @@
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
-                <th scope="col">Tarif</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="dokter, iterationStatus : ${listDokter}">
+            <tr th:each="apoteker, iterationStatus : ${listApoteker}">
                 <th scope="row" th:text="${iterationStatus.index + 1}"></th>
-                <td th:text="${dokter.uuid}"></td>
-                <td th:text="${dokter.nama}"></td>
-                <td th:text="${dokter.username}"></td>
-                <td th:text="${dokter.email}"></td>
-                <td th:text="${dokter.role}"></td>
-                <td th:text="${dokter.tarif}"></td>
+                <td th:text="${apoteker.uuid}"></td>
+                <td th:text="${apoteker.nama}"></td>
+                <td th:text="${apoteker.username}"></td>
+                <td th:text="${apoteker.email}"></td>
+                <td th:text="${apoteker.role}"></td>
             </tr>
             </tbody>
         </table>

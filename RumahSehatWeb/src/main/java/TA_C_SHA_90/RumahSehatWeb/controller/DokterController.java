@@ -29,7 +29,7 @@ public class DokterController {
 
     @GetMapping("/create-dokter")
     public String addDokterFormPage(Model model) {
-        model.addAttribute("mahasiswa", new DokterModel());
+        model.addAttribute("dokter", new DokterModel());
         return "dokter/form-add-dokter";
     }
 
@@ -42,13 +42,13 @@ public class DokterController {
         //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
             dokterService.addDokter(dokter);
-            redirectAttrs.addFlashAttribute("error", "Dokter dengan username " + dokter.getUsername() + " telah berhasil ditambahkan!");
+            redirectAttrs.addFlashAttribute("message", "Dokter dengan username " + dokter.getUsername() + " telah berhasil ditambahkan!");
             return "redirect:/dokter";
         } else if (sameUsername != null) {
-            redirectAttrs.addFlashAttribute("error", "Dokter dengan username " + dokter.getUsername() + " sudah pernah ditambahkan sebelumnya. Coba lagi dengan username lain!");
+            redirectAttrs.addFlashAttribute("error", "User dengan username " + dokter.getUsername() + " sudah pernah ditambahkan sebelumnya. Coba lagi dengan username lain!");
             return "redirect:/dokter/create-dokter";
         } else {
-            redirectAttrs.addFlashAttribute("error", "Dokter dengan email " + dokter.getEmail() + " sudah pernah ditambahkan sebelumnya. Coba lagi dengan email lain!");
+            redirectAttrs.addFlashAttribute("error", "User dengan email " + dokter.getEmail() + " sudah pernah ditambahkan sebelumnya. Coba lagi dengan email lain!");
             return "redirect:/dokter/create-dokter";
         }
 
