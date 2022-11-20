@@ -183,7 +183,7 @@ Pasien with UUID 4028b88184956e9001849576ab460003 has been deleted successfully
 ---
 **Method**: `PUT` \
 **Endpoint**: `/pasien/{uuid}` \
-Mengubah salah satu *field* daru suatu pasien berdasarkan UUID.
+Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
 
 #### Body Params
 ```
