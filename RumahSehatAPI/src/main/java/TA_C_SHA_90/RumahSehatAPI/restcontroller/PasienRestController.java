@@ -25,6 +25,7 @@ import TA_C_SHA_90.RumahSehatAPI.service.PasienRestService;
 import reactor.core.publisher.Mono;
 
 @RestController
+@RequestMapping("/api/v1")
 public class PasienRestController {
 	@Autowired
 	private PasienRestService pasienRestService;
@@ -41,7 +42,7 @@ public class PasienRestController {
 	
 	// Retrieve all
 	@GetMapping(value = "/pasien")
-	private List<PasienModel> retrievePasien() {
+	private List<PasienModel> retrieveAllPasien() {
 		return pasienRestService.getPasienList();
 	}
 	
