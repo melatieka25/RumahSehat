@@ -17,6 +17,22 @@ services:
       - frontend-network
       - backend-network
       
+  rumah-sehat-api:
+    build:
+      context: ./RumahSehatAPI
+    restart: always
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./RumahSehatAPI/file-storage:/file-storage
+      - ./RumahSehatAPI/log:/log
+    env_file:
+      - db.env
+    depends_on:
+      - db
+    networks:
+      - backend-network
+      
   db:
     image: mariadb:10.4.24
     restart: always
@@ -29,5 +45,4 @@ services:
 
 networks:
   frontend-network:
-    driver: bridge
   backend-network:
