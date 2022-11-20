@@ -25,7 +25,6 @@ import TA_C_SHA_90.RumahSehatAPI.service.PasienRestService;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/v1")
 public class PasienRestController {
 	@Autowired
 	private PasienRestService pasienRestService;

@@ -1,11 +1,21 @@
 version: '2'
 services:
+  nginx:
+    build: ./nginx
+    restart: always
+    networks:
+      - frontend-network
+      - backend-network
+    ports:
+      - "9090:9090"
+    depends_on:
+      - rumah-sehat-web
+      - rumah-sehat-api
+      
   rumah-sehat-web:
     build:
       context: ./RumahSehatWeb
     restart: always
-    ports:
-      - "8080:8080"
     volumes:
       - ./RumahSehatWeb/file-storage:/file-storage
       - ./RumahSehatWeb/log:/log
@@ -14,15 +24,12 @@ services:
     depends_on:
       - db
     networks:
-      - frontend-network
       - backend-network
       
   rumah-sehat-api:
     build:
       context: ./RumahSehatAPI
     restart: always
-    ports:
-      - "8081:8081"
     volumes:
       - ./RumahSehatAPI/file-storage:/file-storage
       - ./RumahSehatAPI/log:/log
