@@ -123,7 +123,7 @@ Mengembalikan daftar pasien.
         "uuid": "4028b88184956e9001849576ab460004",
         "nama": "Pasien03",
         "role": "Role",
-        "username": "pasien.satu",
+        "username": "pasien.tiga",
         "password": "lhoPasienDuanyaKeManaDong?",
         "email": "pasien@tiga.com",
         "saldo": 8213892,
