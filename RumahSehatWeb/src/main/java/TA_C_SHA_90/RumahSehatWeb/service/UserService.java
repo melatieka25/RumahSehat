@@ -10,9 +10,5 @@ public interface UserService {
 
     UserModel getUserByUsername(String username);
 
-    UserModel addUser(UserModel user);
-    
-    public String encrypt (String password);
-
     UserModel getUserByEmail(String email);
 }

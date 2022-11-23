@@ -27,8 +27,6 @@ public class DokterController {
     @Autowired
     private UserService userService;
 
-	@Autowired
-    private RoleService roleService;
 
     @GetMapping("/create-dokter")
     public String addDokterFormPage(Model model) {
@@ -38,14 +36,14 @@ public class DokterController {
 
     @PostMapping("/create-dokter")
     public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, Model model, RedirectAttributes redirectAttrs) {
-        dokter.setRole(roleService.getByName("Dokter"));
+        dokter.setRole("Dokter");
+        dokter.setIsSso(false);
         UserModel sameUsername = userService.getUserByUsername(dokter.getUsername());
         UserModel sameEmail = userService.getUserByEmail(dokter.getEmail());
 
         //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
             if (PasswordManager.validationChecker(dokter.getPassword())){
-                dokter.setIsSso(false);
                 dokterService.addDokter(dokter);
                 redirectAttrs.addFlashAttribute("message", "Dokter dengan username " + dokter.getUsername() + " telah berhasil ditambahkan!");
                 return "redirect:/dokter";
