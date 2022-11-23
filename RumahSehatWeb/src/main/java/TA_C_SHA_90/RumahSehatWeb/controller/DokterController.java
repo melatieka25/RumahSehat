@@ -43,6 +43,7 @@ public class DokterController {
         //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
             if (PasswordManager.validationChecker(dokter.getPassword())){
+                dokter.setIsSso(false);
                 dokterService.addDokter(dokter);
                 redirectAttrs.addFlashAttribute("message", "Dokter dengan username " + dokter.getUsername() + " telah berhasil ditambahkan!");
                 return "redirect:/dokter";

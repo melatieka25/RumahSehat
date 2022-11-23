@@ -4,7 +4,6 @@ import TA_C_SHA_90.RumahSehatWeb.Setting.Setting;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.security.xml.Attributes;
 import TA_C_SHA_90.RumahSehatWeb.security.xml.ServiceResponse;
-import TA_C_SHA_90.RumahSehatWeb.service.RoleService;
 import TA_C_SHA_90.RumahSehatWeb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,7 +14,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,9 +34,9 @@ public class PageController {
     @Autowired
     private UserService userService;
 
-    @Qualifier("roleServiceImpl")
-    @Autowired
-    private RoleService roleService;
+//    @Qualifier("roleServiceImpl")
+//    @Autowired
+//    private RoleService roleService;
 
     @Autowired
     ServerProperties serverProperties;
@@ -89,7 +87,7 @@ public class PageController {
             user.setPassword("tkapap");
             user.setUsername(username);
             user.setIsSso(true);
-            user.setRole(roleService.getById(Long.valueOf(1)));
+            user.setRole("Admin");
             userService.addUser(user);
         }
 
