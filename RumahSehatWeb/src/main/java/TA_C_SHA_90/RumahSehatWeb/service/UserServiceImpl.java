@@ -11,6 +11,7 @@ import TA_C_SHA_90.RumahSehatWeb.repository.DokterDb;
 import TA_C_SHA_90.RumahSehatWeb.repository.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             return user.get();
         } 
-        else return null;
+        else throw new UsernameNotFoundException("Username not found: " + username);
     }
 
     @Override

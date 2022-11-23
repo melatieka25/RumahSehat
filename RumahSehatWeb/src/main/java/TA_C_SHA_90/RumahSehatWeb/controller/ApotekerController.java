@@ -27,7 +27,6 @@ public class ApotekerController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/create-apoteker")
     public String addApotekerFormPage(Model model) {
         model.addAttribute("apoteker", new ApotekerModel());
