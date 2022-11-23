@@ -80,7 +80,7 @@ public class PageController {
             redirectAttrs.addFlashAttribute("notLogin", "Anda belum terdaftar sebagai admin");
             return new ModelAndView("redirect:/login");
         }
-		
+
 		AdminModel admin;
 		
 		if (userService.getUserByUsername(username) == null){
