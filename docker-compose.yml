@@ -1,0 +1,55 @@
+version: '2'
+services:
+  nginx:
+    build: ./nginx
+    restart: always
+    networks:
+      - frontend-network
+      - backend-network
+    ports:
+      - "9090:9090"
+    depends_on:
+      - rumah-sehat-web
+      - rumah-sehat-api
+      
+  rumah-sehat-web:
+    build:
+      context: ./RumahSehatWeb
+    restart: always
+    volumes:
+      - ./RumahSehatWeb/file-storage:/file-storage
+      - ./RumahSehatWeb/log:/log
+    env_file:
+      - db.env
+    depends_on:
+      - db
+    networks:
+      - backend-network
+      
+  rumah-sehat-api:
+    build:
+      context: ./RumahSehatAPI
+    restart: always
+    volumes:
+      - ./RumahSehatAPI/file-storage:/file-storage
+      - ./RumahSehatAPI/log:/log
+    env_file:
+      - db.env
+    depends_on:
+      - db
+    networks:
+      - backend-network
+      
+  db:
+    image: mariadb:10.4.24
+    restart: always
+    env_file:
+      - db.env
+    volumes:
+      - .data/mysql:/var/lib/mysql
+    networks:
+      - backend-network
+
+networks:
+  frontend-network:
+  backend-network:

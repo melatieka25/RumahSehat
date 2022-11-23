@@ -1,4 +1,4 @@
-package TA_C_SHA_90.RumahSehatWeb.model;
+package TA_C_SHA_90.RumahSehatAPI.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
