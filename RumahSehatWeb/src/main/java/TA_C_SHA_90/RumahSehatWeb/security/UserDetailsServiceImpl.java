@@ -1,4 +1,4 @@
-package TA_C_SHA_90.RumahSehatWeb.service;
+package TA_C_SHA_90.RumahSehatWeb.security;
 
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.repository.UserDb;
