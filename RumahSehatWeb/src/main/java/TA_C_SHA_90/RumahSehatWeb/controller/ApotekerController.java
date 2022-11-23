@@ -4,6 +4,7 @@ import TA_C_SHA_90.RumahSehatWeb.PasswordManager;
 import TA_C_SHA_90.RumahSehatWeb.model.ApotekerModel;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.service.ApotekerService;
+import TA_C_SHA_90.RumahSehatWeb.service.RoleService;
 import TA_C_SHA_90.RumahSehatWeb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +27,9 @@ public class ApotekerController {
 
     @Autowired
     private UserService userService;
-
+	
+	@Autowired
+    private RoleService roleService;
 
     @GetMapping("/create-apoteker")
     public String addApotekerFormPage(Model model) {
@@ -36,7 +39,7 @@ public class ApotekerController {
 
     @PostMapping("/create-apoteker")
     public String addApotekerSubmitPage(@ModelAttribute ApotekerModel apoteker, Model model, RedirectAttributes redirectAttrs) {
-        apoteker.setRole("Apoteker");
+        apoteker.setRole(roleService.getByName("Apoteker"));
         UserModel sameUsername = userService.getUserByUsername(apoteker.getUsername());
         UserModel sameEmail = userService.getUserByEmail(apoteker.getEmail());
 

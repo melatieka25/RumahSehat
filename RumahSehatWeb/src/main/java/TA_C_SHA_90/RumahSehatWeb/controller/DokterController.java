@@ -5,6 +5,7 @@ import TA_C_SHA_90.RumahSehatWeb.model.DokterModel;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.service.DokterService;
 import TA_C_SHA_90.RumahSehatWeb.service.UserService;
+import TA_C_SHA_90.RumahSehatWeb.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class DokterController {
     @Autowired
     private UserService userService;
 
+	@Autowired
+    private RoleService roleService;
 
     @GetMapping("/create-dokter")
     public String addDokterFormPage(Model model) {
@@ -36,7 +39,7 @@ public class DokterController {
 
     @PostMapping("/create-dokter")
     public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, Model model, RedirectAttributes redirectAttrs) {
-        dokter.setRole("Dokter");
+        dokter.setRole(roleService.getByName("Dokter"));
         UserModel sameUsername = userService.getUserByUsername(dokter.getUsername());
         UserModel sameEmail = userService.getUserByEmail(dokter.getEmail());
 

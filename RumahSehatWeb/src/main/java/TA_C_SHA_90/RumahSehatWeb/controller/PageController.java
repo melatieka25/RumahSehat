@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -80,19 +81,22 @@ public class PageController {
             redirectAttrs.addFlashAttribute("notLogin", "Anda belum terdaftar sebagai admin");
             return new ModelAndView("redirect:/login");
         }
-
-        UserModel user = userService.getUserByUsername(username);
-        if (user == null) {
-            user = new UserModel();
-            user.setEmail(username + "ui.ac.id");
+		
+		UserModel user;
+		
+		try {
+			user = userService.getUserByUsername(username);
+		} catch(UsernameNotFoundException e) {
+			user = new UserModel();
+            user.setEmail(username + "@ui.ac.id");
             user.setNama(attributes.getNama());
             user.setPassword("tkapap");
             user.setUsername(username);
             user.setIsSso(true);
             user.setRole(roleService.getById(Long.valueOf(1)));
             userService.addUser(user);
-        }
-
+		}
+		
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, "tkapap");
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);

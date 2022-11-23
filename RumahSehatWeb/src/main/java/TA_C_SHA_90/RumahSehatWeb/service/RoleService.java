@@ -7,5 +7,7 @@ import java.util.List;
 public interface RoleService {
     List<RoleModel> findAll();
 
-    RoleModel getById(Long valueOf);
+    RoleModel getById(Long id);
+	
+	RoleModel getByName(String name);
 }
