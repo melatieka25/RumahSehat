@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Fragments RumahSehat</title>
@@ -44,13 +44,13 @@
             <a class="nav-item nav-link" th:classappend="${onevar == 'beranda'} ? active : ''" th:href="@{/}">
                 Beranda
             </a>
-            <a  class="nav-item nav-link" th:classappend="${onevar == 'dokter'} ? active : ''" th:href="@{/dokter}">
+            <a sec:authorize="hasRole('Admin')"  class="nav-item nav-link" th:classappend="${onevar == 'dokter'} ? active : ''" th:href="@{/dokter}">
                 Dokter
             </a>
-            <a class="nav-item nav-link" th:classappend="${onevar == 'apoteker'} ? active : ''" th:href="@{/apoteker}">
+            <a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'apoteker'} ? active : ''" th:href="@{/apoteker}">
                 Apoteker
             </a>
-            <a class="nav-item nav-link" th:classappend="${onevar == 'pasien'} ? active : ''" th:href="@{/pasien}">
+            <a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'pasien'} ? active : ''" th:href="@{/pasien}">
                 Pasien
             </a>
         </ul>
