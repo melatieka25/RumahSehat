@@ -27,9 +27,6 @@ public class DokterController {
     @Autowired
     private UserService userService;
 
-	@Autowired
-    private RoleService roleService;
-
     @GetMapping("/create-dokter")
     public String addDokterFormPage(Model model) {
         model.addAttribute("dokter", new DokterModel());
@@ -38,7 +35,8 @@ public class DokterController {
 
     @PostMapping("/create-dokter")
     public String addDokterSubmitPage(@ModelAttribute DokterModel dokter, Model model, RedirectAttributes redirectAttrs) {
-        dokter.setRole(roleService.getByName("Dokter"));
+        dokter.setRole("Dokter");
+        dokter.setIsSso(false);
         UserModel sameUsername = userService.getUserByUsername(dokter.getUsername());
         UserModel sameEmail = userService.getUserByEmail(dokter.getEmail());
 
