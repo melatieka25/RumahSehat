@@ -1,10 +1,13 @@
 package TA_C_SHA_90.RumahSehatWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,10 +30,10 @@ public class UserModel implements Serializable {
     @Column(name = "nama", nullable = false)
     private String nama;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "role", nullable = false)
-    private String role;
+//    @NotNull
+//    @Size(max = 50)
+//    @Column(name = "role", nullable = false)
+//    private String role;
 
     @NotNull
     @Size(max = 50)
@@ -45,4 +48,13 @@ public class UserModel implements Serializable {
     @Size(max = 50)
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @NotNull
+    @Column(name = "is_Sso", nullable = false)
+    private Boolean isSso;
+
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "role", nullable = false)
+    private String role;
 }
