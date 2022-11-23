@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.List;
 
+import static TA_C_SHA_90.RumahSehatWeb.PasswordManager.encrypt;
+
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -44,21 +47,8 @@ public class UserServiceImpl implements UserService {
         Optional<UserModel> user = userDb.findByUsername(username);
         if (user.isPresent()) {
             return user.get();
-        } 
-        else throw new UsernameNotFoundException("Username not found: " + username);
+        } else return null;
     }
 
-    @Override
-    public UserModel addUser(UserModel user) {
-        String pass = encrypt(user.getPassword());
-        user.setPassword(pass);
-        return userDb.save(user);
-    }
 
-    @Override
-    public String encrypt(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder() ;
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
-    }
 }

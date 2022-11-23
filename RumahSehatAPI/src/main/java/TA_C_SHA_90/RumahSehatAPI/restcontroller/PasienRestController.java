@@ -45,6 +45,19 @@ public class PasienRestController {
 	private List<PasienModel> retrieveAllPasien() {
 		return pasienRestService.getPasienList();
 	}
+
+	// Retrieve all user email
+	@GetMapping(value = "/user/email")
+	private List<String> retrieveAllUserEmail() {
+		return pasienRestService.getUserEmailList();
+	}
+
+
+	// Retrieve all user email
+	@GetMapping(value = "/user/username")
+	private List<String> retrieveAllUserUsername() {
+		return pasienRestService.getUserUsernameList();
+	}
 	
 	// Post 
 	@PostMapping(value = "/pasien/new")
