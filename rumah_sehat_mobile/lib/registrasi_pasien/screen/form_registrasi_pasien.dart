@@ -75,7 +75,7 @@ class PasienFormState extends State<PasienForm> {
 
   Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur) async {
 
-    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur);
+    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
     print(PasienToJson(newPasien));
 
     final response = await http.post(
