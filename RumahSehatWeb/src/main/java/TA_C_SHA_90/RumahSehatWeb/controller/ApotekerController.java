@@ -27,7 +27,6 @@ public class ApotekerController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/create-apoteker")
     public String addApotekerFormPage(Model model) {
         model.addAttribute("apoteker", new ApotekerModel());
@@ -36,6 +35,7 @@ public class ApotekerController {
 
     @PostMapping("/create-apoteker")
     public String addApotekerSubmitPage(@ModelAttribute ApotekerModel apoteker, Model model, RedirectAttributes redirectAttrs) {
+        apoteker.setIsSso(false);
         apoteker.setRole("Apoteker");
         UserModel sameUsername = userService.getUserByUsername(apoteker.getUsername());
         UserModel sameEmail = userService.getUserByEmail(apoteker.getEmail());
