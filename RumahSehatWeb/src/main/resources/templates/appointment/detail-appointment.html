@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Appointment</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'appointment'})"></nav>
+<div class="container" style="width:75%; padding-top:50px;">
+    <div class="justify-content-center">
+        <div style="margin: auto; padding-top: 10px; width: 80%; padding: 20px; text-align: center">
+            <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message}"></div>
+            <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+            <h2 style="font-weight: bold; padding-top: 10px;" >Detail Appointment</h2>
+            <br>
+        </div>
+        <div style="margin: auto; padding-top: 10px; width: 80%; padding: 20px; text-align: center">
+            <p th:text="'Kode: ' + ${appointment.kode}"></p>
+            <p th:text="'Waktu Awal Appointment: ' + ${dateTime}"></p>
+            <p th:if="${appointment.isDone}">Status Appointment: Selesai</p>
+            <p th:unless="${appointment.isDone}">Status Appointment: Belum Selesai</p>
+            <p th:text="'Nama Dokter: ' + ${appointment.dokter.nama}"></p>
+            <p th:text="'Nama Pasien: ' + ${appointment.pasien.nama}"></p>
+            <p th:if="${appointment.resep} != null">
+                <a class="btn btn-primary align-content-center">Detail Resep</a>
+            </p>
+            <p th:if="${appointment.isDone} == false">
+                <a class="btn btn-primary align-content-center" th:if="${appointment.resep} == null">Create Resep</a>
+            </p>
+            <p th:if="${appointment.isDone} == false and ${appointment.resep} == null">
+                <a class="btn btn-primary align-content-center" id="selesai"
+                   th:href="@{/appointment/detail/} + ${appointment.kode} + @{/selesai}">
+                    Selesai
+                </a>
+            </p>
+            <p th:if="${appointment.isDone} == false and ${appointment.resep} != null">
+                <a class="btn btn-primary align-content-center"
+                   th:href="@{/appointment/detail/} + ${appointment.kode} + @{/selesai}">
+                    Selesai
+                </a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+</div>
+<script>
+    var submitLink = document.getElementById("selesai")
+    submitLink.addEventListener('click', function (e) {
+        if (!confirm('Apakah anda ingin menyelesaikan appointment tanpa ada resep?')) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>
