@@ -28,11 +28,12 @@ public class TagihanModel implements Serializable {
 
     @NotNull
     @Column(name = "tanggalTerbuat", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd' 'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime tanggalTerbuat;
 
-    @Column(name = "tanggalBayar")
-    @DateTimeFormat(pattern = "yyyy-MM-dd' 'HH:mm")
+    @NotNull
+    @Column(name = "tanggalBayar", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime tanggalBayar;
 
     @NotNull

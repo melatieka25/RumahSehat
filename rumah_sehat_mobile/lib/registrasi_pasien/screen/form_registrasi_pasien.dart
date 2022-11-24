@@ -73,9 +73,9 @@ class PasienFormState extends State<PasienForm> {
     );
   }
 
-  Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur, bool isSso) async {
+  Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur) async {
 
-    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: isSso);
+    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur);
     print(PasienToJson(newPasien));
 
     final response = await http.post(
@@ -120,7 +120,7 @@ class PasienFormState extends State<PasienForm> {
 
     createPasien(_controllerNama.text, "Pasien", _controllerUsername.text,
         _controllerPassword.text, _controllerEmail.text, 0,
-        int.parse(_controllerUmur.text), false);
+        int.parse(_controllerUmur.text));
 
   }
 
@@ -143,7 +143,7 @@ class PasienFormState extends State<PasienForm> {
     var url = Uri.parse(
         'http://10.0.2.2:8081/api/v1/user/email');
     var response =
-    await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
+        await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
     setState(() {
       responseEmail = response.body;
     });
@@ -308,7 +308,7 @@ class PasienFormState extends State<PasienForm> {
                   },
                   // The validator receives the text that the user has entered.
                 ),
-                // The validator receives the text that the user has entered.
+                  // The validator receives the text that the user has entered.
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () async {

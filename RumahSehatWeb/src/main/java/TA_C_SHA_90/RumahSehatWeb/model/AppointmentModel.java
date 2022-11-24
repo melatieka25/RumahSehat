@@ -29,7 +29,7 @@ public class AppointmentModel implements Serializable {
 
     @NotNull
     @Column(name = "waktuAwal", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd' 'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime waktuAwal;
 
     @NotNull
