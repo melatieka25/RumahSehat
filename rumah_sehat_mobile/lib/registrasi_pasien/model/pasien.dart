@@ -53,7 +53,7 @@ class Pasien {
     email: json["email"],
     saldo: json["saldo"],
     umur: json["umur"],
-    isSso: json["isSso"]
+    isSso: json["isSso"],
   );
 
   Map<String, dynamic> toJson() => {
