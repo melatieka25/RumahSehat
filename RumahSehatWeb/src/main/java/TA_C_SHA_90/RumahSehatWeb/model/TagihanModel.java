@@ -31,8 +31,7 @@ public class TagihanModel implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime tanggalTerbuat;
 
-    @NotNull
-    @Column(name = "tanggalBayar", nullable = false)
+    @Column(name = "tanggalBayar")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime tanggalBayar;
 
