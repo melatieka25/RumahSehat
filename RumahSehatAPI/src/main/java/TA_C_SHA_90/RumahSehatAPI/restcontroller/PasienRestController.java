@@ -5,9 +5,12 @@ import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
+import TA_C_SHA_90.RumahSehatAPI.model.LoginModel;
+import TA_C_SHA_90.RumahSehatAPI.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,6 +69,24 @@ public class PasienRestController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field.");
 		} else {
 			return pasienRestService.createPasien(pasien);
+		}
+	}
+
+	@PostMapping(value = "/pasien/login")
+	private PasienModel loginPasien(@Valid @RequestBody LoginModel login, BindingResult bindingResult) {
+		if(bindingResult.hasFieldErrors()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field.");
+		} else {
+			PasienModel pasien = pasienRestService.getPasienByUsername(login.getUsername());
+			if (pasien == null){
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password not valid.");
+			}
+			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+			if (bcrypt.matches(login.getPassword(), pasien.getPassword())){
+				return pasien;
+			} else {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password not valid.");
+			}
 		}
 	}
 	
