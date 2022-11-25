@@ -28,4 +28,9 @@ public class ObatServiceImpl implements ObatService {
         }
         return null;
     }
+
+	@Override
+    public void updateObat(ObatModel obat) {
+        obatDb.save(obat);
+    }
 }

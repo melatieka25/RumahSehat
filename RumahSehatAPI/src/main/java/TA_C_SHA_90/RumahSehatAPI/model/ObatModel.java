@@ -21,11 +21,11 @@ public class ObatModel implements Serializable {
     @Id
     @NotNull
     @Column(name = "id_obat", nullable = false)
-    private String idObat;
+    private String id;
 
     @NotNull
     @Column(name = "nama_obat", nullable = false)
-    private String namaObat;
+    private String nama;
 
     @NotNull
     @Column(name = "stok", nullable = false)

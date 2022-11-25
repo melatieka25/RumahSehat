@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>List Obat RumahSehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'obat'})"></nav>
+<div class="container" style="width:75%; padding-top:50px;">
+    <div class="justify-content-center">
+        <div style="margin: auto; padding-top: 10px; width: 80%; padding: 20px; text-align: center">
+            <h2 style="font-weight: bold; padding-top: 10px;" >List Obat</h2>
+            <br>
+        </div>
+        <table style="margin: 20px;" class="table table-striped" id="obat-table">
+            <thead style="background-color: #f2bb22">
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">ID</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Harga</th>
+                <th scope="col">Stok</th>
+                <th sec:authorize="hasRole('Apoteker')" scope="col">Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="obat, iterationStatus : ${listObat}">
+                <th scope="row" th:text="${iterationStatus.index + 1}"></th>
+                <td th:text="${obat.id}"></td>
+                <td th:text="${obat.nama}"></td>
+                <td th:text="${obat.harga}"></td>
+                <td th:text="${obat.stok}"></td>
+				<td sec:authorize="hasRole('Apoteker')">
+					<a class="btn btn-primary my-1" th:href="@{/obat/stok(id=${obat.id})}">Update Stok</a>
+				</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</div>
+
+<script>
+	$(document).ready(() => {
+		$('#obat-table').DataTable();
+	});
+</script>
+
+</body>
+</html>

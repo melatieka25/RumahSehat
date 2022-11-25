@@ -25,7 +25,7 @@ public class PasienController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
+    @GetMapping
     public String listPasien(Model model) {
         List<PasienModel> listPasien = pasienService.getListPasien();
         model.addAttribute("listPasien", listPasien);

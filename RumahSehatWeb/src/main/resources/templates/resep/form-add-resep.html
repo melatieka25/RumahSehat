@@ -20,7 +20,7 @@
                     <h2 style="font-weight: bold; padding-top: 10px;">Buat Resep</h2>
                     <br>
                 </div>
-                <form th:action="@{/resep/create-resep}" th:object="${resep}" method="POST">
+                <form th:action="@{/resep/create-resep(kodeApp=${kodeApp})}" th:object="${resep}" method="POST">
                     <div class="container">
                         <br>
                         <table class="table">
@@ -38,10 +38,10 @@
                             <tbody>
                             <tr th:each="jumlah, iterationStatus : *{listJumlah}">
                                 <td>
-                                    <select th:field="*{listJumlah[__${iterationStatus.index}__].obat.idObat}"
+                                    <select th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"
                                             class="js-example-basic-single" name="state">
                                         <div th:each="obatEx, iterationStatus2 : ${listObatExisting}">
-                                            <option th:value="${obatEx.idObat}" th:text="${obatEx.namaObat}"></option>
+                                            <option th:value="${obatEx.id}" th:text="${obatEx.namaObat}"></option>
                                         </div>
                                     </select>
                                 </td>
