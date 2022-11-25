@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rumah_sehat_mobile/main.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
 
@@ -59,7 +60,7 @@ class PasienFormState extends State<PasienForm> {
   _showDialog(BuildContext context) {
 
     VoidCallback continueCallBack = () => {
-      Navigator.of(context).pop(),
+      // Navigator.of(context).pop(),
       // code on continue comes here
     };
     Dialog alert = Dialog("Hore akun tersimpan!", "Selamat datang " + _controllerNama.text + "!",continueCallBack);
@@ -105,7 +106,7 @@ class PasienFormState extends State<PasienForm> {
       print(response.body);
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Password tidak kuat, akunmu gagal dibuat.');
+      throw Exception('Pembuatan akun gagal');
     }
   }
   Future<void> _savingData() async{
@@ -121,6 +122,8 @@ class PasienFormState extends State<PasienForm> {
     createPasien(_controllerNama.text, "Pasien", _controllerUsername.text,
         _controllerPassword.text, _controllerEmail.text, 0,
         int.parse(_controllerUmur.text));
+
+    Navigator.of(context).pushNamed("home");
 
   }
 
