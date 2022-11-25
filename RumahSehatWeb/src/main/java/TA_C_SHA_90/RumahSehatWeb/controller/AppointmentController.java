@@ -3,13 +3,16 @@ package TA_C_SHA_90.RumahSehatWeb.controller;
 import TA_C_SHA_90.RumahSehatWeb.model.AppointmentModel;
 import TA_C_SHA_90.RumahSehatWeb.model.DokterModel;
 import TA_C_SHA_90.RumahSehatWeb.model.TagihanModel;
+import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.repository.AppointmentDb;
 import TA_C_SHA_90.RumahSehatWeb.repository.DokterDb;
 import TA_C_SHA_90.RumahSehatWeb.repository.TagihanDb;
 import TA_C_SHA_90.RumahSehatWeb.service.AppointmentService;
+import TA_C_SHA_90.RumahSehatWeb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +40,19 @@ public class AppointmentController {
     @Autowired
     private TagihanDb tagihanDb;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("")
     public String viewAllAppointment(Model model) {
-        List<AppointmentModel> listAppointment = appointmentService.getListAppointment();
+        List<AppointmentModel> listAppointment;
         List<String> listDateTime = new ArrayList<>();
+        UserModel user = userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (user.getRole().equals("Dokter")) {
+            listAppointment = appointmentService.getListAppointmentDoctor(user);
+        } else {
+            listAppointment = appointmentService.getListAppointment();
+        }
         for (int i = 0; i < listAppointment.size(); i++) {
             LocalDateTime date = listAppointment.get(i).getWaktuAwal();
             String timePattern = "dd-MM-yyyy HH:mm";

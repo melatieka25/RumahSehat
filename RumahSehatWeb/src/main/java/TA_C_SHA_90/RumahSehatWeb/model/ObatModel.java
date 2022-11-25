@@ -29,7 +29,7 @@ public class ObatModel implements Serializable {
 
     @NotNull
     @Column(name = "stok", nullable = false)
-    @ColumnDefault("0")
+    @ColumnDefault("100")
     private Integer stok;
 
     @NotNull

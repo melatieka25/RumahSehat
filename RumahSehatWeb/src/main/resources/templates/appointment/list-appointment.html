@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <title>List Appointment</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
@@ -17,7 +17,7 @@
       <thead style="background-color: #f2bb22">
       <tr>
         <th scope="col">No</th>
-        <th scope="col">Nama Dokter</th>
+        <th sec:authorize="hasRole('Admin')" scope="col">Nama Dokter</th>
         <th scope="col">Nama Pasien</th>
         <th scope="col">Waktu Awal Appointment</th>
         <th scope="col">Status Appointment</th>
@@ -27,7 +27,7 @@
       <tbody>
       <tr th:each="appointment, iterationStatus : ${listAppointment}">
         <th scope="row" th:text="${iterationStatus.count}"></th>
-        <td th:text="${appointment.dokter.nama}"></td>
+        <td sec:authorize="hasRole('Admin')" th:text="${appointment.dokter.nama}"></td>
         <td th:text="${appointment.pasien.nama}"></td>
         <td th:text="${listDateTime[__${iterationStatus.index}__]}"></td>
         <td th:if="${appointment.isDone}">Selesai</td>
