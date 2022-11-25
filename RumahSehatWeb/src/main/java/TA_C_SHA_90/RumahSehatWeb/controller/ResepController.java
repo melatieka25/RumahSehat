@@ -1,9 +1,7 @@
 package TA_C_SHA_90.RumahSehatWeb.controller;
 
-import TA_C_SHA_90.RumahSehatWeb.model.JumlahKey;
-import TA_C_SHA_90.RumahSehatWeb.model.JumlahModel;
-import TA_C_SHA_90.RumahSehatWeb.model.ObatModel;
-import TA_C_SHA_90.RumahSehatWeb.model.ResepModel;
+import TA_C_SHA_90.RumahSehatWeb.model.*;
+import TA_C_SHA_90.RumahSehatWeb.service.AppointmentService;
 import TA_C_SHA_90.RumahSehatWeb.service.JumlahService;
 import TA_C_SHA_90.RumahSehatWeb.service.ObatService;
 import TA_C_SHA_90.RumahSehatWeb.service.ResepService;
@@ -30,8 +28,11 @@ public class ResepController {
     @Autowired
     private JumlahService jumlahService;
 
+    @Autowired
+    private AppointmentService appointmentService;
+
     @GetMapping("/create-resep")
-    public String addResepFormPage(Model model) {
+    public String addResepFormPage(@RequestParam(value = "kodeApp") String kodeApp, Model model) {
         ResepModel resep = new ResepModel();
         List<ObatModel> listObat = obatService.getListObat();
         List<JumlahModel> listJumlah = new ArrayList<>();
@@ -39,13 +40,14 @@ public class ResepController {
         resep.setListJumlah(listJumlah);
         resep.getListJumlah().add(new JumlahModel());
 
+        model.addAttribute("kodeApp", kodeApp);
         model.addAttribute("resep", resep);
         model.addAttribute("listObatExisting", listObat);
         return "resep/form-add-resep";
     }
 
     @PostMapping(value = "/create-resep", params = { "addRow" })
-    private String addRowObatMultiple(@ModelAttribute ResepModel resep, Model model) {
+    private String addRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam(value = "kodeApp") String kodeApp, Model model) {
         if (resep.getListJumlah() == null || resep.getListJumlah().size() == 0) {
             resep.setListJumlah(new ArrayList<>());
         }
@@ -54,6 +56,7 @@ public class ResepController {
 
         model.addAttribute("resep", resep);
         List<ObatModel> listObat = obatService.getListObat();
+        model.addAttribute("kodeApp", kodeApp);
         model.addAttribute("listObatExisting", listObat);
         model.addAttribute("listJumlahExisting", listJumlah);
 
@@ -61,7 +64,7 @@ public class ResepController {
     }
 
     @PostMapping(value = "/create-resep", params = { "deleteRow" })
-    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRow") Integer row, Model model) {
+    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRow") Integer row, @RequestParam(value = "kodeApp") String kodeApp, Model model) {
         final Integer rowId = Integer.valueOf(row);
         resep.getListJumlah().remove(rowId.intValue());
 
@@ -69,6 +72,7 @@ public class ResepController {
 
         model.addAttribute("resep", resep);
         List<ObatModel> listObat = obatService.getListObat();
+        model.addAttribute("kodeApp", kodeApp);
         model.addAttribute("listObatExisting", listObat);
         model.addAttribute("listJumlahExisting", listJumlah);
 
@@ -76,8 +80,9 @@ public class ResepController {
     }
 
     @PostMapping(value = "/create-resep", params = { "save" })
-    public String addResepSubmitPage(@ModelAttribute ResepModel resep, Model model, RedirectAttributes redirectAttrs) {
+    public String addResepSubmitPage(@ModelAttribute ResepModel resep, @RequestParam(value = "kodeApp") String kodeApp, Model model, RedirectAttributes redirectAttrs) {
         List<JumlahModel> listJumlah = resep.getListJumlah();
+        AppointmentModel appointment = appointmentService.getDetailAppointment(kodeApp);
 
         if (listJumlah == null) {
             redirectAttrs.addFlashAttribute("error", "Resep harus memiliki setidaknya 1 obat.");
@@ -94,13 +99,15 @@ public class ResepController {
 
         resep.setListJumlah(listJumlah);
         resepService.addResep(resep);
+        resep.setAppointment(appointment);
+        appointment.setResep(resep);
 
         model.addAttribute("resep", resep);
         redirectAttrs.addFlashAttribute("message", "Resep dengan id " + resep.getId() + " telah berhasil ditambahkan!");
 
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("listObatExisting", listObat);
-        return "redirect:/resep/create-resep";
+        return "redirect:/resep/create-resep?kodeApp=" + kodeApp;
     }
 
     @GetMapping("")

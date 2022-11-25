@@ -20,7 +20,7 @@
                     <h2 style="font-weight: bold; padding-top: 10px;">Buat Resep</h2>
                     <br>
                 </div>
-                <form th:action="@{/resep/create-resep}" th:object="${resep}" method="POST">
+                <form th:action="@{/resep/create-resep(kodeApp=${kodeApp})}" th:object="${resep}" method="POST">
                     <div class="container">
                         <br>
                         <table class="table">
