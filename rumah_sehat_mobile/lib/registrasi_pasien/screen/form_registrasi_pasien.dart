@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rumah_sehat_mobile/login/login_page.dart';
+import 'package:rumah_sehat_mobile/main.dart';
 import 'dart:ui';
+import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
 
 // https://docs.flutter.dev/cookbook/forms/validation
 class Dialog extends StatelessWidget {
@@ -34,12 +37,12 @@ class Dialog extends StatelessWidget {
 }
 
 // Define a custom Form widget.
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({Key? key}) : super(key: key);
+class PasienForm extends StatefulWidget {
+  const PasienForm({Key? key}) : super(key: key);
 
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  PasienFormState createState() {
+    return PasienFormState();
   }
 }
 
@@ -47,19 +50,18 @@ var _controllerNama = TextEditingController();
 var _controllerUsername = TextEditingController();
 var _controllerPassword = TextEditingController();
 var _controllerEmail = TextEditingController();
-var _controllerSaldo = TextEditingController();
 var _controllerUmur = TextEditingController();
 
 // Define a corresponding State class.
 // This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
+class PasienFormState extends State<PasienForm> {
   String finalResponse = "";
   final _formKey = GlobalKey<FormState>();
 
   _showDialog(BuildContext context) {
 
     VoidCallback continueCallBack = () => {
-      Navigator.of(context).pop(),
+      // Navigator.of(context).pop(),
       // code on continue comes here
     };
     Dialog alert = Dialog("Hore akun tersimpan!", "Selamat datang " + _controllerNama.text + "!",continueCallBack);
@@ -73,22 +75,17 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 
-  Future<Pasien> createPasien(String title, String? image, String type, String city, int price,
-      String location, String? description, String? link, String? resultTime, String? schedule,
-      String? phone, String? email) async {
+  Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur) async {
 
-    List<CovidTest> tesCovids = [];
-    CovidTest newTest = CovidTest(type: type, title: title, city: city, price: price, location: location, testImage: image, description: description, link: link, resultTime: resultTime, schedule: schedule, phone: phone, email: email);
-    tesCovids.add(newTest);
-    TesCovid data = TesCovid(covidTests: tesCovids);
-
+    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
+    print(PasienToJson(newPasien));
 
     final response = await http.post(
-      Uri.parse('https://lindungipeduli.herokuapp.com/covid-test/kirim-data'),
+      Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: tesCovidToJson(data)
+      body: PasienToJson(newPasien)
       ,
     );
 
@@ -97,25 +94,20 @@ class MyCustomFormState extends State<MyCustomForm> {
       // then parse the JSON.
       _showDialog(context);
 
-      _controllerTitle.clear();
-      _controllerImage.clear();
-      _controllerLocation.clear();
-      _controllerPrice.clear();
-      _controllerDescription.clear();
-      _controllerLink.clear();
-      _controllerResultTime.clear();
-      _controllerSchedule.clear();
-      _controllerPhone.clear();
+      _controllerNama.clear();
+      _controllerUsername.clear();
+      _controllerPassword.clear();
       _controllerEmail.clear();
+      _controllerUmur.clear();
 
       FocusScope.of(context).unfocus();
 
-      return TesCovid.fromJson(jsonDecode(response.body));
+      return Pasien.fromJson(jsonDecode(response.body));
     } else {
       print(response.body);
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Pembuatan tes gagal.');
+      throw Exception('Pembuatan akun gagal');
     }
   }
   Future<void> _savingData() async{
@@ -128,23 +120,92 @@ class MyCustomFormState extends State<MyCustomForm> {
 
     _formKey.currentState!.save();
 
-    createTest(_controllerTitle.text, _controllerImage.text,
-        type, city, int.parse(_controllerPrice.text), _controllerLocation.text, _controllerDescription.text,
-        _controllerLink.text, _controllerResultTime.text, _controllerSchedule.text,
-        _controllerPhone.text, _controllerEmail.text);
+    createPasien(_controllerNama.text, "Pasien", _controllerUsername.text,
+        _controllerPassword.text, _controllerEmail.text, 0,
+        int.parse(_controllerUmur.text));
+
+    setState(() {
+      LoginPage.roles = "Pasien";
+      LoginPage.username =  _controllerUsername.text;
+    });
+    Navigator.of(context).pushNamed("home");
 
   }
 
+  //Referensi: https://stackoverflow.com/questions/56253787/how-to-handle-textfield-validation-in-password-in-flutter
+  String? validatePassword(String value) {
+    RegExp regex =
+    RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+    if (!regex.hasMatch(value)) {
+      return 'Password tidak valid!';
+    } else {
+      return null;
+    }
+  }
+
+  var responseEmail;
+  var responseUsername;
+
+  Future<String?> getEmail() async {
+    var url = Uri.parse(
+        'http://10.0.2.2:8081/api/v1/user/email');
+    var response =
+        await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
+    setState(() {
+      responseEmail = response.body;
+    });
+  }
+
+  Future<String?> getUsername() async {
+    var url = Uri.parse(
+        'http://10.0.2.2:8081/api/v1/user/username');
+    var response =
+    await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
+    setState(() {
+      responseUsername = response.body;
+    });
+  }
+
+
+  String? validateEmail(String value) {
+
+    if (responseEmail.contains(value)) {
+      return "Email sudah digunakan!";
+    } else {
+      return null;
+    }
+  }
+
+  String? validateUsername(String value) {
+
+    if (responseUsername.contains(value)) {
+      return "Username sudah digunakan!";
+    } else {
+      return null;
+    }
+  }
+
   final ScrollController _firstController = ScrollController();
-  String type = "";
-  String city = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("initState");
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      print("WidgetsBinding");
+      getEmail();
+      getUsername();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambah Tes Covid'),
+        title: Text('Registrasi Pasien'),
         backgroundColor: Colors.blueGrey,
       ),
       body: Container(
@@ -159,91 +220,74 @@ class MyCustomFormState extends State<MyCustomForm> {
               controller: _firstController,
               children: [
                 SizedBox(height: 30),
-                const Text('Judul'),
+                const Text('Nama'),
                 TextFormField(
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                   ),
                   onSaved: (value) {
                   },
-                  controller: _controllerTitle,
+                  controller: _controllerNama,
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Masukkan judul tes covid';
+                      return 'Masukkan Nama!';
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 30),
-                SelectFormField(
-                    type: SelectFormFieldType.dropdown, // or can be dialog
-                    initialValue: "Pilih Tipe",
-                    labelText: 'Tipe',
-                    items: tesType,
-                    onChanged: (val) => setState(() {
-                      type = val;
-                      print(type);
-                    })
-                ),
-                SizedBox(height: 30),
-                SelectFormField(
-                    type: SelectFormFieldType.dropdown, // or can be dialog
-                    initialValue: 'Pilih Kota',
-                    labelText: 'Kota/Kabupaten',
-                    items: tesCity,
-                    onChanged: (val) => setState(() {
-                      city = val;
-                      print(val);
-                    })
-                ),
-                SizedBox(height: 30),
-                const Text('Lokasi'),
+                const Text('Email'),
                 TextFormField(
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                   ),
-                  controller: _controllerLocation,
+                  controller: _controllerEmail,
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Masukkan lokasi';
+                      return 'Masukkan Email!';
                     }
-                    return null;
+                    return validateEmail(value);
                   },
                 ),
                 SizedBox(height: 30),
-                const Text('Harga'),
+                const Text('Username'),
                 TextFormField(
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    hintText: '120000',
+                  ),
+                  controller: _controllerUsername,
+                  // The validator receives the text that the user has entered.
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan Username!';
+                    }
 
-                  ),
-                  controller: _controllerPrice,
-                  // The validator receives the text that the user has entered.
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Masukkan harga';
-                    }
-                    return null;
+                    return validateUsername(value);
                   },
                   onSaved: (value) {
                     // price = int.parse(value!);
                   },
                 ),
                 SizedBox(height: 30),
-                const Text('Gambar'),
+                const Text('Password'),
                 TextFormField(
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    hintText: 'http://www.google.com',
                   ),
-                  controller: _controllerImage,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  controller: _controllerPassword,
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Masukkan link gambar';
+                      return 'Masukkan Password!';
+                    }
+                    String? valResult = validatePassword(value);
+                    if (valResult != null){
+                      return valResult;
                     }
                     return null;
                   },
@@ -252,7 +296,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   },
                 ),
                 SizedBox(height: 30),
-                const Text('Deskripsi'),
+                const Text('Umur'),
                 TextFormField(
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
@@ -260,88 +304,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                   // onSaved: (value) {
                   //   title = value!;
                   // },
-                  controller: _controllerDescription,
+                  controller: _controllerUmur,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan Umur!';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     //description = value!;
                   },
                   // The validator receives the text that the user has entered.
                 ),
-                SizedBox(height: 30),
-                const Text('Tautan'),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: 'http://www.google.com',
-                  ),
-                  controller: _controllerLink,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Masukkan Link Tujuan';
-                    }
-                    return null;
-                  },
                   // The validator receives the text that the user has entered.
-                ),
-                SizedBox(height: 30),
-                const Text('Durasi'),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                  ),
-                  controller: _controllerResultTime,
-                  onSaved: (value) {
-                    //resultTime = value!;
-                  },
-                  // The validator receives the text that the user has entered.
-                ),
-                SizedBox(height: 30),
-                const Text('Jadwal'),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    hintText: '00:00:00',
-                  ),
-
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Masukkan jadwal dengan format mm:dd';
-                    }
-                    return null;
-                  },
-                  controller: _controllerSchedule,
-                  onSaved: (value) {
-                    //schedule = value!;
-                  },
-                  // The validator receives the text that the user has entered.
-                ),
-                SizedBox(height: 30),
-                const Text('Nomor Telepon'),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                  ),
-                  controller: _controllerPhone,
-                  onSaved: (value) {
-                    //phone = value!;
-                  },
-                  // The validator receives the text that the user has entered.
-                ),
-                SizedBox(height: 30),
-                const Text('Alamat Email'),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                  ),
-                  // onSaved: (value) {
-                  //   title = value!;
-                  // },
-                  controller: _controllerEmail,
-                  onSaved: (value) {
-                    //email = value!;
-                  },
-                  // The validator receives the text that the user has entered.
-                ),
-
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () async {
@@ -350,7 +325,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     // Validate returns true if the form is valid, or false otherwise.
                     _savingData();
                   },
-                  child: const Text('Submit'),
+                  child: const Text('Register'),
                 ),
               ],
             ),

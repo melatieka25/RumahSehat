@@ -51,7 +51,7 @@
             <a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'pasien'} ? active : ''" th:href="@{/pasien}">
                 Pasien
             </a>
-            <a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'appointment'} ? active : ''" th:href="@{/appointment}">
+            <a sec:authorize="hasAnyRole('Admin', 'Dokter')" class="nav-item nav-link" th:classappend="${onevar == 'appointment'} ? active : ''" th:href="@{/appointment}">
                 Appointment
             </a>
             <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" class="nav-item nav-link" th:classappend="${onevar == 'resep'} ? active : ''" th:href="@{/resep}">

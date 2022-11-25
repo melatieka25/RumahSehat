@@ -11,11 +11,15 @@ import TA_C_SHA_90.RumahSehatWeb.repository.DokterDb;
 import TA_C_SHA_90.RumahSehatWeb.repository.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.List;
+
+import static TA_C_SHA_90.RumahSehatWeb.PasswordManager.encrypt;
+
 
 @Service
 @Transactional
@@ -43,21 +47,8 @@ public class UserServiceImpl implements UserService {
         Optional<UserModel> user = userDb.findByUsername(username);
         if (user.isPresent()) {
             return user.get();
-        } 
-        else return null;
+        } else return null;
     }
 
-    @Override
-    public UserModel addUser(UserModel user) {
-        String pass = encrypt(user.getPassword());
-        user.setPassword(pass);
-        return userDb.save(user);
-    }
 
-    @Override
-    public String encrypt(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder() ;
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
-    }
 }

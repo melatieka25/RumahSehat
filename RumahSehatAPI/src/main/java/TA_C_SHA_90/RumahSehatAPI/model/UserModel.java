@@ -45,4 +45,8 @@ public class UserModel implements Serializable {
     @Size(max = 50)
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @NotNull
+    @Column(name = "is_Sso", nullable = false)
+    private Boolean isSso;
 }

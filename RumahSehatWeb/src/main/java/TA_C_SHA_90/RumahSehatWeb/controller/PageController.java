@@ -1,10 +1,11 @@
 package TA_C_SHA_90.RumahSehatWeb.controller;
 
 import TA_C_SHA_90.RumahSehatWeb.Setting.Setting;
+import TA_C_SHA_90.RumahSehatWeb.model.AdminModel;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.security.xml.Attributes;
 import TA_C_SHA_90.RumahSehatWeb.security.xml.ServiceResponse;
-import TA_C_SHA_90.RumahSehatWeb.service.RoleService;
+import TA_C_SHA_90.RumahSehatWeb.service.AdminService;
 import TA_C_SHA_90.RumahSehatWeb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,13 +16,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,9 +37,8 @@ public class PageController {
     @Autowired
     private UserService userService;
 
-    @Qualifier("roleServiceImpl")
     @Autowired
-    private RoleService roleService;
+    private AdminService adminService;
 
     @Autowired
     ServerProperties serverProperties;
@@ -81,18 +81,19 @@ public class PageController {
             return new ModelAndView("redirect:/login");
         }
 
-        UserModel user = userService.getUserByUsername(username);
-        if (user == null) {
-            user = new UserModel();
-            user.setEmail(username + "ui.ac.id");
-            user.setNama(attributes.getNama());
-            user.setPassword("tkapap");
-            user.setUsername(username);
-            user.setIsSso(true);
-            user.setRole(roleService.getById(Long.valueOf(1)));
-            userService.addUser(user);
+		AdminModel admin;
+		
+		if (userService.getUserByUsername(username) == null){
+            admin = new AdminModel();
+            admin.setEmail(username + "@ui.ac.id");
+            admin.setNama(attributes.getNama());
+            admin.setPassword("tkapap");
+            admin.setUsername(username);
+            admin.setIsSso(true);
+            admin.setRole("Admin");
+            adminService.addAdmin(admin);
         }
-
+		
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, "tkapap");
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
