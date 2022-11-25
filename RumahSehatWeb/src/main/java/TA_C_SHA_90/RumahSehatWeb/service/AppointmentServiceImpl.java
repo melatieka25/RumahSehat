@@ -1,9 +1,12 @@
 package TA_C_SHA_90.RumahSehatWeb.service;
 
 import TA_C_SHA_90.RumahSehatWeb.model.AppointmentModel;
+import TA_C_SHA_90.RumahSehatWeb.model.DokterModel;
+import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.repository.AppointmentDb;
 import TA_C_SHA_90.RumahSehatWeb.model.TagihanModel;
 import TA_C_SHA_90.RumahSehatWeb.repository.AppointmentDb;
+import TA_C_SHA_90.RumahSehatWeb.repository.DokterDb;
 import TA_C_SHA_90.RumahSehatWeb.repository.TagihanDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private TagihanDb tagihanDb;
+
+    @Autowired
+    private DokterDb dokterDb;
 
     @Override
     public List<AppointmentModel> getListAppointment(){ return appointmentDb.findAll(); }
@@ -43,6 +49,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         appointment.setTagihan(tagihan);
         appointmentDb.save(appointment);
+    }
+
+    @Override
+    public List<AppointmentModel> getListAppointmentDoctor(UserModel user) {
+        Optional<DokterModel> dokter = dokterDb.findByEmail(user.getEmail());
+        if (dokter.isPresent()) {
+            return appointmentDb.findAllByDokter(dokter.get());
+        } else {
+            return null;
+        }
+
     }
 
 }
