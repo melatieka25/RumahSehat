@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rumah_sehat_mobile/login/login_page.dart';
 import 'package:rumah_sehat_mobile/main.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
@@ -123,6 +124,10 @@ class PasienFormState extends State<PasienForm> {
         _controllerPassword.text, _controllerEmail.text, 0,
         int.parse(_controllerUmur.text));
 
+    setState(() {
+      LoginPage.roles = "Pasien";
+      LoginPage.username =  _controllerUsername.text;
+    });
     Navigator.of(context).pushNamed("home");
 
   }

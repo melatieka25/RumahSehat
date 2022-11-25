@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rumah_sehat_mobile/login/login_page.dart';
 import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
 
 import '../main.dart';
@@ -12,20 +13,9 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  // bool isVisible = true;
-  // void cekLogin(test) {
-  //   if (test == "") {
-  //     isVisible = true;
-  //   } else {
-  //     setState(() {
-  //       isVisible = false;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // cekLogin(LoginPage.roles);
     return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -105,6 +95,26 @@ class _MyDrawerState extends State<MyDrawer> {
             onTap: () => {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () async {
+              if (LoginPage.roles != '') {
+                setState(() {
+                  LoginPage.roles = "";
+                  LoginPage.username =  "";
+                });
+                Navigator.of(context).pushAndRemoveUntil(
+                    new MaterialPageRoute(
+                        builder: (context) =>
+                        new LoginPage()),
+                        (route) => false);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Anda berhasil Logout')));
+              };
             },
           ),
 
@@ -209,28 +219,6 @@ class _MyDrawerState extends State<MyDrawer> {
           //       } else {
           //         Navigator.push(context,
           //             MaterialPageRoute(builder: (context) => RegisterPage()));
-          //       }
-          //     },
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: !isVisible,
-          //   child: ListTile(
-          //     leading: Icon(Icons.logout),
-          //     title: Text('Logout'),
-          //     onTap: () async {
-          //       if (LoginPage.roles != '') {
-          //         LoginPage.roles = "";
-          //         SharedPreferences prefs =
-          //         await SharedPreferences.getInstance();
-          //         prefs.setString('role', "");
-          //
-          //         ScaffoldMessenger.of(context).showSnackBar(
-          //             const SnackBar(content: Text('Anda berhasil Logout')));
-          //       } else {
-          //         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          //             content:
-          //             Text('User yang belum login tidak bisa logout')));
           //       }
           //     },
           //   ),

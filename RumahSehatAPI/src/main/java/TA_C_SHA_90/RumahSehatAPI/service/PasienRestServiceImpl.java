@@ -34,7 +34,17 @@ public class PasienRestServiceImpl implements PasienRestService {
 			throw new NoSuchElementException();
 		}
 	}
-	
+
+	@Override
+	public PasienModel getPasienByUsername(String username) {
+		Optional<PasienModel> pasien = pasienDb.findByUsername(username);
+		if(pasien.isPresent()) {
+			return pasien.get();
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+
 	@Override
 	public List<PasienModel> getPasienList() {
 		return pasienDb.findAll();
