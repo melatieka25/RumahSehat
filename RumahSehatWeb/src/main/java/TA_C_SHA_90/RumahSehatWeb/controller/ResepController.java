@@ -91,9 +91,9 @@ public class ResepController {
 
         for (JumlahModel jumlah : listJumlah) {
             jumlah.setResep(resep);
-            ObatModel obat = obatService.getObatById(jumlah.getObat().getIdObat());
+            ObatModel obat = obatService.getObatById(jumlah.getObat().getId());
             jumlah.setObat(obat);
-            JumlahKey jumlahKey = new JumlahKey(obat.getIdObat(), resep.getId());
+            JumlahKey jumlahKey = new JumlahKey(obat.getId(), resep.getId());
             jumlah.setId(jumlahKey);
         }
 

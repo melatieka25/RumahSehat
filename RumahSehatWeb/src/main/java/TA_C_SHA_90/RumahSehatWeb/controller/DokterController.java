@@ -61,7 +61,7 @@ public class DokterController {
 
     }
 
-    @GetMapping("")
+    @GetMapping
     public String listDokter(Model model) {
         List<DokterModel> listDokter = dokterService.getListDokter();
         model.addAttribute("listDokter", listDokter);

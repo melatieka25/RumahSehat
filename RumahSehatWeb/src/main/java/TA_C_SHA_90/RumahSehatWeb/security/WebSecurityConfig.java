@@ -28,6 +28,8 @@ public class WebSecurityConfig {
                 .antMatchers("/resep/create-resep").hasRole("Dokter")
                 .antMatchers("/resep").hasAnyRole("Admin", "Apoteker")
                 .antMatchers("/resep/confirm").hasRole("Apoteker")
+				.antMatchers("/obat").hasAnyRole("Admin", "Apoteker")
+				.antMatchers("/obat/stok").hasRole("Apoteker")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
