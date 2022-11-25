@@ -20,6 +20,8 @@ import java.io.Serializable;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class UserModel implements Serializable {
+    private static final long serialVersionUID = 5926468583005150707L;
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -57,4 +59,9 @@ public class UserModel implements Serializable {
     @Size(max = 50)
     @Column(name = "role", nullable = false)
     private String role;
+
+    //need default constructor for JSON Parsing
+    public UserModel(String token) {
+    } //masih tanda tanya
+
 }
