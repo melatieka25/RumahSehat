@@ -8,5 +8,4 @@ public interface PasienService {
 
     void addPasien(PasienModel pasien);
     List<PasienModel> getListPasien();
-
 }
