@@ -42,7 +42,7 @@ public class ResepModel implements Serializable {
     List<JumlahModel> listJumlah;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "confirmed_uuid", referencedColumnName = "uuid", nullable = false)
+    @JoinColumn(name = "confirmer_uuid", referencedColumnName = "uuid")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ApotekerModel apoteker;
 
