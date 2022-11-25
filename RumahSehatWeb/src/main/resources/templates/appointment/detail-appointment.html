@@ -23,10 +23,10 @@
             <p th:text="'Nama Dokter: ' + ${appointment.dokter.nama}"></p>
             <p th:text="'Nama Pasien: ' + ${appointment.pasien.nama}"></p>
             <p th:if="${appointment.resep} != null">
-                <a class="btn btn-primary align-content-center">Detail Resep</a>
+                <a class="btn btn-primary align-content-center" th:href="@{/resep/detail(id=${appointment.resep.id})}">Detail Resep</a>
             </p>
             <p th:if="${appointment.isDone} == false">
-                <a class="btn btn-primary align-content-center" th:if="${appointment.resep} == null">Create Resep</a>
+                <a class="btn btn-primary align-content-center" th:href="@{/resep/create-resep(kodeApp=${appointment.kode})}" th:if="${appointment.resep} == null">Create Resep</a>
             </p>
             <p th:if="${appointment.isDone} == false and ${appointment.resep} == null">
                 <a class="btn btn-primary align-content-center" id="selesai"
