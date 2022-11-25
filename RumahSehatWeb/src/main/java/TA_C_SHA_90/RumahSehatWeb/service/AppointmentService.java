@@ -9,4 +9,7 @@ public interface AppointmentService {
     List<AppointmentModel> getListAppointment();
 
     AppointmentModel getDetailAppointment(String kode);
+
+    void setAppointmentDone(AppointmentModel appointment, Integer totalTagihan);
+
 }
