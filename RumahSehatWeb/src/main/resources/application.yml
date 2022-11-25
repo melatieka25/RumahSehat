@@ -1,7 +1,8 @@
+jwt:
+  header: Authorization
+  secret: javainuse
+
 spring:
   profiles:
     default: dev
-
-jwt:
-  header: Authorization
-  secret: my-very-secret-key
+    
