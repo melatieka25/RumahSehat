@@ -48,16 +48,6 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.app_registration),
-            title: Text('Registrasi'),
-            // selected: _selectedDestination == 1,
-            // onTap: () => selectDestination(1),
-            onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PasienForm())),
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.medication),
             title: Text('Jadwal Appointment'),
             // selected: _selectedDestination == 1,
