@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface PasienDb extends JpaRepository<PasienModel, Long> {
 	Optional<PasienModel> findByUuid(String uuid);
+
+    Optional<PasienModel> findByUsername(String username);
 }
