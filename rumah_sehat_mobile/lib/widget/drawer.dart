@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
 
+import '../main.dart';
+
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -10,16 +12,16 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  bool isVisible = true;
-  void cekLogin(test) {
-    if (test == "") {
-      isVisible = true;
-    } else {
-      setState(() {
-        isVisible = false;
-      });
-    }
-  }
+  // bool isVisible = true;
+  // void cekLogin(test) {
+  //   if (test == "") {
+  //     isVisible = true;
+  //   } else {
+  //     setState(() {
+  //       isVisible = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,20 +51,60 @@ class _MyDrawerState extends State<MyDrawer> {
             title: Text('Home'),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => PasienForm()));
+                  context, MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat')));
               // Navigator.of(context).pushNamed(
               //   '/',
               // );
             },
           ),
           ListTile(
-            leading: Icon(Icons.coronavirus),
+            leading: Icon(Icons.app_registration),
             title: Text('Registrasi'),
             // selected: _selectedDestination == 1,
             // onTap: () => selectDestination(1),
             onTap: () => {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PasienForm())),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.medication),
+            title: Text('Jadwal Appointment'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.account_balance_wallet),
+            title: Text('Topup Saldo'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.payments),
+            title: Text('Daftar Tagihan'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
             },
           ),
 
