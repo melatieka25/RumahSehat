@@ -7,7 +7,7 @@ services:
       - frontend-network
       - backend-network
     ports:
-      - "9090:9090"
+      - "10090:80"
     depends_on:
       - rumah-sehat-web
       - rumah-sehat-api
