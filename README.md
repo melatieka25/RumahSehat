@@ -34,6 +34,8 @@ menjadi
 proxy_set_header   Host $host:80;
 ```
 
+Selain itu, variabel `CLIENT_BASE_URL` pada `TA_C_SHA_90.RumahSehatWeb.Setting.Setting.java` juga perlu diubah menjadi URL aplikasi saat sudah di-*deploy*.
+
 **Docker Compose (Unix/Linux):**
 ```
 # Pertama, build JAR kedua aplikasi
