@@ -22,11 +22,22 @@ cd RumahSehatWeb
 .\gradlew.bat bootRun
 ```
 
+Sebelum men-*deploy* aplikasi dengan Docker Compose pada server Kirti (mengingat server melakukan *mapping* port 80 ke port aplikasi sesungguhnya berdasarkan subdomain), diperlukan konfigurasi nginx agar port pada *header* `Host` aplikasi benar. Untuk itu, dapat diubah pada `nginx/nginx.conf`, untuk *location* `/` dan `/api/v1/`, diubah *line* berikut:
+
+```
+proxy_set_header   Host $host:10090;
+```
+
+menjadi
+
+```
+proxy_set_header   Host $host:80;
+```
+
 **Docker Compose (Unix/Linux):**
 ```
-# Pertama, build JAR aplikasi
-cd RumahSehatWeb
-./gradlew clean build -x test
+# Pertama, build JAR kedua aplikasi
+./build-all.sh
 
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
@@ -34,9 +45,8 @@ docker-compose up --build -d
 
 **Docker Compose (Windows):**
 ```
-# Pertama, build JAR aplikasi
-cd RumahSehatWeb
-.\gradlew.bat clean build -x test
+# Pertama, build JAR kedua aplikasi
+.\build-all.bat
 
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
