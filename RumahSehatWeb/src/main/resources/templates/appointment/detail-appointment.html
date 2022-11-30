@@ -25,16 +25,16 @@
             <p th:if="${appointment.resep} != null">
                 <a class="btn btn-primary align-content-center" th:href="@{/resep/detail(id=${appointment.resep.id})}">Detail Resep</a>
             </p>
-            <p th:if="${appointment.isDone} == false">
+            <p sec:authorize="hasRole('Dokter')" th:if="${appointment.isDone} == false">
                 <a class="btn btn-primary align-content-center" th:href="@{/resep/create-resep(kodeApp=${appointment.kode})}" th:if="${appointment.resep} == null">Create Resep</a>
             </p>
-            <p th:if="${appointment.isDone} == false and ${appointment.resep} == null">
+            <p sec:authorize="hasRole('Dokter')" th:if="${appointment.isDone} == false and ${appointment.resep} == null">
                 <a class="btn btn-primary align-content-center" id="selesai"
                    th:href="@{/appointment/detail/} + ${appointment.kode} + @{/selesai}">
                     Selesai
                 </a>
             </p>
-            <p th:if="${appointment.isDone} == false and ${appointment.resep} != null">
+            <p sec:authorize="hasRole('Dokter')" th:if="${appointment.isDone} == false and ${appointment.resep} != null">
                 <a class="btn btn-primary align-content-center"
                    th:href="@{/appointment/detail/} + ${appointment.kode} + @{/selesai}">
                     Selesai
