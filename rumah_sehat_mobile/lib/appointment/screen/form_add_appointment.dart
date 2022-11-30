@@ -156,7 +156,6 @@ class AppointmentFormState extends State<AppointmentForm> {
       _dataDokter = data;
     }
   }
-
   dateTimePickerWidget(BuildContext context) async {
     return DatePicker.showDatePicker(
       context,
