@@ -1,5 +1,6 @@
 package TA_C_SHA_90.RumahSehatAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,5 +48,6 @@ public class TagihanModel implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kode_appointment", referencedColumnName = "kode", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonManagedReference(value = "tagihanAppointment")
     private AppointmentModel appointment;
 }
