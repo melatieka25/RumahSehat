@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (_loginFormKey.currentState!.validate()) {
                       final response = await http.post(
                         Uri.parse(
-                            "http://10.0.2.2:8081/api/v1/pasien/login"),
+                            "https://apap-090.cs.ui.ac.id/api/v1/pasien/login"),
                         headers: <String, String>{
                           "Content-Type": "application/json;charset=UTF-8",
                         },
