@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_mobile/appointment/screen/form_add_appointment.dart';
 import 'package:rumah_sehat_mobile/login/login_page.dart';
-import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
+import 'package:rumah_sehat_mobile/tagihan/screen/tagihan_list.dart';
 
 import '../appointment/screen/list_appointment.dart';
 import '../main.dart';
@@ -86,7 +86,7 @@ class _MyDrawerState extends State<MyDrawer> {
             // onTap: () => selectDestination(1),
             onTap: () => {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
+                  MaterialPageRoute(builder: (context) => const TagihanListScreen())),
             },
           ),
           ListTile(

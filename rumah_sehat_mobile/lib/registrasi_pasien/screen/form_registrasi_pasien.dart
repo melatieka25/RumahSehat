@@ -61,7 +61,7 @@ class PasienFormState extends State<PasienForm> {
   _showDialog(BuildContext context) {
 
     VoidCallback continueCallBack = () => {
-      // Navigator.of(context).pop(),
+      //Navigator.of(context).pop(),
       // code on continue comes here
     };
     Dialog alert = Dialog("Hore akun tersimpan!", "Selamat datang " + _controllerNama.text + "!",continueCallBack);

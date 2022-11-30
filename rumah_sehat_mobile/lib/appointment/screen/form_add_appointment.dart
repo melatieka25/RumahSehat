@@ -157,6 +157,7 @@ class AppointmentFormState extends State<AppointmentForm> {
         _dataDokter = data;
       });
     }
+    print(_dataDokter);
   }
 
 
