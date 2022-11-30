@@ -28,10 +28,9 @@ public class AppointmentRestController {
         }
     }
 
-    @GetMapping(value = "/appointment")
-    private List<AppointmentModel> retrieveAllAppointment() {
-        //System.out.println(appointmentRestService.getAppointmentList().get(0).getPasien().getUsername());
-        return appointmentRestService.getAppointmentList();
+    @GetMapping(value = "/appointment/{pasien}")
+    private List<AppointmentModel> retrieveAllAppointment(@PathVariable String pasien) {
+        return appointmentRestService.getAppointmentList(pasien);
     }
 
     @GetMapping(value = "/appointment/detail/{kode}")

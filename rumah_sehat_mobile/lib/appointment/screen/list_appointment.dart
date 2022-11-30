@@ -29,8 +29,9 @@ class ListAppointmentState extends State<ListAppointment> {
   }
   List _listAppointment = [];
   void getListAppointment() async {
-    var url = Uri.parse('http://10.0.2.2:8081/api/v1/appointment');
+    var url = Uri.parse('http://10.0.2.2:8081/api/v1/appointment/' + LoginPage.username);
     final response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
+    print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       _listAppointment = data;
@@ -47,7 +48,19 @@ class ListAppointmentState extends State<ListAppointment> {
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
-
+          child: Table(
+            border: TableBorder.all(width: 1.0, color: Colors.black),
+            children: [
+              for (var appointment in _listAppointment) TableRow(children: [
+                TableCell(child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    
+                  ],
+                ))
+              ])
+            ],
+          ),
       ),
     );
   }
