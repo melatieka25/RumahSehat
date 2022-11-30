@@ -1,5 +1,7 @@
 package TA_C_SHA_90.RumahSehatAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,14 +38,17 @@ public class ResepModel implements Serializable {
     private LocalDateTime createdAt;
 
     @OneToOne(mappedBy = "resep")
+    @JsonBackReference(value = "resepAppointment")
     private AppointmentModel appointment;
 
     @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "jumlahResep")
     List<JumlahModel> listJumlah;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "confirmed_uuid", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference(value = "apotekerResep")
     private ApotekerModel apoteker;
 
 }

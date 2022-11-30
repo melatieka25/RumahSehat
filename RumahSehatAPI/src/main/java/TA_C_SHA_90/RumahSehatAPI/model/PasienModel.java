@@ -1,5 +1,6 @@
 package TA_C_SHA_90.RumahSehatAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class PasienModel extends UserModel {
     private Integer umur;
 
     @OneToMany(mappedBy = "pasien" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "pasienAppointment")
     private List<AppointmentModel> listAppointment;
 }
