@@ -155,6 +155,7 @@ class AppointmentFormState extends State<AppointmentForm> {
       var data = jsonDecode(response.body);
       _dataDokter = data;
     }
+    print(_dataDokter);
   }
   dateTimePickerWidget(BuildContext context) async {
     return DatePicker.showDatePicker(

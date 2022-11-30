@@ -81,7 +81,7 @@ class PasienFormState extends State<PasienForm> {
     print(PasienToJson(newPasien));
 
     final response = await http.post(
-      Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/pasien/new'),
+      Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -149,7 +149,7 @@ class PasienFormState extends State<PasienForm> {
 
   Future<String?> getEmail() async {
     var url = Uri.parse(
-        'https://apap-090.cs.ui.ac.id/api/v1/user/email');
+        'http://10.0.2.2:8081/api/v1/user/email');
     var response =
         await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
     setState(() {
@@ -159,7 +159,7 @@ class PasienFormState extends State<PasienForm> {
 
   Future<String?> getUsername() async {
     var url = Uri.parse(
-        'https://apap-090.cs.ui.ac.id/api/v1/user/username');
+        'http://10.0.2.2:8081/api/v1/user/username');
     var response =
     await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
     setState(() {
