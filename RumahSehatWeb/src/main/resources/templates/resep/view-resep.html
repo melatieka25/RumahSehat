@@ -69,7 +69,7 @@
             <tbody>
             <tr th:each="jumlah, iterationStatus : ${listJumlah}">
                 <th scope="row" th:text="${iterationStatus.index + 1}"></th>
-                <td th:text="${jumlah.obat.namaObat}"></td>
+                <td th:text="${jumlah.obat.nama}"></td>
                 <td th:text="${jumlah.kuantitas}"></td>
             </tr>
             </tbody>

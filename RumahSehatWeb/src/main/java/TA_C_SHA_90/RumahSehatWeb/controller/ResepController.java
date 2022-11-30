@@ -107,7 +107,7 @@ public class ResepController {
 
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("listObatExisting", listObat);
-        return "redirect:/resep/create-resep?kodeApp=" + kodeApp;
+        return "redirect:/resep/detail?id=" + resep.getId();
     }
 
     @GetMapping("")

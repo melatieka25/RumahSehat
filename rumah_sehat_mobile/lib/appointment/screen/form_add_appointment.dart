@@ -153,7 +153,9 @@ class AppointmentFormState extends State<AppointmentForm> {
     final response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      _dataDokter = data;
+      setState(() {
+        _dataDokter = data;
+      });
     }
     print(_dataDokter);
   }
