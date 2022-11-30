@@ -112,16 +112,21 @@ class MyCardWidgetState extends State<MyCardWidget> {
                     future: _fetchData(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return Scrollbar(
-                            thumbVisibility: true,
-                            controller: _firstController,
-                            child: ListView.builder(
-                                controller: _firstController,
-                                itemCount: _listTagihan.length,
-                                itemBuilder: (context, index) {
-                                  return  tagihanTemplate(_listTagihan[index], context);
-                                })
-                        );
+                        if (_listTagihan.length == 0){
+                          return const Text("Kamu tidak memiliki tagihan apapun.");
+                        } else {
+                          return Scrollbar(
+                              thumbVisibility: true,
+                              controller: _firstController,
+                              child: ListView.builder(
+                                  controller: _firstController,
+                                  itemCount: _listTagihan.length,
+                                  itemBuilder: (context, index) {
+                                    return tagihanTemplate(
+                                        _listTagihan[index], context);
+                                  })
+                          );
+                        }
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
