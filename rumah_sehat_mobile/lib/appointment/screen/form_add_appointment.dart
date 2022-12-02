@@ -96,9 +96,9 @@ class AppointmentFormState extends State<AppointmentForm> {
     );
   }
 
-  Future<void> createAppointment(String waktuAwal, bool isDone, int? resep, String? tagihan, String pasien, String dokter) async {
+  Future<void> createAppointment(DateTime waktuAwal, bool isDone, int? resep, String? tagihan, String pasien, String dokter, String? namaDokter) async {
 
-    Appointment newAppointment = Appointment(waktuAwal: waktuAwal, isDone: isDone, resep: resep, tagihan: tagihan, pasien: pasien, dokter: dokter);
+    Appointment newAppointment = Appointment(waktuAwal: waktuAwal, isDone: isDone, resep: resep, tagihan: tagihan, pasien: pasien, dokter: dokter, namaDokter: namaDokter);
     print(AppointmentToJson(newAppointment));
 
     final response = await http.post(
@@ -132,7 +132,7 @@ class AppointmentFormState extends State<AppointmentForm> {
     }
 
     _formKey.currentState!.save();
-    createAppointment(date, false, null, null, LoginPage.username, _valDokter);
+    createAppointment(dateTimeChosen, false, null, null, LoginPage.username, _valDokter, null);
   }
   final ScrollController _firstController = ScrollController();
 
