@@ -1,6 +1,7 @@
 package TA_C_SHA_90.RumahSehatAPI.restcontroller;
 
 import TA_C_SHA_90.RumahSehatAPI.model.AppointmentModel;
+import TA_C_SHA_90.RumahSehatAPI.model.createAppointmentModel;
 import TA_C_SHA_90.RumahSehatAPI.service.AppointmentRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class AppointmentRestController {
     private AppointmentRestService appointmentRestService;
 
     @PostMapping(value = "/appointment/create")
-    private AppointmentModel createAppointment(@Valid @RequestBody AppointmentModel appointment, BindingResult bindingResult) {
+    private AppointmentModel createAppointment(@Valid @RequestBody createAppointmentModel appointment, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field! ");
         } else {
@@ -28,7 +29,10 @@ public class AppointmentRestController {
     }
 
     @GetMapping(value = "/appointment")
-    private List<AppointmentModel> retrieveAllAppointment() { return appointmentRestService.getAppointmentList(); }
+    private List<AppointmentModel> retrieveAllAppointment() {
+        //System.out.println(appointmentRestService.getAppointmentList().get(0).getPasien().getUsername());
+        return appointmentRestService.getAppointmentList();
+    }
 
     @GetMapping(value = "/appointment/detail/{kode}")
     private AppointmentModel detailAppointment(@PathVariable("kode") String kode) {

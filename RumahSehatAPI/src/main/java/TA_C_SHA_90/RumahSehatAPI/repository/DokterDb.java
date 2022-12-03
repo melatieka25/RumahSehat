@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DokterDb extends JpaRepository<DokterModel, Long> {
-
+    DokterModel findByUuid(String uuid);
 }
