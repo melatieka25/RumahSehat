@@ -38,16 +38,17 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
 
         PasienModel pasien = pasienRestService.getPasienByUsername(appointment.getPasien());
         DokterModel dokter = dokterRestService.getDokterByUuid(appointment.getDokter());
-        if (appointmentDb.getAllAppointmentWithinInterval(dateTimeStart, dateTimeFinish).size() > 0) {
+        if (appointmentDb.getAllAppointmentWithinInterval(dateTimeStart, dateTimeFinish, appointment.getDokter()).size() > 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Jadwal bentrok");
         }
-        AppointmentModel newAppointment = new AppointmentModel(null, dateTime, false, null, null, pasien, dokter);
+        AppointmentModel newAppointment = new AppointmentModel(null, dateTime, false, null, null, pasien, dokter, dokter.getNama());
         return appointmentDb.save(newAppointment);
     }
 
     @Override
-    public List<AppointmentModel> getAppointmentList() {
-        return appointmentDb.findAll();
+    public List<AppointmentModel> getAppointmentList(String pasien) {
+        PasienModel pasienModel = pasienRestService.getPasienByUsername(pasien);
+        return appointmentDb.findByPasien(pasienModel);
     }
 
     @Override
