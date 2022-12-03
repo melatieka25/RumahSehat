@@ -78,7 +78,6 @@ class PasienFormState extends State<PasienForm> {
   Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur) async {
 
     Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
-    print(PasienToJson(newPasien));
 
     final response = await http.post(
       Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
@@ -107,6 +106,8 @@ class PasienFormState extends State<PasienForm> {
 
       setState(() {
         LoginPage.token = jsonDecode(tokenResponse.body)['token'];
+        LoginPage.roles = "Pasien";
+        LoginPage.username =  _controllerUsername.text;
       });
 
       _controllerNama.clear();
@@ -116,15 +117,16 @@ class PasienFormState extends State<PasienForm> {
       _controllerUmur.clear();
 
       FocusScope.of(context).unfocus();
+      Navigator.of(context).pushNamed("home");
 
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
-      print(response.body);
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Pembuatan akun gagal');
     }
   }
+
   Future<void> _savingData() async{
 
     final validation = _formKey.currentState!.validate();
@@ -135,20 +137,19 @@ class PasienFormState extends State<PasienForm> {
 
     _formKey.currentState!.save();
 
-    createPasien(_controllerNama.text, "Pasien", _controllerUsername.text,
-        _controllerPassword.text, _controllerEmail.text, 0,
-        int.parse(_controllerUmur.text));
-
-    setState(() {
-      LoginPage.roles = "Pasien";
-      LoginPage.username =  _controllerUsername.text;
-    });
-
-    print(LoginPage.username);
-    print(LoginPage.token);
-
-    Navigator.of(context).pushNamed("home");
-
+    try {
+      createPasien(
+          _controllerNama.text,
+          "Pasien",
+          _controllerUsername.text,
+          _controllerPassword.text,
+          _controllerEmail.text,
+          0,
+          int.parse(_controllerUmur.text));
+    } catch (exception){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Maaf, pembuatan akun gagal")));
+    }
   }
 
   //Referensi: https://stackoverflow.com/questions/56253787/how-to-handle-textfield-validation-in-password-in-flutter
@@ -211,9 +212,7 @@ class PasienFormState extends State<PasienForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("initState");
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      print("WidgetsBinding");
       getEmail();
       getUsername();
     });

@@ -8,6 +8,8 @@ import TA_C_SHA_90.RumahSehatAPI.service.PasienRestService;
 import TA_C_SHA_90.RumahSehatAPI.service.TagihanRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,22 +26,28 @@ public class TagihanRestController {
     @Autowired
     private PasienRestService pasienRestService;
 
-    @GetMapping(value = "/tagihan")
-    private List<TagihanModel> retrieveAllTagihan() { return tagihanRestService.getTagihanList(); }
-
     @GetMapping(value = "/tagihan/{username}")
-    private Map<String, List> retrieveAllTagihanByUsername(@PathVariable("username") String username) {
-        PasienModel pasien = pasienRestService.getPasienByUsername(username);
-        List<AppointmentModel> listAppointment = pasien.getListAppointment();
-        List<TagihanModel> listTagihan = new ArrayList<>();
-        for (AppointmentModel appointment : listAppointment){
-            if (appointment.getTagihan() != null){
-                listTagihan.add(appointment.getTagihan());
-            }
+    private ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
+
+        if(!username.equals(authentication.getName())) {
+            return ResponseEntity.status(401).build();
         }
-        Map<String, List> jsonMap = new HashMap<>();
-        jsonMap.put("listTagihan", listTagihan);
-        return jsonMap;
+        try {
+            PasienModel pasien = pasienRestService.getPasienByUsername(username);
+            List<AppointmentModel> listAppointment = pasien.getListAppointment();
+            List<TagihanModel> listTagihan = new ArrayList<>();
+            for (AppointmentModel appointment : listAppointment){
+                if (appointment.getTagihan() != null){
+                    listTagihan.add(appointment.getTagihan());
+                }
+            }
+            Map<String, List> jsonMap = new HashMap<>();
+            jsonMap.put("listTagihan", listTagihan);
+            return ResponseEntity.ok(jsonMap);
+        } catch(NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
+        }
+
     }
 
 //    @GetMapping(value = "/appointment/detail/{kode}")
