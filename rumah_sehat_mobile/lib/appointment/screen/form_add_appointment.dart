@@ -105,6 +105,7 @@ class AppointmentFormState extends State<AppointmentForm> {
       Uri.parse('http://10.0.2.2:8081/api/v1/appointment/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer " + LoginPage.token,
       },
       body: AppointmentToJson(newAppointment)
       ,
@@ -150,7 +151,7 @@ class AppointmentFormState extends State<AppointmentForm> {
 
   void getDokter() async {
     var url = Uri.parse('http://10.0.2.2:8081/api/v1/dokter');
-    final response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
+    final response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       setState(() {
