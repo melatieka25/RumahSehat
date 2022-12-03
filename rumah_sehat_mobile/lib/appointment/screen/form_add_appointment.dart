@@ -6,10 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/appointment/model/appointment.dart';
+import 'package:rumah_sehat_mobile/appointment/screen/list_appointment.dart';
 import 'package:rumah_sehat_mobile/login/login_page.dart';
-import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
 
 import '../../main.dart';
+import '../../resep/model/resep.dart';
 
 class Dialog extends StatelessWidget {
 
@@ -34,8 +35,7 @@ class Dialog extends StatelessWidget {
                 child: Text("Kembali"),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomePage(
-                          title: 'RumahSehat')));
+                      MaterialPageRoute(builder: (context) => const ListAppointment()));
                 },
               ),
             ],
@@ -96,9 +96,9 @@ class AppointmentFormState extends State<AppointmentForm> {
     );
   }
 
-  Future<void> createAppointment(DateTime waktuAwal, bool isDone, int? resep, String? tagihan, String pasien, String dokter, String? namaDokter) async {
+  Future<void> createAppointment(String? kode, DateTime waktuAwal, bool isDone, Resep? resep, String? tagihan, String pasien, String dokter, String? namaDokter, String? namaPasien) async {
 
-    Appointment newAppointment = Appointment(waktuAwal: waktuAwal, isDone: isDone, resep: resep, tagihan: tagihan, pasien: pasien, dokter: dokter, namaDokter: namaDokter);
+    Appointment newAppointment = Appointment(kode: kode, waktuAwal: waktuAwal, isDone: isDone, resep: resep, tagihan: tagihan, pasien: pasien, dokter: dokter, namaDokter: namaDokter, namaPasien: namaPasien);
     print(AppointmentToJson(newAppointment));
 
     final response = await http.post(
@@ -132,7 +132,7 @@ class AppointmentFormState extends State<AppointmentForm> {
     }
 
     _formKey.currentState!.save();
-    createAppointment(dateTimeChosen, false, null, null, LoginPage.username, _valDokter, null);
+    createAppointment(null, dateTimeChosen, false, null, null, LoginPage.username, _valDokter, null, null);
   }
   final ScrollController _firstController = ScrollController();
 
