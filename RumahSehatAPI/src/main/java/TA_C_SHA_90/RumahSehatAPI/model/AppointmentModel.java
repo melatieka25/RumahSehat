@@ -66,4 +66,10 @@ public class AppointmentModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference(value = "dokterAppointment")
     private DokterModel dokter;
+
+    @Transient
+    private transient String namaDokter;
+
+    @Transient
+    private transient String namaPasien;
 }

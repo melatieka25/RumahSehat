@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rumah_sehat_mobile/appointment/screen/form_add_appointment.dart';
 import 'package:rumah_sehat_mobile/login/login_page.dart';
 import 'package:rumah_sehat_mobile/tagihan/screen/tagihan_list.dart';
-
+import 'package:rumah_sehat_mobile/saldo/topup_saldo.dart';
+import '../appointment/screen/list_appointment.dart';
 import '../main.dart';
 
 
@@ -55,7 +56,7 @@ class _MyDrawerState extends State<MyDrawer> {
             // onTap: () => selectDestination(1),
             onTap: () => {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AppointmentForm())),
+                  MaterialPageRoute(builder: (context) => const ListAppointment())),
             },
           ),
           ListTile(
@@ -75,7 +76,7 @@ class _MyDrawerState extends State<MyDrawer> {
             // onTap: () => selectDestination(1),
             onTap: () => {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat'))),
+                  MaterialPageRoute(builder: (context) => const TopupSaldoPage())),
             },
           ),
           ListTile(
@@ -96,6 +97,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 setState(() {
                   LoginPage.roles = "";
                   LoginPage.username =  "";
+                  LoginPage.token =  "";
                 });
                 Navigator.of(context).pushAndRemoveUntil(
                     new MaterialPageRoute(

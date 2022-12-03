@@ -1,6 +1,7 @@
 package TA_C_SHA_90.RumahSehatAPI.repository;
 
 import TA_C_SHA_90.RumahSehatAPI.model.AppointmentModel;
+import TA_C_SHA_90.RumahSehatAPI.model.PasienModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public interface AppointmentDb extends JpaRepository<AppointmentModel, Long> {
     Optional<AppointmentModel> findByKode(String kode);
 
-    @Query("Select c FROM AppointmentModel c WHERE c.waktuAwal between :dateTimeStart and :dateTimeFinish")
-    List<AppointmentModel> getAllAppointmentWithinInterval(@Param("dateTimeStart") LocalDateTime dateTimeStart, @Param("dateTimeFinish") LocalDateTime dateTimeFinish);
+    List<AppointmentModel> findByPasien(PasienModel pasienModel);
+    @Query("Select c FROM AppointmentModel c WHERE c.dokter.uuid = :dokter AND c.waktuAwal between :dateTimeStart and :dateTimeFinish")
+    List<AppointmentModel> getAllAppointmentWithinInterval(@Param("dateTimeStart") LocalDateTime dateTimeStart, @Param("dateTimeFinish") LocalDateTime dateTimeFinish, @Param("dokter") String dokter);
 }

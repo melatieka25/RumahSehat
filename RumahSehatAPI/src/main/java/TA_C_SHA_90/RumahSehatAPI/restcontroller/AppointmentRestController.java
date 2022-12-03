@@ -1,6 +1,7 @@
 package TA_C_SHA_90.RumahSehatAPI.restcontroller;
 
 import TA_C_SHA_90.RumahSehatAPI.model.AppointmentModel;
+import TA_C_SHA_90.RumahSehatAPI.model.ResepModel;
 import TA_C_SHA_90.RumahSehatAPI.model.createAppointmentModel;
 import TA_C_SHA_90.RumahSehatAPI.service.AppointmentRestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -28,10 +31,23 @@ public class AppointmentRestController {
         }
     }
 
-    @GetMapping(value = "/appointment")
-    private List<AppointmentModel> retrieveAllAppointment() {
-        //System.out.println(appointmentRestService.getAppointmentList().get(0).getPasien().getUsername());
-        return appointmentRestService.getAppointmentList();
+    @GetMapping(value = "/appointment/{pasien}")
+    private Map<String, List> retrieveAllAppointment(@PathVariable String pasien) {
+        try {
+            List<AppointmentModel> listAppointment = appointmentRestService.getAppointmentList(pasien);
+            for (int i = 0; i < listAppointment.size(); i++) {
+                String namaDokter = listAppointment.get(i).getDokter().getNama();
+                listAppointment.get(i).setNamaDokter(namaDokter);
+                String namaPasien = listAppointment.get(i).getPasien().getNama();
+                listAppointment.get(i).setNamaPasien(namaPasien);
+            }
+
+            Map<String, List> jsonMap = new HashMap<>();
+            jsonMap.put("listAppointment", listAppointment);
+            return jsonMap;
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with Username " + pasien + " not found.");
+        }
     }
 
     @GetMapping(value = "/appointment/detail/{kode}")

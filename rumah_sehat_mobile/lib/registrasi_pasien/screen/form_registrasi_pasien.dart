@@ -85,14 +85,29 @@ class PasienFormState extends State<PasienForm> {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: PasienToJson(newPasien)
-      ,
+      body: PasienToJson(newPasien),
     );
 
-    if (response.statusCode == 200) {
+    final tokenResponse = await http.post(
+      Uri.parse(
+          "http://10.0.2.2:8081/api/v1/authenticate"),
+      headers: <String, String>{
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: jsonEncode(<String, String>{
+        'username': _controllerUsername.text,
+        'password': _controllerPassword.text,
+      }),
+    );
+
+    if (response.statusCode == 200 && tokenResponse.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       _showDialog(context);
+
+      setState(() {
+        LoginPage.token = jsonDecode(tokenResponse.body)['token'];
+      });
 
       _controllerNama.clear();
       _controllerUsername.clear();
@@ -128,6 +143,10 @@ class PasienFormState extends State<PasienForm> {
       LoginPage.roles = "Pasien";
       LoginPage.username =  _controllerUsername.text;
     });
+
+    print(LoginPage.username);
+    print(LoginPage.token);
+
     Navigator.of(context).pushNamed("home");
 
   }
