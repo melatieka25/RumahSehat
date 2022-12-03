@@ -55,4 +55,7 @@ public class AppointmentModel implements Serializable {
     @JoinColumn(name = "dokter", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DokterModel dokter;
+
+    @Transient
+    private transient String namaDokter;
 }
