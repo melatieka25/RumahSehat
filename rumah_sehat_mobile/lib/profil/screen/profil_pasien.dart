@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rumah_sehat_mobile/main.dart';
-import 'package:rumah_sehat_mobile/profil/widget/profil_template.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
 import 'package:rumah_sehat_mobile/saldo/topup_saldo.dart';
@@ -57,7 +55,6 @@ class profilPasienState extends State<profilPasien> {
           backgroundColor: Colors.blueGrey,
         ),
         backgroundColor: Colors.white,
-        //https://api.flutter.dev/flutter/material/FloatingActionButton-class.html
         drawer: const MyDrawer(),
         body: Column(
             children: <Widget>[

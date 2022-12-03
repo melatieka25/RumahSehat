@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tesCovid = tesCovidFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
