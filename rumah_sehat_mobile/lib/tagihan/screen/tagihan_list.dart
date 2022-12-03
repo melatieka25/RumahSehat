@@ -55,7 +55,7 @@ class MyCardWidgetState extends State<MyCardWidget> {
     var url = Uri.parse(
         'http://10.0.2.2:8081/api/v1/tagihan/' + LoginPage.username);
     var response =
-    await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
+    await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
 
     //var data = jsonDecode(response.body);
     List<Tagihan> listTagihan = AllTagihanFromJson(response.body).listTagihan;

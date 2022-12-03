@@ -67,13 +67,7 @@ public class PasienRestServiceImpl implements PasienRestService {
 	@Override
 	public PasienModel updatePasien(String uuid, PasienModel updatedPasien) {
 		PasienModel pasien = getPasienByUuid(uuid);
-		pasien.setNama(updatedPasien.getNama());
-		pasien.setRole(updatedPasien.getRole());
-		pasien.setUsername(updatedPasien.getUsername());
-		pasien.setPassword(jwtUserDetailsService.encrypt(updatedPasien.getPassword()));
-		pasien.setEmail(updatedPasien.getEmail());
 		pasien.setSaldo(updatedPasien.getSaldo());
-		pasien.setUmur(updatedPasien.getUmur());
 		return pasienDb.save(pasien);
 	}
 
