@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage();
   static String roles = "";
   static String username = "";
+  static String token = "";
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -133,10 +134,12 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 child: ElevatedButton(
                   onPressed: () async {
+                    print(username);
+                    print(password1);
                     if (_loginFormKey.currentState!.validate()) {
                       final response = await http.post(
                         Uri.parse(
-                            "http://10.0.2.2:8081/api/v1/pasien/login"),
+                            "http://10.0.2.2:8081/api/v1/authenticate"),
                         headers: <String, String>{
                           "Content-Type": "application/json;charset=UTF-8",
                         },
@@ -146,12 +149,11 @@ class _LoginPageState extends State<LoginPage> {
                         }),
                       );
 
-                      print(response.body);
-
                       if (response.statusCode == 200) {
                         setState(() {
                           LoginPage.roles = "Pasien";
-                          LoginPage.username =  username;
+                          LoginPage.username = username;
+                          LoginPage.token = jsonDecode(response.body)['token'];
                         });
                         //pindah halaman
                         Navigator.push(
