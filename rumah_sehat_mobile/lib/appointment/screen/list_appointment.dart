@@ -57,7 +57,6 @@ class MyCardWidgetState extends State<MyCardWidget> {
   }
 
   final ScrollController _firstController = ScrollController();
-  String query = "";
   List<Appointment> _listAppointment = [];
 
   @override
