@@ -47,7 +47,7 @@ class MyCardWidget extends StatefulWidget {
 class MyCardWidgetState extends State<MyCardWidget> {
   Future<List<Appointment>> _fetchData() async {
     var url = Uri.parse(
-        'http://localhost:8081/api/v1/appointment/' + LoginPage.username);
+        'http://10.0.2.2:8081/api/v1/appointment/' + LoginPage.username);
     var response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
     List<Appointment> listAppointment = AllAppointmentFromJson(response.body).listAppointment;
     setState(() {
