@@ -107,6 +107,7 @@ Mengembalikan suatu pasien berdasarkan UUID.
     "email": "pasien@satu.com",
     "saldo": 1337420,
     "umur": 42,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -129,6 +130,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@satu.com",
         "saldo": 1337420,
         "umur": 42,
+		"isSso": false,
         "listAppointment": []
     },
     {
@@ -140,6 +142,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@tiga.com",
         "saldo": 8213892,
         "umur": 16,
+		"isSso": false,
         "listAppointment": []
     }
 ]
@@ -161,6 +164,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -176,6 +180,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -207,6 +212,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -222,6 +228,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
