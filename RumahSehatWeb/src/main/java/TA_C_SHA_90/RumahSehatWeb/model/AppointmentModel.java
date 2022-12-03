@@ -61,4 +61,5 @@ public class AppointmentModel implements Serializable {
 
     @Transient
     private transient String namaPasien;
+
 }

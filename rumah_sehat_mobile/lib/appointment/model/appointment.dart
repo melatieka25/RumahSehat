@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../resep/model/resep.dart';
 
+
 Appointment AppointmentFromJson(String str) => Appointment.fromJson(json.decode(str));
 
 String AppointmentToJson(Appointment data) => json.encode(data.toJson());
