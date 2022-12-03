@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rumah_sehat_mobile/appointment/model/appointment.dart';
+import 'package:rumah_sehat_mobile/appointment/screen/detail_appointment.dart';
 import 'package:rumah_sehat_mobile/appointment/screen/form_add_appointment.dart';
 import 'package:rumah_sehat_mobile/main.dart';
 
@@ -49,7 +51,11 @@ Widget appointmentTemplate(appointment, context) {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AppointmentForm()),
+                MaterialPageRoute(builder: (context) => detailAppointment(),
+                settings: RouteSettings(
+                  arguments: appointment
+                )
+                ),
               );
             },
             child: Text('Detail Appointment'),

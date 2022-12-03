@@ -58,4 +58,8 @@ public class AppointmentModel implements Serializable {
 
     @Transient
     private transient String namaDokter;
+
+    @Transient
+    private transient String namaPasien;
+
 }

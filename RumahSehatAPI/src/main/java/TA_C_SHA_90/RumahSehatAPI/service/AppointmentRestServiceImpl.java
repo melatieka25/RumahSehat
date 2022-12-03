@@ -41,7 +41,7 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
         if (appointmentDb.getAllAppointmentWithinInterval(dateTimeStart, dateTimeFinish, appointment.getDokter()).size() > 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Jadwal bentrok");
         }
-        AppointmentModel newAppointment = new AppointmentModel(null, dateTime, false, null, null, pasien, dokter, dokter.getNama());
+        AppointmentModel newAppointment = new AppointmentModel(null, dateTime, false, null, null, pasien, dokter, dokter.getNama(), pasien.getNama());
         return appointmentDb.save(newAppointment);
     }
 
