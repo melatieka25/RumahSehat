@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tesCovid = tesCovidFromJson(jsonString);
-
 import 'dart:convert';
 
 AllTagihan AllTagihanFromJson(String str) => AllTagihan.fromJson(json.decode(str));

@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface PasienService {
 
-    void addPasien(PasienModel pasien);
     List<PasienModel> getListPasien();
 }

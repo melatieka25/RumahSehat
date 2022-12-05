@@ -13,7 +13,7 @@ Widget tagihanTemplate(tagihan, context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           Text(
             "Nomor: " + tagihan.kode,
             style: TextStyle(

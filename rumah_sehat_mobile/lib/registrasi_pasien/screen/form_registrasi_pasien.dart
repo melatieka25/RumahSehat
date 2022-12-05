@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rumah_sehat_mobile/login/login_page.dart';
-import 'package:rumah_sehat_mobile/main.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
+
+import '../../main.dart';
 
 // https://docs.flutter.dev/cookbook/forms/validation
 class Dialog extends StatelessWidget {
@@ -60,10 +61,7 @@ class PasienFormState extends State<PasienForm> {
 
   _showDialog(BuildContext context) {
 
-    VoidCallback continueCallBack = () => {
-      //Navigator.of(context).pop(),
-      // code on continue comes here
-    };
+    continueCallBack() => {};
     Dialog alert = Dialog("Hore akun tersimpan!", "Selamat datang " + _controllerNama.text + "!",continueCallBack);
 
 
@@ -146,6 +144,10 @@ class PasienFormState extends State<PasienForm> {
           _controllerEmail.text,
           0,
           int.parse(_controllerUmur.text));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(title: "RumahSehat")));
     } catch (exception){
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Maaf, pembuatan akun gagal")));
@@ -210,7 +212,6 @@ class PasienFormState extends State<PasienForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       getEmail();
@@ -310,7 +311,6 @@ class PasienFormState extends State<PasienForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    //testImage = value!;
                   },
                 ),
                 SizedBox(height: 30),
@@ -319,9 +319,6 @@ class PasienFormState extends State<PasienForm> {
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                   ),
-                  // onSaved: (value) {
-                  //   title = value!;
-                  // },
                   controller: _controllerUmur,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -330,7 +327,6 @@ class PasienFormState extends State<PasienForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    //description = value!;
                   },
                   // The validator receives the text that the user has entered.
                 ),
@@ -338,9 +334,6 @@ class PasienFormState extends State<PasienForm> {
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () async {
-                    // createTest("tes covid", "https://fajar.co.id/wp-content/uploads/img/no-image.jpg", "PCR", "Bekasi", 200000,
-                    //     "jakarta", "tidak ada", "https://fajar.co.id/wp-content/uploads/img/no-image.jpg", "5 jam", "08:00", "0888888", "mitra@gmail.com");
-                    // Validate returns true if the form is valid, or false otherwise.
                     _savingData();
                   },
                   child: const Text('Register'),

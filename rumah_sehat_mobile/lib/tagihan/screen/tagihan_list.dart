@@ -57,7 +57,6 @@ class MyCardWidgetState extends State<MyCardWidget> {
     var response =
     await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
 
-    //var data = jsonDecode(response.body);
     List<Tagihan> listTagihan = AllTagihanFromJson(response.body).listTagihan;
     setState(() {
       _listTagihan = listTagihan;
@@ -68,11 +67,12 @@ class MyCardWidgetState extends State<MyCardWidget> {
   final ScrollController _firstController = ScrollController();
   String query = "";
   List<Tagihan> _listTagihan = [];
+  late Future<List<Tagihan>> _futureTagihan;
 
-  // Sumber: https://github.com/JohannesMilke/filter_listview_example
   @override
   void initState() {
     super.initState();
+    _futureTagihan = _fetchData();
   }
 
   @override
@@ -109,7 +109,7 @@ class MyCardWidgetState extends State<MyCardWidget> {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: FutureBuilder<List<Tagihan>>(
-                    future: _fetchData(),
+                    future: _futureTagihan,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (_listTagihan.length == 0){
