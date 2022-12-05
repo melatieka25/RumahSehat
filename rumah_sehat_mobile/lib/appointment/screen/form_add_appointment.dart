@@ -8,8 +8,6 @@ import 'dart:ui';
 import 'package:rumah_sehat_mobile/appointment/model/appointment.dart';
 import 'package:rumah_sehat_mobile/appointment/screen/list_appointment.dart';
 import 'package:rumah_sehat_mobile/login/login_page.dart';
-
-import '../../main.dart';
 import '../../resep/model/resep.dart';
 
 class Dialog extends StatelessWidget {

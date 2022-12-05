@@ -1,14 +1,8 @@
-import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/appointment/model/appointment.dart';
-import 'package:rumah_sehat_mobile/appointment/screen/form_add_appointment.dart';
-import 'package:rumah_sehat_mobile/login/login_page.dart';
 import '../../main.dart';
-import '../../resep/model/resep.dart';
 
 class detailAppointment extends StatelessWidget {
   const detailAppointment({Key? key}) : super(key: key);
