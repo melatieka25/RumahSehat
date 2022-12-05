@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rumah_sehat_mobile/appointment/screen/form_add_appointment.dart';
 import 'package:rumah_sehat_mobile/login/login_page.dart';
 import 'package:rumah_sehat_mobile/tagihan/screen/tagihan_list.dart';
 import 'package:rumah_sehat_mobile/saldo/topup_saldo.dart';
@@ -20,7 +19,6 @@ class _MyDrawerState extends State<MyDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: <Widget>[
           // Nama Web
@@ -100,122 +98,16 @@ class _MyDrawerState extends State<MyDrawer> {
                   LoginPage.token =  "";
                 });
                 Navigator.of(context).pushAndRemoveUntil(
-                    new MaterialPageRoute(
+                    MaterialPageRoute(
                         builder: (context) =>
-                        new LoginPage()),
+                        const LoginPage()),
                         (route) => false);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Anda berhasil Logout')));
-              };
+              }
             },
           ),
-
-          // ListTile(
-          //   leading: Icon(Icons.book),
-          //   title: Text('Add-Thread'),
-          //   onTap: () {
-          //     if (LoginPage.roles != "") {
-          //       // Kalau belum login, role defaultnya "", kyknya(iya bener)
-          //       // Navigator.of(context).pushNamed(
-          //       //   '/Add-Thread',
-          //       // );
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => AddThread()));
-          //     } else {
-          //       // Navigator.of(context).pushNamed(
-          //       //   '/register',
-          //       // );
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => RegisterPage()));
-          //     }
-          //     ;
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Micon.syringe),
-          //   title: Text('Daftar Vaksin'),
-          //   onTap: () => {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => DaftarVaksin())),
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Micon.book_medical),
-          //   title: Text('Kamus Obat'),
-          //
-          //   // selected: _selectedDestination == 2,
-          //   // onTap: () => selectDestination(2),
-          //   onTap: () => {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (context) => KamusHomepage()))
-          //   },
-          //
-          // ),
-          // ListTile(
-          //   leading: Icon(Icons.local_pharmacy),
-          //   title: Text('Apotek Daring'),
-          //   onTap: () => {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return KatalogApotek();
-          //     }))
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Icons.article),
-          //   title: Text('Artikel'),
-          //   // selected: _selectedDestination == 2,
-          //   // onTap: () => selectDestination(2),
-          //   onTap: () => {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return ArtikelScreen();
-          //     }))
-          //   },
-          // ),
-          // const Divider(
-          //   height: 1,
-          //   thickness: 1,
-          // ),
-          //
-          // // Account
-          // const Padding(
-          //   padding: EdgeInsets.all(16.0),
-          //   child: Text(
-          //     'Akun',
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: isVisible,
-          //   child: ListTile(
-          //     leading: Icon(Icons.login),
-          //     title: Text('Masuk'),
-          //     onTap: () {
-          //       if (LoginPage.roles != "") {
-          //         ScaffoldMessenger.of(context).showSnackBar(
-          //             const SnackBar(content: Text('Anda Telah Login')));
-          //       } else {
-          //         Navigator.push(context,
-          //             MaterialPageRoute(builder: (context) => LoginPage()));
-          //       }
-          //     },
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: isVisible,
-          //   child: ListTile(
-          //     leading: Icon(Icons.app_registration),
-          //     title: Text('Daftar'),
-          //     onTap: () {
-          //       if (LoginPage.roles != "") {
-          //         ScaffoldMessenger.of(context).showSnackBar(
-          //             const SnackBar(content: Text('Anda Telah Login')));
-          //       } else {
-          //         Navigator.push(context,
-          //             MaterialPageRoute(builder: (context) => RegisterPage()));
-          //       }
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );

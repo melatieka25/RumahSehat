@@ -3,16 +3,10 @@ package TA_C_SHA_90.RumahSehatWeb.service;
 import TA_C_SHA_90.RumahSehatWeb.model.UserModel;
 import TA_C_SHA_90.RumahSehatWeb.repository.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
-
-
-import static TA_C_SHA_90.RumahSehatWeb.PasswordManager.encrypt;
 
 
 @Service
@@ -21,11 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDb userDb;
-
-    @Override
-    public List<UserModel> getListUser() {
-        return userDb.findAll();
-    }
 
     @Override
     public UserModel getUserByEmail(String email) {
@@ -43,14 +32,6 @@ public class UserServiceImpl implements UserService {
             return user.get();
         }
         else return null;
-    }
-
-
-    @Override
-    public String encrypt(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder() ;
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
     }
 
 

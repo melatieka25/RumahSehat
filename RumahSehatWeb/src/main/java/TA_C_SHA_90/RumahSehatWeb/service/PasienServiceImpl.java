@@ -15,12 +15,6 @@ import java.util.List;
 public class PasienServiceImpl implements PasienService {
     @Autowired
     PasienDb pasienDb;
-
-    @Override
-    public void addPasien(PasienModel pasien) {
-        pasienDb.save(pasien);
-    }
-
     @Override
     public List<PasienModel> getListPasien() {
         return pasienDb.findAll();
