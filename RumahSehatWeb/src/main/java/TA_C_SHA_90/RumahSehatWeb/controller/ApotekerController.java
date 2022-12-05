@@ -40,7 +40,6 @@ public class ApotekerController {
         UserModel sameUsername = userService.getUserByUsername(apoteker.getUsername());
         UserModel sameEmail = userService.getUserByEmail(apoteker.getEmail());
 
-        //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
             if (PasswordManager.validationChecker(apoteker.getPassword())){
                 apotekerService.addApoteker(apoteker);
