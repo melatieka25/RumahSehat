@@ -112,14 +112,4 @@ public class PasienRestController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
 		}
 	}
-
-	@GetMapping(value = "/pasien/profil/{username}")
-	private PasienModel getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
-		try {
-			PasienModel pasien = pasienRestService.getPasienByUsername(username);
-			return pasien;
-		} catch (NoSuchElementException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
-		}
-	}
 }
