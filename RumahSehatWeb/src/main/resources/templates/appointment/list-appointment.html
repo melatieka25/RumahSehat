@@ -13,7 +13,7 @@
       <h2 style="font-weight: bold; padding-top: 10px;" >List Appointment</h2>
       <br>
     </div>
-    <table style="margin: 20px;" class="table table-striped">
+    <table style="margin: 20px;" class="table table-striped" id="appointment-table">
       <thead style="background-color: #f2bb22">
       <tr>
         <th scope="col">No</th>
@@ -43,5 +43,10 @@
 </div>
 
 </div>
+<script>
+  $(document).ready(() => {
+    $('#appointment-table').DataTable();
+  });
+</script>
 </body>
 </html>
