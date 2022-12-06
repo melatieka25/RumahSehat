@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
-import 'package:rumah_sehat_mobile/widget/drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
@@ -21,14 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   bool isVisible = false;
-
-  void _getRoleAndUsername() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      LoginPage.roles = prefs.getString('role') ?? "";
-      LoginPage.username = prefs.getString('username') ?? "";
-    });
-  }
 
   void toggleVisibility() {
     setState(() {
@@ -201,6 +192,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-    // TODO: implement build
   }
 }

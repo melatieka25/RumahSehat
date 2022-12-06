@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tesCovid = tesCovidFromJson(jsonString);
-
 import 'dart:convert';
 
 Pasien PasienFromJson(String str) => Pasien.fromJson(json.decode(str));

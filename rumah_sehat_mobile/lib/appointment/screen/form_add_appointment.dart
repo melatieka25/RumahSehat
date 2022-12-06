@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:http/http.dart' as http;
@@ -156,7 +155,6 @@ class AppointmentFormState extends State<AppointmentForm> {
         _dataDokter = data;
       });
     }
-    print(_dataDokter);
   }
 
   dateTimePickerWidget(BuildContext context) async {

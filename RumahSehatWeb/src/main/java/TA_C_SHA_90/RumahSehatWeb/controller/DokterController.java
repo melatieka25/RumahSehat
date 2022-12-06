@@ -40,7 +40,6 @@ public class DokterController {
         UserModel sameUsername = userService.getUserByUsername(dokter.getUsername());
         UserModel sameEmail = userService.getUserByEmail(dokter.getEmail());
 
-        //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
             if (PasswordManager.validationChecker(dokter.getPassword())){
                 dokter.setIsSso(false);
