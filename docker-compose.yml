@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx:
-    build: ./nginx
+    image: apap-registry.cs.ui.ac.id/faris.haidar/apap-090-nginx
     restart: always
     networks:
       - frontend-network
@@ -13,8 +13,7 @@ services:
       - rumah-sehat-api
       
   rumah-sehat-web:
-    build:
-      context: ./RumahSehatWeb
+    image: apap-registry.cs.ui.ac.id/faris.haidar/apap-090-web
     restart: always
     volumes:
       - ./RumahSehatWeb/file-storage:/file-storage
@@ -27,8 +26,7 @@ services:
       - backend-network
       
   rumah-sehat-api:
-    build:
-      context: ./RumahSehatAPI
+    image: apap-registry.cs.ui.ac.id/faris.haidar/apap-090-api
     restart: always
     volumes:
       - ./RumahSehatAPI/file-storage:/file-storage
