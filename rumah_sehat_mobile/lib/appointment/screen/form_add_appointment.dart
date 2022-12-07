@@ -252,5 +252,4 @@ class AppointmentFormState extends State<AppointmentForm> {
       ),
     );
   }
-
 }
