@@ -1,5 +1,7 @@
 package TA_C_SHA_90.RumahSehatAPI;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PasswordManager {
     //Referensi: https://codescracker.com/java/program/java-check-password-strength.htm
@@ -25,11 +27,5 @@ public class PasswordManager {
             return true;
         else
             return false;
-    }
-
-    public static String encrypt(String password){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
     }
 }

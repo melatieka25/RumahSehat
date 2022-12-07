@@ -40,7 +40,6 @@ public class DokterController {
         UserModel sameUsername = userService.getUserByUsername(dokter.getUsername());
         UserModel sameEmail = userService.getUserByEmail(dokter.getEmail());
 
-        //Membuat objek MahasiswaModel
         if (sameUsername == null && sameEmail == null){
             if (PasswordManager.validationChecker(dokter.getPassword())){
                 dokter.setIsSso(false);
@@ -61,7 +60,7 @@ public class DokterController {
 
     }
 
-    @GetMapping("")
+    @GetMapping
     public String listDokter(Model model) {
         List<DokterModel> listDokter = dokterService.getListDokter();
         model.addAttribute("listDokter", listDokter);

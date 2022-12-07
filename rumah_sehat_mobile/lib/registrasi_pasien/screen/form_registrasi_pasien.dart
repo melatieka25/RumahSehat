@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rumah_sehat_mobile/login/login_page.dart';
 import 'dart:ui';
 import 'package:rumah_sehat_mobile/registrasi_pasien/model/pasien.dart';
+
+import '../../main.dart';
 
 // https://docs.flutter.dev/cookbook/forms/validation
 class Dialog extends StatelessWidget {
@@ -58,10 +61,7 @@ class PasienFormState extends State<PasienForm> {
 
   _showDialog(BuildContext context) {
 
-    VoidCallback continueCallBack = () => {
-      Navigator.of(context).pop(),
-      // code on continue comes here
-    };
+    continueCallBack() => {};
     Dialog alert = Dialog("Hore akun tersimpan!", "Selamat datang " + _controllerNama.text + "!",continueCallBack);
 
 
@@ -75,22 +75,38 @@ class PasienFormState extends State<PasienForm> {
 
   Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur) async {
 
-    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur);
-    print(PasienToJson(newPasien));
+    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
 
     final response = await http.post(
       Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: PasienToJson(newPasien)
-      ,
+      body: PasienToJson(newPasien),
     );
 
-    if (response.statusCode == 200) {
+    final tokenResponse = await http.post(
+      Uri.parse(
+          "http://10.0.2.2:8081/api/v1/authenticate"),
+      headers: <String, String>{
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: jsonEncode(<String, String>{
+        'username': _controllerUsername.text,
+        'password': _controllerPassword.text,
+      }),
+    );
+
+    if (response.statusCode == 200 && tokenResponse.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       _showDialog(context);
+
+      setState(() {
+        LoginPage.token = jsonDecode(tokenResponse.body)['token'];
+        LoginPage.roles = "Pasien";
+        LoginPage.username =  _controllerUsername.text;
+      });
 
       _controllerNama.clear();
       _controllerUsername.clear();
@@ -99,15 +115,16 @@ class PasienFormState extends State<PasienForm> {
       _controllerUmur.clear();
 
       FocusScope.of(context).unfocus();
+      Navigator.of(context).pushNamed("home");
 
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
-      print(response.body);
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Password tidak kuat, akunmu gagal dibuat.');
+      throw Exception('Pembuatan akun gagal');
     }
   }
+
   Future<void> _savingData() async{
 
     final validation = _formKey.currentState!.validate();
@@ -118,10 +135,23 @@ class PasienFormState extends State<PasienForm> {
 
     _formKey.currentState!.save();
 
-    createPasien(_controllerNama.text, "Pasien", _controllerUsername.text,
-        _controllerPassword.text, _controllerEmail.text, 0,
-        int.parse(_controllerUmur.text));
-
+    try {
+      createPasien(
+          _controllerNama.text,
+          "Pasien",
+          _controllerUsername.text,
+          _controllerPassword.text,
+          _controllerEmail.text,
+          0,
+          int.parse(_controllerUmur.text));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(title: "RumahSehat")));
+    } catch (exception){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Maaf, pembuatan akun gagal")));
+    }
   }
 
   //Referensi: https://stackoverflow.com/questions/56253787/how-to-handle-textfield-validation-in-password-in-flutter
@@ -182,11 +212,8 @@ class PasienFormState extends State<PasienForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print("initState");
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      print("WidgetsBinding");
       getEmail();
       getUsername();
     });
@@ -284,7 +311,6 @@ class PasienFormState extends State<PasienForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    //testImage = value!;
                   },
                 ),
                 SizedBox(height: 30),
@@ -293,9 +319,6 @@ class PasienFormState extends State<PasienForm> {
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                   ),
-                  // onSaved: (value) {
-                  //   title = value!;
-                  // },
                   controller: _controllerUmur,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -304,7 +327,6 @@ class PasienFormState extends State<PasienForm> {
                     return null;
                   },
                   onSaved: (value) {
-                    //description = value!;
                   },
                   // The validator receives the text that the user has entered.
                 ),
@@ -312,9 +334,6 @@ class PasienFormState extends State<PasienForm> {
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () async {
-                    // createTest("tes covid", "https://fajar.co.id/wp-content/uploads/img/no-image.jpg", "PCR", "Bekasi", 200000,
-                    //     "jakarta", "tidak ada", "https://fajar.co.id/wp-content/uploads/img/no-image.jpg", "5 jam", "08:00", "0888888", "mitra@gmail.com");
-                    // Validate returns true if the form is valid, or false otherwise.
                     _savingData();
                   },
                   child: const Text('Register'),

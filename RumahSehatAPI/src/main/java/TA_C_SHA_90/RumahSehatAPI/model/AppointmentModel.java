@@ -1,5 +1,11 @@
 package TA_C_SHA_90.RumahSehatAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +35,8 @@ public class AppointmentModel implements Serializable {
 
     @NotNull
     @Column(name = "waktuAwal", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd' 'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd' 'HH:mm")
     private LocalDateTime waktuAwal;
 
     @NotNull
@@ -41,18 +48,28 @@ public class AppointmentModel implements Serializable {
         joinColumns = { @JoinColumn(name = "kode_appointment", referencedColumnName = "kode")
         },
         inverseJoinColumns = { @JoinColumn(name = "id_resep", referencedColumnName = "id")})
+    @JsonManagedReference(value = "resepAppointment")
     private ResepModel resep;
 
     @OneToOne(mappedBy = "appointment" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference(value = "tagihanAppointment")
     private TagihanModel tagihan;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pasien", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference(value = "pasienAppointment")
     private PasienModel pasien;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dokter", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference(value = "dokterAppointment")
     private DokterModel dokter;
+
+    @Transient
+    private transient String namaDokter;
+
+    @Transient
+    private transient String namaPasien;
 }

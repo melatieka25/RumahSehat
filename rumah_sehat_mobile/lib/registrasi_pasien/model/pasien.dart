@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tesCovid = tesCovidFromJson(jsonString);
-
 import 'dart:convert';
 
 Pasien PasienFromJson(String str) => Pasien.fromJson(json.decode(str));
@@ -33,6 +29,7 @@ class Pasien {
         required this.email,
         required this.saldo,
         required this.umur,
+        required this.isSso,
       });
 
   String nama;
@@ -42,6 +39,7 @@ class Pasien {
   String email;
   int saldo;
   int umur;
+  bool isSso;
 
   factory Pasien.fromJson(Map<String, dynamic> json) => Pasien(
     nama: json["nama"],
@@ -51,6 +49,7 @@ class Pasien {
     email: json["email"],
     saldo: json["saldo"],
     umur: json["umur"],
+    isSso: json["isSso"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +60,6 @@ class Pasien {
     "email": email,
     "saldo": saldo,
     "umur": umur,
+    "isSso": isSso,
   };
 }
