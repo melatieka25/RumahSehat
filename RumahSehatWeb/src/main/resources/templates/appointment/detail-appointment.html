@@ -29,10 +29,9 @@
                 <a class="btn btn-primary align-content-center" th:href="@{/resep/create-resep(kodeApp=${appointment.kode})}" th:if="${appointment.resep} == null">Create Resep</a>
             </p>
             <p sec:authorize="hasRole('Dokter')" th:if="${appointment.isDone} == false and ${appointment.resep} == null">
-                <a class="btn btn-primary align-content-center" id="selesai"
-                   th:href="@{/appointment/detail/} + ${appointment.kode} + @{/selesai}">
+                <button type="button" class="btn btn-primary align-content-center" id="confirmationButton">
                     Selesai
-                </a>
+                </button>
             </p>
             <p sec:authorize="hasRole('Dokter')" th:if="${appointment.isDone} == false and ${appointment.resep} != null">
                 <a class="btn btn-primary align-content-center"
@@ -40,19 +39,60 @@
                     Selesai
                 </a>
             </p>
+            <div class="modal" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi Penyelesaian Appointment</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apakah anda yakin ingin menyelesaikan appointment tanpa memiliki resep?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
+                            <a class="btn btn-primary align-content-center"
+                                    th:href="@{/appointment/detail/} + ${appointment.kode} + @{/selesai}">Ya</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 
 </div>
 <script>
-    var submitLink = document.getElementById("selesai")
-    submitLink.addEventListener('click', function (e) {
-        if (!confirm('Apakah anda ingin menyelesaikan appointment tanpa ada resep?')) {
-            e.preventDefault();
+    var modal = document.getElementById("confirmationModal");
+    var button = document.getElementById("confirmationButton");
+    var span = document.getElementsByClassName("close")[0];
+    var span2 = document.getElementsByClassName("btn btn-danger")[0];
+
+    button.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    span2.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
-    });
+    }
+    // var submitLink = document.getElementById("selesai")
+    // submitLink.addEventListener('click', function (e) {
+    //     if (!confirm('Apakah anda ingin menyelesaikan appointment tanpa ada resep?')) {
+    //         e.preventDefault();
+    //     }
+    // });
 </script>
 </body>
 </html>
