@@ -125,6 +125,8 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 child: ElevatedButton(
                   onPressed: () async {
+                    print(username);
+                    print(password1);
                     if (_loginFormKey.currentState!.validate()) {
                       final response = await http.post(
                         Uri.parse(
