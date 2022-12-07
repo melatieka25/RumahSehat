@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import TA_C_SHA_90.RumahSehatAPI.model.PasienModel;
 import TA_C_SHA_90.RumahSehatAPI.repository.PasienDb;
 
-import static TA_C_SHA_90.RumahSehatAPI.PasswordManager.encrypt;
-
 @Service
 @Transactional
 public class PasienRestServiceImpl implements PasienRestService {
@@ -24,6 +22,9 @@ public class PasienRestServiceImpl implements PasienRestService {
 
 	@Autowired
 	private UserDb userDb;
+	
+	@Autowired
+	private JwtUserDetailsService jwtUserDetailsService;
 	
 	@Override
 	public PasienModel getPasienByUuid(String uuid) {
@@ -34,7 +35,17 @@ public class PasienRestServiceImpl implements PasienRestService {
 			throw new NoSuchElementException();
 		}
 	}
-	
+
+	@Override
+	public PasienModel getPasienByUsername(String username) {
+		Optional<PasienModel> pasien = pasienDb.findByUsername(username);
+		if(pasien.isPresent()) {
+			return pasien.get();
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+
 	@Override
 	public List<PasienModel> getPasienList() {
 		return pasienDb.findAll();
@@ -42,7 +53,7 @@ public class PasienRestServiceImpl implements PasienRestService {
 	
 	@Override
 	public PasienModel createPasien(PasienModel pasien) {
-		String pass = encrypt(pasien.getPassword());
+		String pass = jwtUserDetailsService.encrypt(pasien.getPassword());
 		pasien.setPassword(pass);
 		return pasienDb.save(pasien);
 	}
@@ -56,13 +67,7 @@ public class PasienRestServiceImpl implements PasienRestService {
 	@Override
 	public PasienModel updatePasien(String uuid, PasienModel updatedPasien) {
 		PasienModel pasien = getPasienByUuid(uuid);
-		pasien.setNama(updatedPasien.getNama());
-		pasien.setRole(updatedPasien.getRole());
-		pasien.setUsername(updatedPasien.getUsername());
-		pasien.setPassword(updatedPasien.getPassword());
-		pasien.setEmail(updatedPasien.getEmail());
 		pasien.setSaldo(updatedPasien.getSaldo());
-		pasien.setUmur(updatedPasien.getUmur());
 		return pasienDb.save(pasien);
 	}
 

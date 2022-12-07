@@ -38,9 +38,9 @@ public class AppointmentModel implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "resep_appointment",
-        joinColumns = { @JoinColumn(name = "kode_appointment", referencedColumnName = "kode")
-        },
-        inverseJoinColumns = { @JoinColumn(name = "id_resep", referencedColumnName = "id")})
+            joinColumns = { @JoinColumn(name = "kode_appointment", referencedColumnName = "kode")
+            },
+            inverseJoinColumns = { @JoinColumn(name = "id_resep", referencedColumnName = "id")})
     private ResepModel resep;
 
     @OneToOne(mappedBy = "appointment" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -55,4 +55,11 @@ public class AppointmentModel implements Serializable {
     @JoinColumn(name = "dokter", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DokterModel dokter;
+
+    @Transient
+    private transient String namaDokter;
+
+    @Transient
+    private transient String namaPasien;
+
 }

@@ -18,13 +18,17 @@ spring:
     # pembuatan database (create || create-drop || validate || update)
     hibernate.ddl-auto: update
 
+  main:
+    allow-circular-references: true
 
   # Templates reloading during development
   thymeleaf:
-    prefix: file:src/main/resources/templates/
+    prefix: classpath:/templates/
+    suffix: .html
     cache: false
 
   # Static resources reloading during development
   web:
     resources:
       static-locations: file:src/main/resources/static/
+      

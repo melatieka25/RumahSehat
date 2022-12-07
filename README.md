@@ -22,11 +22,24 @@ cd RumahSehatWeb
 .\gradlew.bat bootRun
 ```
 
+Sebelum men-*deploy* aplikasi dengan Docker Compose pada server Kirti (mengingat server melakukan *mapping* port 80 ke port aplikasi sesungguhnya berdasarkan subdomain), diperlukan konfigurasi nginx agar port pada *header* `Host` aplikasi benar. Untuk itu, dapat diubah pada `nginx/nginx.conf`, untuk *location* `/` dan `/api/v1/`, diubah *line* berikut:
+
+```
+proxy_set_header   Host $host:10090;
+```
+
+menjadi
+
+```
+proxy_set_header   Host $host:80;
+```
+
+Selain itu, variabel `CLIENT_BASE_URL` pada `TA_C_SHA_90.RumahSehatWeb.Setting.Setting.java` juga perlu diubah menjadi URL aplikasi saat sudah di-*deploy*.
+
 **Docker Compose (Unix/Linux):**
 ```
-# Pertama, build JAR aplikasi
-cd RumahSehatWeb
-./gradlew clean build -x test
+# Pertama, build JAR kedua aplikasi
+./build-all.sh
 
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
@@ -34,13 +47,15 @@ docker-compose up --build -d
 
 **Docker Compose (Windows):**
 ```
-# Pertama, build JAR aplikasi
-cd RumahSehatWeb
-.\gradlew.bat clean build -x test
+# Pertama, build JAR kedua aplikasi
+.\build-all.bat
 
 # Lalu, lakukan deployment. Flag --build dapat digunakan untuk mem-build ulang, dan -d untuk menjalankan dalam detach mode.
 docker-compose up --build -d
 ```
+
+## Development
+Untuk dapat menggunakan fungsionalitas login SSO, ketika men-*develop* aplikasi ini, ubah variabel konfigurasi `CLIENT_BASE_URL` pada `TA_C_SHA_90.RumahSehatWeb.Setting` menjadi URL dan port lokal Anda. Sebagai contoh, `http://localhost:8080` dapat digunakan sebagai nilai sementara selama men-*develop*. Pastikan bahwa Anda mengubah kembali nilai tersebut sebelum melakukan *push* ke Gitlab, agar fungsionalitas login SSO pada aplikasi yang ter-*deploy* dapat berjalan dengan baik. 
 
 ## Kontrak
 
@@ -95,6 +110,7 @@ Mengembalikan suatu pasien berdasarkan UUID.
     "email": "pasien@satu.com",
     "saldo": 1337420,
     "umur": 42,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -117,6 +133,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@satu.com",
         "saldo": 1337420,
         "umur": 42,
+		"isSso": false,
         "listAppointment": []
     },
     {
@@ -128,6 +145,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@tiga.com",
         "saldo": 8213892,
         "umur": 16,
+		"isSso": false,
         "listAppointment": []
     }
 ]
@@ -149,6 +167,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -164,6 +183,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -195,6 +215,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```
@@ -210,6 +231,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
+	"isSso": false,
     "listAppointment": []
 }
 ```

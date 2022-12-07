@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
+import 'package:rumah_sehat_mobile/login/login_page.dart';
+import 'package:rumah_sehat_mobile/profil/screen/profil_pasien.dart';
+import 'package:rumah_sehat_mobile/tagihan/screen/tagihan_list.dart';
+import 'package:rumah_sehat_mobile/saldo/topup_saldo.dart';
+import '../appointment/screen/list_appointment.dart';
+import '../main.dart';
 
 
 class MyDrawer extends StatefulWidget {
@@ -10,23 +15,11 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  bool isVisible = true;
-  void cekLogin(test) {
-    if (test == "") {
-      isVisible = true;
-    } else {
-      setState(() {
-        isVisible = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    // cekLogin(LoginPage.roles);
     return Drawer(
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: <Widget>[
           // Nama Web
@@ -49,150 +42,73 @@ class _MyDrawerState extends State<MyDrawer> {
             title: Text('Home'),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => PasienForm()));
+                  context, MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat')));
               // Navigator.of(context).pushNamed(
               //   '/',
               // );
             },
           ),
           ListTile(
-            leading: Icon(Icons.coronavirus),
-            title: Text('Registrasi'),
+            leading: Icon(Icons.medication),
+            title: Text('Jadwal Appointment'),
             // selected: _selectedDestination == 1,
             // onTap: () => selectDestination(1),
             onTap: () => {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PasienForm())),
+                  MaterialPageRoute(builder: (context) => const ListAppointment())),
             },
           ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const profilPasien())),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.account_balance_wallet),
+            title: Text('Topup Saldo'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TopupSaldoPage())),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.payments),
+            title: Text('Daftar Tagihan'),
+            // selected: _selectedDestination == 1,
+            // onTap: () => selectDestination(1),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TagihanListScreen())),
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () async {
+              if (LoginPage.roles != '') {
+                setState(() {
+                  LoginPage.roles = "";
+                  LoginPage.username =  "";
+                  LoginPage.token =  "";
+                });
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const LoginPage()),
+                        (route) => false);
 
-          // ListTile(
-          //   leading: Icon(Icons.book),
-          //   title: Text('Add-Thread'),
-          //   onTap: () {
-          //     if (LoginPage.roles != "") {
-          //       // Kalau belum login, role defaultnya "", kyknya(iya bener)
-          //       // Navigator.of(context).pushNamed(
-          //       //   '/Add-Thread',
-          //       // );
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => AddThread()));
-          //     } else {
-          //       // Navigator.of(context).pushNamed(
-          //       //   '/register',
-          //       // );
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => RegisterPage()));
-          //     }
-          //     ;
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Micon.syringe),
-          //   title: Text('Daftar Vaksin'),
-          //   onTap: () => {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => DaftarVaksin())),
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Micon.book_medical),
-          //   title: Text('Kamus Obat'),
-          //
-          //   // selected: _selectedDestination == 2,
-          //   // onTap: () => selectDestination(2),
-          //   onTap: () => {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (context) => KamusHomepage()))
-          //   },
-          //
-          // ),
-          // ListTile(
-          //   leading: Icon(Icons.local_pharmacy),
-          //   title: Text('Apotek Daring'),
-          //   onTap: () => {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return KatalogApotek();
-          //     }))
-          //   },
-          // ),
-          // ListTile(
-          //   leading: Icon(Icons.article),
-          //   title: Text('Artikel'),
-          //   // selected: _selectedDestination == 2,
-          //   // onTap: () => selectDestination(2),
-          //   onTap: () => {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return ArtikelScreen();
-          //     }))
-          //   },
-          // ),
-          // const Divider(
-          //   height: 1,
-          //   thickness: 1,
-          // ),
-          //
-          // // Account
-          // const Padding(
-          //   padding: EdgeInsets.all(16.0),
-          //   child: Text(
-          //     'Akun',
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: isVisible,
-          //   child: ListTile(
-          //     leading: Icon(Icons.login),
-          //     title: Text('Masuk'),
-          //     onTap: () {
-          //       if (LoginPage.roles != "") {
-          //         ScaffoldMessenger.of(context).showSnackBar(
-          //             const SnackBar(content: Text('Anda Telah Login')));
-          //       } else {
-          //         Navigator.push(context,
-          //             MaterialPageRoute(builder: (context) => LoginPage()));
-          //       }
-          //     },
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: isVisible,
-          //   child: ListTile(
-          //     leading: Icon(Icons.app_registration),
-          //     title: Text('Daftar'),
-          //     onTap: () {
-          //       if (LoginPage.roles != "") {
-          //         ScaffoldMessenger.of(context).showSnackBar(
-          //             const SnackBar(content: Text('Anda Telah Login')));
-          //       } else {
-          //         Navigator.push(context,
-          //             MaterialPageRoute(builder: (context) => RegisterPage()));
-          //       }
-          //     },
-          //   ),
-          // ),
-          // Visibility(
-          //   visible: !isVisible,
-          //   child: ListTile(
-          //     leading: Icon(Icons.logout),
-          //     title: Text('Logout'),
-          //     onTap: () async {
-          //       if (LoginPage.roles != '') {
-          //         LoginPage.roles = "";
-          //         SharedPreferences prefs =
-          //         await SharedPreferences.getInstance();
-          //         prefs.setString('role', "");
-          //
-          //         ScaffoldMessenger.of(context).showSnackBar(
-          //             const SnackBar(content: Text('Anda berhasil Logout')));
-          //       } else {
-          //         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          //             content:
-          //             Text('User yang belum login tidak bisa logout')));
-          //       }
-          //     },
-          //   ),
-          // ),
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Anda berhasil Logout')));
+              }
+            },
+          ),
         ],
       ),
     );
