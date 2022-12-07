@@ -115,7 +115,10 @@ class PasienFormState extends State<PasienForm> {
       _controllerUmur.clear();
 
       FocusScope.of(context).unfocus();
-      Navigator.of(context).pushNamed("home");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(title: "RumahSehat")));
 
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
@@ -144,10 +147,6 @@ class PasienFormState extends State<PasienForm> {
           _controllerEmail.text,
           0,
           int.parse(_controllerUmur.text));
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const HomePage(title: "RumahSehat")));
     } catch (exception){
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Maaf, pembuatan akun gagal")));
