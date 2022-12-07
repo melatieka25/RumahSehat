@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 import TA_C_SHA_90.RumahSehatAPI.security.JwtTokenUtil;
 import TA_C_SHA_90.RumahSehatAPI.model.JwtRequestModel;
 import TA_C_SHA_90.RumahSehatAPI.model.JwtResponseModel;
 import TA_C_SHA_90.RumahSehatAPI.model.PasienModel;
 import TA_C_SHA_90.RumahSehatAPI.service.JwtUserDetailsService;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1")
@@ -35,7 +38,8 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequestModel authenticationRequest) throws Exception {
-
+		log.info("Received request at authentication endpoint");
+		
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String token = jwtTokenUtil.generateToken(userDetails);
@@ -46,8 +50,10 @@ public class JwtAuthenticationController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
+			log.warn("Unable to authenticate, user has been disabled");
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
+			log.warn("nable to authenticate, invalid credentials have been provided");
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}
