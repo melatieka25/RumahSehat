@@ -11,9 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.validation.Valid;
 import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1")
 public class TagihanRestController {
@@ -23,8 +26,10 @@ public class TagihanRestController {
 
     @GetMapping(value = "/tagihan/{username}")
     private ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
-
+		log.info("Received request at retrieve tagihan endpoint for user " + username);
+		
         if(!username.equals(authentication.getName())) {
+			log.warn("Authentication failure occurred.");
             return ResponseEntity.status(401).build();
         }
         try {
