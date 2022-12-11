@@ -16,7 +16,7 @@ class DetailResepScreen extends StatelessWidget {
     final id_resep = ModalRoute.of(context)!.settings.arguments as int;
     Future<Resep> _fetchData() async {
       var url =
-          Uri.parse('http://10.0.2.2:8081/api/v1/resep/' + id_resep.toString());
+          Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/resep/' + id_resep.toString());
       // TODO HAPUS
       print(LoginPage.token);
       var response = await http.get(url, headers: {

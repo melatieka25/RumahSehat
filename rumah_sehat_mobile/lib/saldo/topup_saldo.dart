@@ -118,7 +118,7 @@ class MyCardWidgetState extends State<MyCardWidget> {
                             }));
                             final response = await http.post(
                               Uri.parse(
-                                  "http://10.0.2.2:8081/api/v1/pasien/saldo"),
+                                  "https://apap-090.cs.ui.ac.id/api/v1/pasien/saldo"),
                               headers: <String, String>{
                                 "Content-Type": "application/json;charset=UTF-8",
                                 "Authorization": "Bearer " + LoginPage.token,
