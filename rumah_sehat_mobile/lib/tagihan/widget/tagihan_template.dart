@@ -1,8 +1,5 @@
-
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:rumah_sehat_mobile/main.dart';
+import 'package:rumah_sehat_mobile/tagihan/screen/detail_tagihan.dart';
 
 Widget tagihanTemplate(tagihan, context) {
   return Card(
@@ -22,7 +19,7 @@ Widget tagihanTemplate(tagihan, context) {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           Text(
             "Tanggal terbuat: " + tagihan.tanggalTerbuat.substring(0, 10),
             style: TextStyle(
@@ -30,12 +27,12 @@ Widget tagihanTemplate(tagihan, context) {
               color: Colors.grey[500],
             ),
           ),
-          SizedBox(height: 15.0),
+          const SizedBox(height: 15.0),
           Text(
-            "Status: " + (tagihan.isPaid? "Lunas":"Belum dibayar"),
+            "Status: " + (tagihan.isPaid ? "Lunas" : "Belum dibayar"),
             style: TextStyle(
               fontSize: 20.0,
-              color: tagihan.isPaid? Colors.green[800] : Colors.red[800],
+              color: tagihan.isPaid ? Colors.green[800] : Colors.red[800],
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -44,14 +41,14 @@ Widget tagihanTemplate(tagihan, context) {
               foregroundColor: Colors.blue,
               disabledForegroundColor: Colors.red,
             ),
-            // TODO: Navigasi ke detail tagihan masukin disini
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage(title: "RumahSehat")),
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const detailTagihan(),
+                      settings: RouteSettings(arguments: tagihan)));
             },
-            child: Text('Detail Tagihan'),
+            child: const Text('Detail Tagihan'),
           )
         ],
       ),

@@ -46,6 +46,7 @@ class MyCardWidgetState extends State<MyCardWidget> {
     var url = Uri.parse(
         'http://10.0.2.2:8081/api/v1/appointment/' + LoginPage.username);
     var response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
+    print(response.body);
     List<Appointment> listAppointment = AllAppointmentFromJson(response.body).listAppointment;
     setState(() {
       _listAppointment = listAppointment;
