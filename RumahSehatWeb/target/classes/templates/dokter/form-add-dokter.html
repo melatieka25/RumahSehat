@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>Add Dokter RumahSehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'dokter'})"></nav>
+<div class="container" style="width:50%">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <div style="margin: auto; width: 80%; text-align: center">
+          <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+          <h2 style="font-weight: bold; padding-top: 10px;" >Tambah Dokter</h2>
+          <br>
+        </div>
+        <form th:action="@{/dokter/create-dokter}" th:object="${dokter}" method="POST">
+          <div class="container">
+            <br>
+            <div class="row">
+              <div class="col">
+                <p style="font-weight: bold;">Nama</p>
+                <input class="form-control" type="text" placeholder="Nama" name="nama"/>
+              </div>
+              <div class="col">
+                <p style="font-weight: bold;">Email</p>
+                <input class="form-control" type="text" placeholder="Email" name="email"/>
+              </div>
+            </div>
+            <div class="row">
+              <div style="margin-top:20px;" class="col">
+                <p style="font-weight: bold;">Username</p>
+                <input class="form-control" type="text" name="username" placeholder="Username"/>
+              </div>
+              <div style="margin-top:20px;" class="col">
+                <p style="font-weight: bold;">Password</p>
+                <input class="form-control" type="password" placeholder="Password" name="password"/>
+              </div>
+            </div>
+            <div class="row">
+              <div style="margin-top:20px;" class="col">
+                <p style="font-weight: bold;">Tarif</p>
+                <input class="form-control" type="number" placeholder="Tarif" name="tarif"/>
+              </div>
+            </div>
+            <br>
+        </form>
+        <div style="margin: auto; padding-top:20px; text-align: center; font-weight: bold;">
+          <a class="btn btn-outline-secondary"style="margin: 10px; width: 40%" href="/">Kembali</a>
+          <button class="btn btn-primary" style="margin: 10px;font-weight: bold; background-color: #258a85; border: none; width:40%" type="submit">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
