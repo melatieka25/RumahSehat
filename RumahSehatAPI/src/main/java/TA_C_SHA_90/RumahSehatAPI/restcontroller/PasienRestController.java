@@ -110,7 +110,6 @@ public class PasienRestController {
 		}
 	}
 	@GetMapping(value = "/pasien/profil/{username}")
-<<<<<<< RumahSehatAPI/src/main/java/TA_C_SHA_90/RumahSehatAPI/restcontroller/PasienRestController.java
 	private ResponseEntity getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
 		log.info("Received request at profil pasien endpoint");
 		if(!username.equals(authentication.getName())) {
@@ -123,13 +122,6 @@ public class PasienRestController {
 			return ResponseEntity.ok(pasien);
 		} catch (NoSuchElementException e) {
 			log.warn("Failed to update pasien saldo, username not found: " + username);
-=======
-	private PasienModel getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
-		try {
-			PasienModel pasien = pasienRestService.getPasienByUsername(username);
-			return pasien;
-		} catch (NoSuchElementException e) {
->>>>>>> RumahSehatAPI/src/main/java/TA_C_SHA_90/RumahSehatAPI/restcontroller/PasienRestController.java
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
 		}
 	}
