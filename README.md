@@ -58,6 +58,8 @@ docker-compose up --build -d
 Untuk dapat menggunakan fungsionalitas login SSO, ketika men-*develop* aplikasi ini, ubah variabel konfigurasi `CLIENT_BASE_URL` pada `TA_C_SHA_90.RumahSehatWeb.Setting` menjadi URL dan port lokal Anda. Sebagai contoh, `http://localhost:8080` dapat digunakan sebagai nilai sementara selama men-*develop*. Pastikan bahwa Anda mengubah kembali nilai tersebut sebelum melakukan *push* ke Gitlab, agar fungsionalitas login SSO pada aplikasi yang ter-*deploy* dapat berjalan dengan baik. 
 
 ## Code Analysis with SonarQube
+Project SonarQube untuk *project* ini terdapat pada https://sonarqube.cs.ui.ac.id/dashboard?id=melati.eka_ta_c_sha_90_AYUApPQ8WK4E6S_2LNIo. 
+
 Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *command* dengan *credentials* berikut pada masing-masing *project* `gradle` (`RumahSehatWeb` dan `RumahSehatAPI`).
 
 **Linux:**
