@@ -39,7 +39,7 @@
     </button>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav navbar-right">
-            <a class="nav-item nav-link" th:classappend="${onevar == 'beranda'} ? active : ''" th:href="@{/}">
+            <a class="nav-item nav-link" th:if="${onevar != 'logged-out'}" th:classappend="${onevar == 'beranda'} ? active : ''" th:href="@{/}">
                 Beranda
             </a>
             <a sec:authorize="hasRole('Admin')"  class="nav-item nav-link" th:classappend="${onevar == 'dokter'} ? active : ''" th:href="@{/dokter}">
@@ -65,7 +65,8 @@
             </a>
         </ul>
         <ul class= "navbar-nav pull-right">
-            <a class="nav-item nav-link text-text-secondary" th:href="@{/logout-sso}">Logout</a>
+            <a class="nav-item nav-link text-text-secondary" th:if="${onevar == 'logged-out'}" th:href="@{/login}">Login</a>
+            <a class="nav-item nav-link text-text-secondary" th:if="${onevar != 'logged-out'}" th:href="@{/logout-sso}">Logout</a>
         </ul>
     </div>
         </div>

@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,12 +44,12 @@ public class PageController {
 
     private WebClient webClient = WebClient.builder().build();
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String home() {
         return "home";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login() {
         return "auth/login";
     }
@@ -66,6 +65,9 @@ public class PageController {
                         Setting.CLIENT_LOGIN
                 )
         ).retrieve().bodyToMono(ServiceResponse.class).block();
+        		
+        if(serviceResponse == null)
+			return new ModelAndView("error/500-logged-out");
 
         Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
         String username = serviceResponse.getAuthenticationSuccess().getUser();
