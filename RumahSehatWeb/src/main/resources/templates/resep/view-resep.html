@@ -58,7 +58,7 @@
 
         <br>
         <p style="font-weight: bold;">Daftar Obat</p>
-        <table style="margin: 20px;" class="table table-striped">
+        <table style="margin: 20px;" class="table table-striped" id="obat-table">
             <thead style="background-color: #f2bb22">
             <tr>
                 <th scope="col">No</th>
@@ -79,5 +79,10 @@
 </div>
 
 </div>
+<script>
+    $(document).ready(() => {
+        $('#obat-table').DataTable();
+    });
+</script>
 </body>
 </html>
