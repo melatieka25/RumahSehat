@@ -1,7 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:rumah_sehat_mobile/main.dart';
 
 Widget obatTemplate(namaObat, kuantitas, context) {
   return Card(
@@ -22,7 +20,7 @@ Widget obatTemplate(namaObat, kuantitas, context) {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 6.0),
+          const SizedBox(height: 6.0),
           Text(
             "Jumlah: " + kuantitas,
             style: TextStyle(

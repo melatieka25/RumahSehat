@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rumah_sehat_mobile/appointment/model/appointment.dart';
 import 'package:rumah_sehat_mobile/login/login_page.dart';
 import 'package:rumah_sehat_mobile/resep/widget/obat_template.dart';
 import 'dart:async';
 
-import '../../widget/drawer.dart';
 import '../model/resep.dart';
 
 class DetailResepScreen extends StatelessWidget {
@@ -38,16 +36,16 @@ class DetailResepScreen extends StatelessWidget {
           child: Column(children: <Widget>[
             const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 75),
-              child: Row(children: [
-                const Text(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 75),
+              child: Row(children: const [
+                Text(
                   "Detail ",
                   style: TextStyle(
                       fontSize: 30,
                       color: Colors.lightGreen,
                       fontWeight: FontWeight.w700),
                 ),
-                const Text(
+                Text(
                   "Resep",
                   style: TextStyle(
                       fontSize: 30,
@@ -57,20 +55,19 @@ class DetailResepScreen extends StatelessWidget {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 75),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 75),
               child: FutureBuilder<Resep>(
                   future: _fetchData(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasError) {
-                      print("error");
-                      print(snapshot.stackTrace);
+                      return Text('${snapshot.error}');
                     }
                     if (snapshot.hasData) {
                       Resep resep = snapshot.data;
                       return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            SizedBox(height: 6.0),
+                            const SizedBox(height: 6.0),
                             Text(
                               "ID Resep: " + resep.id.toString(),
                               style: TextStyle(
@@ -79,7 +76,7 @@ class DetailResepScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 6.0),
+                            const SizedBox(height: 6.0),
                             Text(
                               "Nama Dokter: " + resep.namaDokter.toString(),
                               style: TextStyle(
@@ -88,7 +85,7 @@ class DetailResepScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 6.0),
+                            const SizedBox(height: 6.0),
                             Text(
                               "Nama Pasien: " + resep.namaPasien.toString(),
                               style: TextStyle(
@@ -97,7 +94,7 @@ class DetailResepScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 15.0),
+                            const SizedBox(height: 15.0),
                             Text(
                               "Status Resep: " +
                                   (resep.isDone ? "Selesai" : "Belum selesai"),
@@ -109,7 +106,7 @@ class DetailResepScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 6.0),
+                            const SizedBox(height: 6.0),
                             if (resep.namaApoteker != "null")
                               Text(
                                 "Nama Apoteker: " +
@@ -120,7 +117,7 @@ class DetailResepScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            SizedBox(height: 30.0),
+                            const SizedBox(height: 30.0),
                             Text(
                               "Daftar Obat",
                               style: TextStyle(
