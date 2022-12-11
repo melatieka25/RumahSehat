@@ -100,7 +100,8 @@ class PasienFormState extends State<PasienForm> {
     Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
 
     final response = await http.post(
-      Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/pasien/new'),
+      //Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/pasien/new'),
+      Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -109,7 +110,8 @@ class PasienFormState extends State<PasienForm> {
 
     final tokenResponse = await http.post(
       Uri.parse(
-          "https://apap-090.cs.ui.ac.id/api/v1/authenticate"),
+          "http://10.0.2.2:8081/api/v1/authenticate"),
+        //"https://apap-090.cs.ui.ac.id/api/v1/authenticate"),
       headers: <String, String>{
         "Content-Type": "application/json;charset=UTF-8",
       },
