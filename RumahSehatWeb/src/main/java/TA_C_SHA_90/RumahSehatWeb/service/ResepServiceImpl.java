@@ -50,11 +50,14 @@ public class ResepServiceImpl implements ResepService {
     @Override
     public Boolean confirmResep(ResepModel resep) {
         Integer hargaResep = 0;
-
+		
         for (JumlahModel jumlah : resep.getListJumlah()) {
             if (jumlah.getObat().getStok() < jumlah.getKuantitas()) {
                 return false;
             }
+        }
+
+        for (JumlahModel jumlah : resep.getListJumlah()) {
             ObatModel obat = jumlah.getObat();
             hargaResep += obat.getHarga() * jumlah.getKuantitas();
             obat.setStok(obat.getStok() - jumlah.getKuantitas());
