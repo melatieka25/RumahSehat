@@ -13,11 +13,12 @@ public class AppointmentGenerator implements IdentifierGenerator {
     @Override
     public Serializable generate(
             SharedSessionContractImplementor session, Object object)
-        throws HibernateException {
+            throws HibernateException {
         String prefix = "APT-";
         String suffix = "";
-        try(Connection connection = session.connection();
-            Statement statement = connection.createStatement()) {
+        try {
+			Connection connection = session.connection();
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select count(kode) from appointment");
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1) + 1;
