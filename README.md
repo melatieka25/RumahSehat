@@ -72,10 +72,7 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 
 **Windows:**
 ```
-.\gradlew.bat sonarqube \
-  -D "sonar.projectKey=melati.eka_ta_c_sha_90_AYUApPQ8WK4E6S_2LNIo" \
-  -D "sonar.host.url=https://sonarqube.cs.ui.ac.id" \
-  -D "sonar.login=454e39959b5a22373641518beb26cd80151b8a93"
+.\gradlew.bat sonarqube -D "sonar.projectKey=melati.eka_ta_c_sha_90_AYUApPQ8WK4E6S_2LNIo" -D "sonar.host.url=https://sonarqube.cs.ui.ac.id" -D "sonar.login=454e39959b5a22373641518beb26cd80151b8a93"
 ```
 
 ## Kontrak
@@ -131,7 +128,7 @@ Mengembalikan suatu pasien berdasarkan UUID.
     "email": "pasien@satu.com",
     "saldo": 1337420,
     "umur": 42,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -154,7 +151,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@satu.com",
         "saldo": 1337420,
         "umur": 42,
-		"isSso": false,
+        "isSso": false,
         "listAppointment": []
     },
     {
@@ -166,7 +163,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@tiga.com",
         "saldo": 8213892,
         "umur": 16,
-		"isSso": false,
+        "isSso": false,
         "listAppointment": []
     }
 ]
@@ -188,7 +185,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -204,7 +201,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -236,7 +233,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -252,7 +249,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```

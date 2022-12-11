@@ -27,7 +27,7 @@ public class TagihanRestController {
     private TagihanRestService tagihanRestService;
 
     @GetMapping(value = "/tagihan/{username}")
-    private ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
+    public ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
         log.info("Received request at retrieve tagihan endpoint for user " + username);
         
         if(!username.equals(authentication.getName())) {
