@@ -110,18 +110,17 @@ public class PasienRestController {
 		}
 	}
 	@GetMapping(value = "/pasien/profil/{username}")
-	private ResponseEntity getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
+	private ResponseEntity retrieveProfil(Authentication authentication, @PathVariable("username") String username) {
 		log.info("Received request at profil pasien endpoint");
 		if(!username.equals(authentication.getName())) {
 			log.warn("Authentication error occurred");
 			return ResponseEntity.status(401).build();
 		}
 		try {
-			log.info("Received request at profil pasien endpoint");
 			PasienModel pasien = pasienRestService.getPasienByUsername(username);
 			return ResponseEntity.ok(pasien);
 		} catch (NoSuchElementException e) {
-			log.warn("Failed to update pasien saldo, username not found: " + username);
+			log.warn("Failed to fetch user profile, username not found: " + username);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
 		}
 	}

@@ -91,6 +91,8 @@ public class TagihanServiceImpl implements TagihanService{
 			Integer tagihanDay = tagihan.getTanggalTerbuat().getDayOfMonth() - 1;
 			Integer umur = tagihan.getAppointment().getPasien().getUmur();
 			
+			System.out.println("UMUR: " + umur);
+			
 			List<Integer> ageCohortList;
 			
 			if(umur <= 15)

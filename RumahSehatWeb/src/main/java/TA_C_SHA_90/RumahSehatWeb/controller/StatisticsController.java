@@ -58,9 +58,6 @@ public class StatisticsController {
 			for(int singularRange : ageRange)
 				labels[labelsIndex++] = ageRangeLabels[singularRange];
 			
-			System.out.println(Arrays.toString(labels));
-			System.out.println(data);
-			
 			model.addAttribute("labels", labels);
 			model.addAttribute("data", data);
 			model.addAttribute("dataSource", dataSource);
