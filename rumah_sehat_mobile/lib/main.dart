@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
 import 'package:rumah_sehat_mobile/widget/drawer.dart';
+// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'login/login_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    if (LoginPage.username == ""){
+    if (LoginPage.username == "") {
       return LoginPage();
     } else {
       return Scaffold(
@@ -63,12 +63,12 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Halo ' + LoginPage.username  +  '! Selamat datang di RumahSehat!',
+                'Halo ' +
+                    LoginPage.username +
+                    '! Selamat datang di RumahSehat!',
               ),
-              const SizedBox(height:30),
-              const Text(
-                  'Ketuk drawer untuk menjelajahi aplikasi '
-              ),
+              const SizedBox(height: 30),
+              const Text('Ketuk drawer untuk menjelajahi aplikasi'),
             ],
           ),
         ),

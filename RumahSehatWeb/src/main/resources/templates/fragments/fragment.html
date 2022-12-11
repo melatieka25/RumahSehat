@@ -39,18 +39,16 @@
     </button>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav navbar-right">
-            <a class="nav-item nav-link" th:if="${onevar != 'logged-out'}" th:classappend="${onevar == 'beranda'} ? active : ''" th:href="@{/}">
-                Beranda
-            </a>
-            <a sec:authorize="hasRole('Admin')"  class="nav-item nav-link" th:classappend="${onevar == 'dokter'} ? active : ''" th:href="@{/dokter}">
-                Dokter
-            </a>
-            <a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'apoteker'} ? active : ''" th:href="@{/apoteker}">
-                Apoteker
-            </a>
-            <a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'pasien'} ? active : ''" th:href="@{/pasien}">
-                Pasien
-            </a>
+            <li class="nav-item dropdown">
+                <a sec:authorize="hasRole('Admin')" class="nav-link dropdown-toggle" th:classappend="${onevar == 'add new user'} ? active : ''" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    User
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <li><a class="dropdown-item" th:href="@{/dokter}">Dokter</a></li>
+                    <li><a class="dropdown-item" th:href="@{/apoteker}">Apoteker</a> </li>
+                    <li><a class="dropdown-item" th:href="@{/pasien}">Pasien</a> </li>
+                </ul>
+            </li>
             <a sec:authorize="hasAnyRole('Admin', 'Dokter')" class="nav-item nav-link" th:classappend="${onevar == 'appointment'} ? active : ''" th:href="@{/appointment}">
                 Appointment
             </a>

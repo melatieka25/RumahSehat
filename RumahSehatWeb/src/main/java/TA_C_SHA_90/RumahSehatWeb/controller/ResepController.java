@@ -32,12 +32,12 @@ public class ResepController {
 
     @Autowired
     private AppointmentService appointmentService;
-	
+    
     @GetMapping("/create-resep")
     public String addResepFormPage(@RequestParam(value = "kodeApp", required = false) String kodeApp, Model model) {
-		if(kodeApp == null)
-			return "error/500";
-		
+        if(kodeApp == null)
+            return "error/500";
+        
         ResepModel resep = new ResepModel();
         List<ObatModel> listObat = obatService.getListObat();
         List<JumlahModel> listJumlah = new ArrayList<>();
@@ -89,12 +89,12 @@ public class ResepController {
             redirectAttrs.addFlashAttribute("error", "Resep harus terasosiasi dengan satu appointment.");
             return "redirect:/resep/create-resep";
         }
-		
-		List<JumlahModel> listJumlah = resep.getListJumlah();
+        
+        List<JumlahModel> listJumlah = resep.getListJumlah();
         AppointmentModel appointment = appointmentService.getDetailAppointment(kodeApp);
 
-		if(appointment.getResep() != null)
-			return "error/401";
+        if(appointment.getResep() != null)
+            return "error/401";
 
         if (listJumlah == null) {
             redirectAttrs.addFlashAttribute("error", "Resep harus memiliki setidaknya 1 obat.");
@@ -141,6 +141,7 @@ public class ResepController {
     @GetMapping("/confirm")
     public String confirmResep(@RequestParam(value = "id") Long id, Model model, RedirectAttributes redirectAttrs) {
         ResepModel resep = resepService.getResepById(id);
+        if (resep.getIsDone()) return "redirect:/resep/detail?id=" + id;
 
         Boolean confirmed = resepService.confirmResep(resep);
 

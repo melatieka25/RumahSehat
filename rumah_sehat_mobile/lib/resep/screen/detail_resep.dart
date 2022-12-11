@@ -13,12 +13,10 @@ class DetailResepScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final id_resep = ModalRoute.of(context)!.settings.arguments as int;
+    final idResep = ModalRoute.of(context)!.settings.arguments as int;
     Future<Resep> _fetchData() async {
-      var url =
-          Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/resep/' + id_resep.toString());
-      // TODO HAPUS
-      print(LoginPage.token);
+      var url = Uri.parse(
+          'https://apap-090.cs.ui.ac.id/api/v1/resep/' + idResep.toString());
       var response = await http.get(url, headers: {
         "Access-Control_Allow_Origin": "*",
         HttpHeaders.authorizationHeader: "Bearer " + LoginPage.token
@@ -29,7 +27,7 @@ class DetailResepScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("RumahSehat"),
+          title: const Text("RumahSehat"),
           backgroundColor: Colors.blueGrey,
         ),
         body: SingleChildScrollView(
