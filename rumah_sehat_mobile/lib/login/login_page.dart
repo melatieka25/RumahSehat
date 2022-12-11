@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Doesn't have an Account?"),
+                  Text("Doesn't have an account? "),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(

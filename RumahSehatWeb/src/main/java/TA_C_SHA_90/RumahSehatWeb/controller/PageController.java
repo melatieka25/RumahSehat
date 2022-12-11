@@ -66,6 +66,9 @@ public class PageController {
                         Setting.CLIENT_LOGIN
                 )
         ).retrieve().bodyToMono(ServiceResponse.class).block();
+        		
+        if(serviceResponse == null)
+			return new ModelAndView("error/500-logged-out");
 
         Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
         String username = serviceResponse.getAuthenticationSuccess().getUser();
