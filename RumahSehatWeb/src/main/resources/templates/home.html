@@ -18,8 +18,7 @@
     <br>
     <br>
     <div class="d-flex justify-content-center">
-      <a sec:authorize="hasAnyRole('Admin', 'Dokter')" th:href="@{/appointment}" class="mx-2 btn btn-primary" style="background-color:#258a85" >Jadwal Appointment</a>
-      <a sec:authorize="hasRole('Admin')" th:href="@{/tagihan}" class="mx-2 btn btn-primary" style="background-color:#258a85">Tagihan</a>
+      <a sec:authorize="hasAnyRole('Admin', 'Dokter')" th:href="@{/appointment}" class="mx-2 btn btn-primary" style="background-color:#258a85" >Daftar Appointment</a>
       <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:href="@{/resep}" class="mx-2 btn btn-primary" style="background-color:#258a85">Daftar Resep</a>
       <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:href="@{/obat}" class="mx-2 btn btn-primary" style="background-color:#258a85">Daftar Obat</a>
     </div>

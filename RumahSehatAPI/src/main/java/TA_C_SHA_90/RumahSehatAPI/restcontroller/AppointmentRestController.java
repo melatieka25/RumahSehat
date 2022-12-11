@@ -27,9 +27,9 @@ public class AppointmentRestController {
 
     @PostMapping(value = "/appointment/create")
     private AppointmentModel createAppointment(@Valid @RequestBody createAppointmentModel appointment, BindingResult bindingResult) {
-		log.info("Received request at create new appointment endpoint");
+        log.info("Received request at create new appointment endpoint");
         if (bindingResult.hasFieldErrors()) {
-			log.warn("Failed to create new appointment");
+            log.warn("Failed to create new appointment");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field! ");
         } else {
             return appointmentRestService.createAppointment(appointment);
@@ -38,7 +38,7 @@ public class AppointmentRestController {
 
     @GetMapping(value = "/appointment/{pasien}")
     private Map<String, List> retrieveAllAppointment(@PathVariable String pasien) {
-		log.info("Received request at retrieve appointment endpoint for pasien with username " + pasien);
+        log.info("Received request at retrieve appointment endpoint for pasien with username " + pasien);
         try {
             List<AppointmentModel> listAppointment = appointmentRestService.getAppointmentList(pasien);
             for (int i = 0; i < listAppointment.size(); i++) {
@@ -52,18 +52,18 @@ public class AppointmentRestController {
             jsonMap.put("listAppointment", listAppointment);
             return jsonMap;
         } catch (NoSuchElementException e) {
-			log.warn("Failed to retrieve appointment, pasien username not found: " + pasien);
+            log.warn("Failed to retrieve appointment, pasien username not found: " + pasien);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with Username " + pasien + " not found.");
         }
     }
 
     @GetMapping(value = "/appointment/detail/{kode}")
     private AppointmentModel detailAppointment(@PathVariable("kode") String kode) {
-		log.info("Received request at retrieve appointment details endpoint for appointment with kode " + kode);
+        log.info("Received request at retrieve appointment details endpoint for appointment with kode " + kode);
         try {
             return appointmentRestService.getAppointmentByKode(kode);
         } catch (NoSuchElementException e) {
-			log.warn("Failed to retrieve appointment details, kode not found: " + kode);
+            log.warn("Failed to retrieve appointment details, kode not found: " + kode);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment with Code " + kode + " not found.");
         }
     }

@@ -28,10 +28,10 @@ public class TagihanRestController {
 
     @GetMapping(value = "/tagihan/{username}")
     private ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
-		log.info("Received request at retrieve tagihan endpoint for user " + username);
-		
+        log.info("Received request at retrieve tagihan endpoint for user " + username);
+        
         if(!username.equals(authentication.getName())) {
-			log.warn("Authentication failure occurred.");
+            log.warn("Authentication failure occurred.");
             return ResponseEntity.status(401).build();
         }
         try {

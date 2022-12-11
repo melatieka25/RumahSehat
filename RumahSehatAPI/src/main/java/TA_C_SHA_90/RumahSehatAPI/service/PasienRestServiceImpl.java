@@ -19,77 +19,83 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @Transactional
 public class PasienRestServiceImpl implements PasienRestService {
-	@Autowired
-	private PasienDb pasienDb;
+    @Autowired
+    private PasienDb pasienDb;
 
-	@Autowired
-	private UserDb userDb;
-	
-	@Autowired
-	private JwtUserDetailsService jwtUserDetailsService;
-	
-	@Override
-	public PasienModel getPasienByUuid(String uuid) {
-		Optional<PasienModel> pasien = pasienDb.findByUuid(uuid);
-		if(pasien.isPresent()) {
-			return pasien.get();
-		} else {
-			throw new NoSuchElementException();
-		}
-	}
+    @Autowired
+    private UserDb userDb;
+    
+    @Autowired
+    private JwtUserDetailsService jwtUserDetailsService;
+    
+    @Override
+    public PasienModel getPasienByUuid(String uuid) {
+        Optional<PasienModel> pasien = pasienDb.findByUuid(uuid);
+        if(pasien.isPresent()) {
+            return pasien.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
 
-	@Override
-	public PasienModel getPasienByUsername(String username) {
-		Optional<PasienModel> pasien = pasienDb.findByUsername(username);
-		if(pasien.isPresent()) {
-			return pasien.get();
-		} else {
-			throw new NoSuchElementException();
-		}
-	}
+    @Override
+    public PasienModel getPasienByUsername(String username) {
+        Optional<PasienModel> pasien = pasienDb.findByUsername(username);
+        if(pasien.isPresent()) {
+            return pasien.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
 
-	@Override
-	public List<PasienModel> getPasienList() {
-		return pasienDb.findAll();
-	}
-	
-	@Override
-	public PasienModel createPasien(PasienModel pasien) {
-		UserModel userSameEmail;
-		UserModel userSameUsername;
-		try{
-			userSameEmail = userDb.findByEmail(pasien.getEmail()).get();
-		} catch (NoSuchElementException e){
-			userSameEmail = null;
-		}
+    @Override
+    public List<PasienModel> getPasienList() {
+        return pasienDb.findAll();
+    }
+    
+    @Override
+    public PasienModel createPasien(PasienModel pasien) {
+        UserModel userSameEmail;
+        UserModel userSameUsername;
+        try{
+            userSameEmail = userDb.findByEmail(pasien.getEmail()).get();
+        } catch (NoSuchElementException e){
+            userSameEmail = null;
+        }
 
-		try{
-			userSameUsername = userDb.findByUsername(pasien.getUsername()).get();
-		} catch (NoSuchElementException e){
-			userSameUsername = null;
-		}
+        try{
+            userSameUsername = userDb.findByUsername(pasien.getUsername()).get();
+        } catch (NoSuchElementException e){
+            userSameUsername = null;
+        }
 
-		if (userSameEmail != null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan email yang sama sudah pernah dibuat!");
-		} else if (userSameUsername != null){
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan username yang sama sudah pernah dibuat!");
-		} else {
-			String pass = jwtUserDetailsService.encrypt(pasien.getPassword());
-			pasien.setPassword(pass);
-			return pasienDb.save(pasien);
-		}
-	}
-	
-	@Override
-	public void deletePasien(String uuid) {
-		PasienModel pasien = getPasienByUuid(uuid);
-		pasienDb.delete(pasien);
-	}
-	
-	@Override
-	public PasienModel updatePasien(String uuid, PasienModel updatedPasien) {
-		PasienModel pasien = getPasienByUuid(uuid);
-		pasien.setSaldo(updatedPasien.getSaldo());
-		return pasienDb.save(pasien);
-	}
+        if (userSameEmail != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan email yang sama sudah pernah dibuat!");
+        } else if (userSameUsername != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan username yang sama sudah pernah dibuat!");
+        } else {
+            String pass = jwtUserDetailsService.encrypt(pasien.getPassword());
+            pasien.setPassword(pass);
+            return pasienDb.save(pasien);
+        }
+    }
+    
+    @Override
+    public void deletePasien(String uuid) {
+        PasienModel pasien = getPasienByUuid(uuid);
+        pasienDb.delete(pasien);
+    }
+    
+    @Override
+    public PasienModel updatePasien(String uuid, PasienModel updatedPasien) {
+        PasienModel pasien = getPasienByUuid(uuid);
+        pasien.setNama(updatedPasien.getNama());
+        pasien.setRole(updatedPasien.getRole());
+        pasien.setUsername(updatedPasien.getUsername());
+        pasien.setPassword(updatedPasien.getPassword());
+        pasien.setEmail(updatedPasien.getEmail());
+        pasien.setSaldo(updatedPasien.getSaldo());
+        pasien.setUmur(updatedPasien.getUmur());
+        return pasienDb.save(pasien);
+    }
 }

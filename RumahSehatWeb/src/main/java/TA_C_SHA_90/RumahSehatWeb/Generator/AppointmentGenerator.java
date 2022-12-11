@@ -17,7 +17,7 @@ public class AppointmentGenerator implements IdentifierGenerator {
         String prefix = "APT-";
         String suffix = "";
         try {
-			Connection connection = session.connection();
+            Connection connection = session.connection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select count(kode) from appointment");
             if (resultSet.next()) {

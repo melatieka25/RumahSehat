@@ -41,7 +41,7 @@
         <ul class="navbar-nav navbar-right">
             <li class="nav-item dropdown">
                 <a sec:authorize="hasRole('Admin')" class="nav-link dropdown-toggle" th:classappend="${onevar == 'add new user'} ? active : ''" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Add New User
+                    User
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                     <li><a class="dropdown-item" th:href="@{/dokter}">Dokter</a></li>
@@ -49,6 +49,18 @@
                     <li><a class="dropdown-item" th:href="@{/pasien}">Pasien</a> </li>
                 </ul>
             </li>
+            <a sec:authorize="hasAnyRole('Admin', 'Dokter')" class="nav-item nav-link" th:classappend="${onevar == 'appointment'} ? active : ''" th:href="@{/appointment}">
+                Appointment
+            </a>
+            <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" class="nav-item nav-link" th:classappend="${onevar == 'resep'} ? active : ''" th:href="@{/resep}">
+                Resep
+            </a>
+			<a sec:authorize="hasAnyRole('Admin', 'Apoteker')" class="nav-item nav-link" th:classappend="${onevar == 'obat'} ? active : ''" th:href="@{/obat}">
+                Obat
+            </a>
+			<a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'stats'} ? active : ''" th:href="@{/statistics}">
+                Statistik
+            </a>
         </ul>
         <ul class= "navbar-nav pull-right">
             <a class="nav-item nav-link text-text-secondary" th:if="${onevar == 'logged-out'}" th:href="@{/login}">Login</a>

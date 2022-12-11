@@ -17,7 +17,7 @@ public class TagihanGenerator implements IdentifierGenerator {
         String prefix = "BILL-";
         String suffix = "";
         try {
-			Connection connection = session.connection();
+            Connection connection = session.connection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select count(kode) from tagihan");
             if (resultSet.next()) {
