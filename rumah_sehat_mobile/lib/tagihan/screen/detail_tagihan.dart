@@ -132,7 +132,7 @@ class detailTagihan extends StatelessWidget {
                               onPressed: () async {
                                 final response = await http.get(
                                   Uri.parse(
-                                      "http://10.0.2.2:8081/api/v1/tagihan/" +
+                                      "https://apap-090.cs.ui.ac.id/api/v1/tagihan/" +
                                           LoginPage.username +
                                           "/bayar/" +
                                           tagihan.kode),
