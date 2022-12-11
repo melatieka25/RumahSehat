@@ -100,7 +100,7 @@ class PasienFormState extends State<PasienForm> {
     Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
 
     final response = await http.post(
-      Uri.parse('//apap-090.cs.ui.ac.id/api/v1/pasien/new'),
+      Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/pasien/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -109,7 +109,7 @@ class PasienFormState extends State<PasienForm> {
 
     final tokenResponse = await http.post(
       Uri.parse(
-          "//apap-090.cs.ui.ac.id/api/v1/authenticate"),
+          "https://apap-090.cs.ui.ac.id/api/v1/authenticate"),
       headers: <String, String>{
         "Content-Type": "application/json;charset=UTF-8",
       },
@@ -144,8 +144,9 @@ class PasienFormState extends State<PasienForm> {
 
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
-      // If the server did not return a 201 CREATED response,
+      // If the server did not return a 200 CREATED response,
       // then throw an exception.
+      print(response.body);
       _showDialog(context, response.statusCode, response.body);
       throw Exception('Pembuatan akun gagal');
     }
