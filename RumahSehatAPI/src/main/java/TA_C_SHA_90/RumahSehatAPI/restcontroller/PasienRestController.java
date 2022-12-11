@@ -51,21 +51,6 @@ public class PasienRestController {
 		log.info("Received request at retrieve all pasien endpoint");
 		return pasienRestService.getPasienList();
 	}
-
-	// Retrieve all user email
-	@GetMapping(value = "/user/email")
-	private List<String> retrieveAllUserEmail() {
-		log.info("Received request at retrieve all pasien emails endpoint");
-		return pasienRestService.getUserEmailList();
-	}
-
-
-	// Retrieve all user email
-	@GetMapping(value = "/user/username")
-	private List<String> retrieveAllUserUsername() {
-		log.info("Received request at retrieve all pasien usernames endpoint");
-		return pasienRestService.getUserUsernameList();
-	}
 	
 	// Post 
 	@PostMapping(value = "/pasien/new")
