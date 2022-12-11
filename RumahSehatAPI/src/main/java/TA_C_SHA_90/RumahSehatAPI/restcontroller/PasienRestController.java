@@ -51,21 +51,6 @@ public class PasienRestController {
 		log.info("Received request at retrieve all pasien endpoint");
 		return pasienRestService.getPasienList();
 	}
-
-	// Retrieve all user email
-	@GetMapping(value = "/user/email")
-	private List<String> retrieveAllUserEmail() {
-		log.info("Received request at retrieve all pasien emails endpoint");
-		return pasienRestService.getUserEmailList();
-	}
-
-
-	// Retrieve all user email
-	@GetMapping(value = "/user/username")
-	private List<String> retrieveAllUserUsername() {
-		log.info("Received request at retrieve all pasien usernames endpoint");
-		return pasienRestService.getUserUsernameList();
-	}
 	
 	// Post 
 	@PostMapping(value = "/pasien/new")
@@ -125,11 +110,26 @@ public class PasienRestController {
 		}
 	}
 	@GetMapping(value = "/pasien/profil/{username}")
+<<<<<<< RumahSehatAPI/src/main/java/TA_C_SHA_90/RumahSehatAPI/restcontroller/PasienRestController.java
+	private ResponseEntity getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
+		log.info("Received request at profil pasien endpoint");
+		if(!username.equals(authentication.getName())) {
+			log.warn("Authentication error occurred");
+			return ResponseEntity.status(401).build();
+		}
+		try {
+			log.info("Received request at profil pasien endpoint");
+			PasienModel pasien = pasienRestService.getPasienByUsername(username);
+			return ResponseEntity.ok(pasien);
+		} catch (NoSuchElementException e) {
+			log.warn("Failed to update pasien saldo, username not found: " + username);
+=======
 	private PasienModel getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
 		try {
 			PasienModel pasien = pasienRestService.getPasienByUsername(username);
 			return pasien;
 		} catch (NoSuchElementException e) {
+>>>>>>> RumahSehatAPI/src/main/java/TA_C_SHA_90/RumahSehatAPI/restcontroller/PasienRestController.java
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
 		}
 	}

@@ -24,7 +24,7 @@ class profilPasienState extends State<profilPasien> {
 
   Future<Pasien> _fetchData() async {
     var url = Uri.parse(
-        'http://10.0.2.2:8081/api/v1/pasien/profil/' + LoginPage.username);
+        'https://apap-090.cs.ui.ac.id/api/v1/pasien/profil/' + LoginPage.username);
     var response =
     await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
     print(response.body);

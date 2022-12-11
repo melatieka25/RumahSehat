@@ -9,10 +9,12 @@ import javax.transaction.Transactional;
 import TA_C_SHA_90.RumahSehatAPI.model.UserModel;
 import TA_C_SHA_90.RumahSehatAPI.repository.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import TA_C_SHA_90.RumahSehatAPI.model.PasienModel;
 import TA_C_SHA_90.RumahSehatAPI.repository.PasienDb;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
@@ -53,9 +55,29 @@ public class PasienRestServiceImpl implements PasienRestService {
 	
 	@Override
 	public PasienModel createPasien(PasienModel pasien) {
-		String pass = jwtUserDetailsService.encrypt(pasien.getPassword());
-		pasien.setPassword(pass);
-		return pasienDb.save(pasien);
+		UserModel userSameEmail;
+		UserModel userSameUsername;
+		try{
+			userSameEmail = userDb.findByEmail(pasien.getEmail()).get();
+		} catch (NoSuchElementException e){
+			userSameEmail = null;
+		}
+
+		try{
+			userSameUsername = userDb.findByUsername(pasien.getUsername()).get();
+		} catch (NoSuchElementException e){
+			userSameUsername = null;
+		}
+
+		if (userSameEmail != null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan email yang sama sudah pernah dibuat!");
+		} else if (userSameUsername != null){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan username yang sama sudah pernah dibuat!");
+		} else {
+			String pass = jwtUserDetailsService.encrypt(pasien.getPassword());
+			pasien.setPassword(pass);
+			return pasienDb.save(pasien);
+		}
 	}
 	
 	@Override
@@ -69,25 +91,5 @@ public class PasienRestServiceImpl implements PasienRestService {
 		PasienModel pasien = getPasienByUuid(uuid);
 		pasien.setSaldo(updatedPasien.getSaldo());
 		return pasienDb.save(pasien);
-	}
-
-	@Override
-	public List<String> getUserEmailList() {
-		List<String> listEmail = new ArrayList<>();
-		List<UserModel> listUser = userDb.findAll();
-		for (UserModel user : listUser){
-			listEmail.add(user.getEmail());
-		}
-		return listEmail;
-	}
-
-	@Override
-	public List<String> getUserUsernameList() {
-		List<String> listUsername = new ArrayList<>();
-		List<UserModel> listUser = userDb.findAll();
-		for (UserModel user : listUser){
-			listUsername.add(user.getUsername());
-		}
-		return listUsername;
 	}
 }

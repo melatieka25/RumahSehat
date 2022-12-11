@@ -12,8 +12,4 @@ public interface PasienRestService {
 	PasienModel createPasien(PasienModel pasien);
 	void deletePasien(String uuid);
 	PasienModel updatePasien(String uuid, PasienModel updatedPasien);
-
-	List<String> getUserEmailList();
-
-	List<String> getUserUsernameList();
 }
