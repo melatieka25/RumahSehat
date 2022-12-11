@@ -47,6 +47,7 @@ public class TagihanRestController {
             jsonMap.put("listTagihan", listTagihan);
             return ResponseEntity.ok(jsonMap);
         } catch(NoSuchElementException e) {
+            log.warn("Failed to retrieve tagihan, pasien username not found: " + username);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
         }
 
@@ -68,6 +69,7 @@ public class TagihanRestController {
             jsonMap.put("statusPembayaran", status);
             return ResponseEntity.ok(jsonMap);
         } catch(NoSuchElementException e) {
+            log.warn("Failed to update tagihan, tagihan code not found: " + kode);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tagihan with code " + kode + " not found.");
         }
 

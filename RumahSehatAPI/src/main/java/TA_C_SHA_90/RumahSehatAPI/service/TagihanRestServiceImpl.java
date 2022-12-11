@@ -30,6 +30,7 @@ public class TagihanRestServiceImpl implements TagihanRestService {
 
     @Override
     public Boolean payTagihan(TagihanModel tagihan, PasienModel pasien) {
+        if (tagihan.getIsPaid()) return false;
         if (pasien.getSaldo() >= tagihan.getJumlahTagihan()) {
             tagihan.setIsPaid(true);
 
@@ -38,8 +39,7 @@ public class TagihanRestServiceImpl implements TagihanRestService {
 
             pasien.setSaldo(pasien.getSaldo() - tagihan.getJumlahTagihan());
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
