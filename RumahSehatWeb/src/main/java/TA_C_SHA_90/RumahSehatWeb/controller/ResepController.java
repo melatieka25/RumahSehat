@@ -64,8 +64,7 @@ public class ResepController {
     }
 
     @PostMapping(value = "/create-resep", params = { "deleteRow" })
-    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRow") Integer row, @RequestParam(value = "kodeApp") String kodeApp, Model model) {
-        final Integer rowId = Integer.valueOf(row);
+    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRow") Integer rowId, @RequestParam(value = "kodeApp") String kodeApp, Model model) {
         resep.getListJumlah().remove(rowId.intValue());
 
         List<JumlahModel> listJumlah = jumlahService.getListJumlah();
