@@ -57,17 +57,18 @@ public class PasienRestServiceImpl implements PasienRestService {
     public PasienModel createPasien(PasienModel pasien) {
         UserModel userSameEmail;
         UserModel userSameUsername;
-        try{
-            userSameEmail = userDb.findByEmail(pasien.getEmail()).get();
-        } catch (NoSuchElementException e){
+        
+        Optional<UserModel> userSameEmailOptional = userDb.findByEmail(pasien.getEmail());
+        if(userSameEmailOptional.isPresent())
+            userSameEmail = userSameEmailOptional.get();
+        else
             userSameEmail = null;
-        }
-
-        try{
-            userSameUsername = userDb.findByUsername(pasien.getUsername()).get();
-        } catch (NoSuchElementException e){
+        
+        Optional<UserModel> userSameUsernameOptional = userDb.findByUsername(pasien.getUsername());
+        if(userSameUsernameOptional.isPresent())
+            userSameUsername = userSameUsernameOptional.get();
+        else
             userSameUsername = null;
-        }
 
         if (userSameEmail != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Akun dengan email yang sama sudah pernah dibuat!");

@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
