@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
@@ -39,6 +40,7 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
         PasienModel pasien = pasienRestService.getPasienByUsername(appointment.getPasien());
         DokterModel dokter = dokterRestService.getDokterByUuid(appointment.getDokter());
         if (appointmentDb.getAllAppointmentWithinInterval(dateTimeStart, dateTimeFinish, appointment.getDokter()).size() > 0) {
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Jadwal bentrok");
         }
         AppointmentModel newAppointment = new AppointmentModel(null, dateTime, false, null, null, pasien, dokter, dokter.getNama(), pasien.getNama());
