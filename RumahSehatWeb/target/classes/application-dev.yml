@@ -3,11 +3,11 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
     # sesuaikan nama database anda dengan di bawah ini
-    url: jdbc:mysql://db:3306/tkapap?useSSL=false&serverTimezone=Asia/Jakarta
+    url: jdbc:mysql://localhost:3306/tkapap?useSSL=false&serverTimezone=Asia/Jakarta
 
     # sesuaikan dengan NAMA dan PASSWORD anda dengan username password di bawah ini
-    username: apap90_user
-    password: apap90_pass
+    username: root
+    password: 
 
   jpa:
     properties:
@@ -17,6 +17,8 @@ spring:
 
     # pembuatan database (create || create-drop || validate || update)
     hibernate.ddl-auto: update
+
+    show-sql: true
 
   main:
     allow-circular-references: true
@@ -31,4 +33,6 @@ spring:
   web:
     resources:
       static-locations: file:src/main/resources/static/
-      
+
+  jwt:
+    secret: javainuse

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <title>List Appointment</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'appointment'})"></nav>
+<div class="container" style="width:75%; padding-top:50px;">
+  <div class="justify-content-center">
+    <div style="margin: auto; padding-top: 10px; width: 80%; padding: 20px; text-align: center">
+      <h2 style="font-weight: bold; padding-top: 10px;" >List Appointment</h2>
+      <br>
+    </div>
+    <table style="margin: 20px;" class="table table-striped">
+      <thead style="background-color: #f2bb22">
+      <tr>
+        <th scope="col">No</th>
+        <th sec:authorize="hasRole('Admin')" scope="col">Nama Dokter</th>
+        <th scope="col">Nama Pasien</th>
+        <th scope="col">Waktu Awal Appointment</th>
+        <th scope="col">Status Appointment</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="appointment, iterationStatus : ${listAppointment}">
+        <th scope="row" th:text="${iterationStatus.count}"></th>
+        <td sec:authorize="hasRole('Admin')" th:text="${appointment.dokter.nama}"></td>
+        <td th:text="${appointment.pasien.nama}"></td>
+        <td th:text="${listDateTime[__${iterationStatus.index}__]}"></td>
+        <td th:if="${appointment.isDone}">Selesai</td>
+        <td th:unless="${appointment.isDone}">Belum Selesai</td>
+        <td class="align-content-center">
+          <a class="btn btn-primary align-content-center" th:href="@{/appointment/detail/} + ${appointment.kode}">Detail</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <br>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

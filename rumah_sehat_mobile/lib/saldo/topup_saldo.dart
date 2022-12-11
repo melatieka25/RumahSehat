@@ -19,13 +19,10 @@ class TopupSaldoPage extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.lightBlue[800],
-
           fontFamily: 'Fredoka One',
-
           textTheme: const TextTheme(
             headline6: TextStyle(fontSize: 24.0),
-          )
-      ),
+          )),
       home: Scaffold(
         body: Container(
           child: MyCardWidget(),
@@ -34,6 +31,7 @@ class TopupSaldoPage extends StatelessWidget {
     );
   }
 }
+
 class MyCardWidget extends StatefulWidget {
   const MyCardWidget({Key? key}) : super(key: key);
 
@@ -64,104 +62,114 @@ class MyCardWidgetState extends State<MyCardWidget> {
         backgroundColor: Colors.white,
         //https://api.flutter.dev/flutter/material/FloatingActionButton-class.html
         drawer: const MyDrawer(),
-        body: Column(
-            children: <Widget>[
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                      Text( "Topup Saldo", style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.lightGreen,
-                          fontWeight: FontWeight.w700),
-                      ),
-                  ],
+        body: Column(children: <Widget>[
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "Topup Saldo",
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.lightGreen,
+                      fontWeight: FontWeight.w700),
                 ),
+              ],
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+            child: TextField(
+              controller: textController,
+              decoration: const InputDecoration(
+                labelText: "Jumlah (Rp)",
+                hintText: 'Jumlah yang ingin ditop-up',
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
-                child: TextField(
-                  controller: textController,
-                  decoration: const InputDecoration(
-                    labelText: "Jumlah (Rp)",
-                    hintText: 'Jumlah yang ingin ditop-up',
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+            ),
+          ),
+          OutlinedButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.blue,
+              disabledForegroundColor: Colors.red,
+            ),
+            onPressed: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext _context) => AlertDialog(
+                title: const Text('Konfirmasi Topup'),
+                content: Text(
+                    'Apakah Anda yakin akan melakukan topup sebesar Rp' +
+                        textController.text +
+                        '?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(_context),
+                    child: const Text('Cancel'),
                   ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                ),
-              ),
-              OutlinedButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.blue,
-                  disabledForegroundColor: Colors.red,
-                ),
-                onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext _context) => AlertDialog(
-                    title: const Text('Konfirmasi Topup'),
-                    content: Text('Apakah Anda yakin akan melakukan topup sebesar Rp' + textController.text + '?'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(_context),
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                            print(LoginPage.token);
-                            print(jsonEncode(<String, String>{
-                              'username': LoginPage.username,
-                              'saldo': textController.text,
-                            }));
-                            final response = await http.post(
-                              Uri.parse(
-                                  "https://apap-090.cs.ui.ac.id/api/v1/pasien/saldo"),
-                              headers: <String, String>{
-                                "Content-Type": "application/json;charset=UTF-8",
-                                "Authorization": "Bearer " + LoginPage.token,
-                              },
-                              body: jsonEncode(<String, String>{
-                                'username': LoginPage.username,
-                                'saldo': textController.text,
-                              }),
-                            );
-                            if (response.statusCode == 200) {
-                              Navigator.pop(_context);
-                              showDialog<String>(
-                                context: context,
-                                builder: (BuildContext _context) => AlertDialog(
-                                  title: const Text('Konfirmasi Topup'),
-                                  content: Text('Saldo telah berhasil ditop-up sebesar Rp' + textController.text + ''),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () async {
-                                        Navigator.pop(_context);
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat')));
-                            } else {
-                              Navigator.pop(_context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Terjadi masalah dalam proses update saldo.")));
-                            }
+                  TextButton(
+                    onPressed: () async {
+                      print(LoginPage.token);
+                      print(jsonEncode(<String, String>{
+                        'username': LoginPage.username,
+                        'saldo': textController.text,
+                      }));
+                      final response = await http.post(
+                        Uri.parse(
+                            "https://apap-090.cs.ui.ac.id/api/v1/pasien/saldo"),
+                        headers: <String, String>{
+                          "Content-Type": "application/json;charset=UTF-8",
+                          "Authorization": "Bearer " + LoginPage.token,
                         },
-                        child: const Text('OK'),
-                      ),
-                    ],
+                        body: jsonEncode(<String, String>{
+                          'username': LoginPage.username,
+                          'saldo': textController.text,
+                        }),
+                      );
+                      if (response.statusCode == 200) {
+                        Navigator.pop(_context);
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext _context) => AlertDialog(
+                            title: const Text('Konfirmasi Topup'),
+                            content: Text(
+                                'Saldo telah berhasil ditop-up sebesar Rp' +
+                                    textController.text +
+                                    ''),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.pop(_context);
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const HomePage(title: 'RumahSehat')));
+                      } else {
+                        Navigator.pop(_context);
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                "Terjadi masalah dalam proses update saldo.")));
+                      }
+                    },
+                    child: const Text('OK'),
                   ),
-                ),
-                child: Text('Topup'),
+                ],
               ),
-            ]
-        )
-    );
+            ),
+            child: Text('Topup'),
+          ),
+        ]));
   }
 }
