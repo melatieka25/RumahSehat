@@ -45,12 +45,12 @@ public class PageController {
 
     private WebClient webClient = WebClient.builder().build();
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String home() {
         return "home";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login() {
         return "auth/login";
     }
