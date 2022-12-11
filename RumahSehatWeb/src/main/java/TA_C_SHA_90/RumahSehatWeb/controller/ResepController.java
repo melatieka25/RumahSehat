@@ -5,12 +5,14 @@ import TA_C_SHA_90.RumahSehatWeb.service.AppointmentService;
 import TA_C_SHA_90.RumahSehatWeb.service.JumlahService;
 import TA_C_SHA_90.RumahSehatWeb.service.ObatService;
 import TA_C_SHA_90.RumahSehatWeb.service.ResepService;
+import TA_C_SHA_90.RumahSehatWeb.service.DokterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.Authentication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +32,12 @@ public class ResepController {
 
     @Autowired
     private AppointmentService appointmentService;
-
+	
     @GetMapping("/create-resep")
-    public String addResepFormPage(@RequestParam(value = "kodeApp") String kodeApp, Model model) {
+    public String addResepFormPage(@RequestParam(value = "kodeApp", required = false) String kodeApp, Model model) {
+		if(kodeApp == null)
+			return "error/500";
+		
         ResepModel resep = new ResepModel();
         List<ObatModel> listObat = obatService.getListObat();
         List<JumlahModel> listJumlah = new ArrayList<>();
@@ -79,9 +84,17 @@ public class ResepController {
     }
 
     @PostMapping(value = "/create-resep", params = { "save" })
-    public String addResepSubmitPage(@ModelAttribute ResepModel resep, @RequestParam(value = "kodeApp") String kodeApp, Model model, RedirectAttributes redirectAttrs) {
-        List<JumlahModel> listJumlah = resep.getListJumlah();
+    public String addResepSubmitPage(@ModelAttribute ResepModel resep, @RequestParam(value = "kodeApp", required = false) String kodeApp, Model model, RedirectAttributes redirectAttrs) {
+        if (kodeApp == null) {
+            redirectAttrs.addFlashAttribute("error", "Resep harus terasosiasi dengan satu appointment.");
+            return "redirect:/resep/create-resep";
+        }
+		
+		List<JumlahModel> listJumlah = resep.getListJumlah();
         AppointmentModel appointment = appointmentService.getDetailAppointment(kodeApp);
+
+		if(appointment.getResep() != null)
+			return "error/401";
 
         if (listJumlah == null) {
             redirectAttrs.addFlashAttribute("error", "Resep harus memiliki setidaknya 1 obat.");
