@@ -16,9 +16,9 @@ public class TagihanGenerator implements IdentifierGenerator {
             throws HibernateException {
         String prefix = "BILL-";
         String suffix = "";
-        try {
-			Connection connection = session.connection();
-            Statement statement = connection.createStatement();
+        Connection connection = session.connection();
+
+        try(Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("select count(kode) from tagihan");
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1) + 1;
@@ -27,6 +27,7 @@ public class TagihanGenerator implements IdentifierGenerator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+		
         return prefix + suffix;
     }
 }

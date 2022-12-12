@@ -72,10 +72,7 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 
 **Windows:**
 ```
-.\gradlew.bat sonarqube \
-  -D "sonar.projectKey=melati.eka_ta_c_sha_90_AYUApPQ8WK4E6S_2LNIo" \
-  -D "sonar.host.url=https://sonarqube.cs.ui.ac.id" \
-  -D "sonar.login=454e39959b5a22373641518beb26cd80151b8a93"
+.\gradlew.bat sonarqube -D "sonar.projectKey=melati.eka_ta_c_sha_90_AYUApPQ8WK4E6S_2LNIo" -D "sonar.host.url=https://sonarqube.cs.ui.ac.id" -D "sonar.login=454e39959b5a22373641518beb26cd80151b8a93"
 ```
 
 ## Kontrak
@@ -84,12 +81,12 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 **Kontrak Tahap 1 Tugas Akhir (Pembagian peran/tanggung jawab)**
 
 | NPM        | Nama Lengkap | Peran/Tanggung Jawab |
-|------------| --- |------------------------------| 
-| 2006597216 | Ardelia Syahira Yudiva | Project Manager              |                       
-| 2006523400 | Melisa Ayu Angelina | Integration  Tester            |                    
-| 1906398894 | Alfred Prasetio | Database (Data Modeling)     |                                              
-| 2006464266 | Melati Eka Putri | Gitlab Master                 |                        
-| 2006597336 | Faris Haidar Zuhdi | DevOps                       |                                               
+|------------| --- |-------------------------------| 
+| 2006597216 | Ardelia Syahira Yudiva | Project Manager |                       
+| 2006523400 | Melisa Ayu Angelina | Integration  Tester |                    
+| 1906398894 | Alfred Prasetio | Database (Data Modeling) |                                              
+| 2006464266 | Melati Eka Putri | Gitlab Master |                        
+| 2006597336 | Faris Haidar Zuhdi | DevOps |                                               
 ---
 **Kontrak Tahap 2 Tugas Akhir**
 
@@ -97,19 +94,19 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 |------------| --- |------------------------------| 
 | 2006597216 | Ardelia Syahira Yudiva | 1, 2, 3 |                       
 | 2006523400 | Melisa Ayu Angelina | 9, 10, 11 |                    
-| 1906398894 | Alfred Prasetio | 6, 7, 8 |                                              |
+| 1906398894 | Alfred Prasetio | 6, 7, 8 |
 | 2006464266 | Melati Eka Putri | 4, 5  |                        
-| 2006597336 | Faris Haidar Zuhdi | 14, 15 |                                               |
+| 2006597336 | Faris Haidar Zuhdi | 12, 13 |
 ---
 **Kontrak Tahap 3 Tugas Akhir**
 
 | NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
 |------------| --- |------------------------------|
-| 2006597216 | Ardelia Syahira Yudiva | 18                           |                       
-| 2006523400 | Melisa Ayu Angelina | 17                           |                    
-| 1906398894 | Alfred Prasetio | 12,13                        |                                              |
-| 2006464266 | Melati Eka Putri | 16                           |                        
-| 2006597336 | Faris Haidar Zuhdi | 21                           |
+| 2006597216 | Ardelia Syahira Yudiva | 18 |                       
+| 2006523400 | Melisa Ayu Angelina | 17, 18 |                    
+| 1906398894 | Alfred Prasetio | 14, 18 |
+| 2006464266 | Melati Eka Putri | 16, 18, 19 |                        
+| 2006597336 | Faris Haidar Zuhdi | 15, 18, 19, 22, 23 |
 
 ## Dokumentasi API RumahSehat
 Base URL: `http://<domain>/api/v1`
@@ -131,7 +128,7 @@ Mengembalikan suatu pasien berdasarkan UUID.
     "email": "pasien@satu.com",
     "saldo": 1337420,
     "umur": 42,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -154,7 +151,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@satu.com",
         "saldo": 1337420,
         "umur": 42,
-		"isSso": false,
+        "isSso": false,
         "listAppointment": []
     },
     {
@@ -166,7 +163,7 @@ Mengembalikan daftar pasien.
         "email": "pasien@tiga.com",
         "saldo": 8213892,
         "umur": 16,
-		"isSso": false,
+        "isSso": false,
         "listAppointment": []
     }
 ]
@@ -188,7 +185,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -204,7 +201,7 @@ Menambahkan suatu pasien baru.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -236,7 +233,7 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
     "listAppointment": []
 }
 ```
@@ -252,7 +249,48 @@ Mengubah *field(s)* dari suatu pasien berdasarkan UUID.
     "email": "pasien@empat.com",
     "saldo": 101010101,
     "umur": 101,
-	"isSso": false,
+    "isSso": false,
+    "listAppointment": []
+}
+```
+
+### updateSaldo
+---
+**Method**: `POST` \
+**Endpoint**: `/pasien/saldo` \
+Mengubah (menambahkan) *saldo* dari suatu pasien berdasarkan *username* pada *request body*. Contoh berikut menambahkan Rp750 ke saldo pasien.
+
+#### Body Params
+```
+{
+    "username": "SeorangPasien",
+    "saldo": 750
+}
+```
+
+#### Success Response
+```
+Saldo for pasien SeorangPasien has been updated successfully
+```
+
+### retrieveProfil
+---
+**Method**: `GET` \
+**Endpoint**: `/pasien/profil/{username}` \
+Mengembalikan profil pasien berdasarkan *username*, tidak seperti `retrievePasien` yang mengambil berdasarkan UUID.
+
+#### Success Response
+```
+{
+    "uuid": "4028b88184956e9001849576ab460002",
+    "nama": "Pasien01",
+    "role": "Role",
+    "username": "pasien.satu",
+    "password": "someHashedPassword",
+    "email": "pasien@satu.com",
+    "saldo": 1337420,
+    "umur": 42,
+    "isSso": false,
     "listAppointment": []
 }
 ```

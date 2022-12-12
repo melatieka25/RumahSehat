@@ -6,7 +6,6 @@ import 'package:rumah_sehat_mobile/saldo/topup_saldo.dart';
 import '../appointment/screen/list_appointment.dart';
 import '../main.dart';
 
-
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
@@ -15,7 +14,6 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -42,7 +40,10 @@ class _MyDrawerState extends State<MyDrawer> {
             title: Text('Home'),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const HomePage(title: 'RumahSehat')));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const HomePage(title: 'RumahSehat')));
               // Navigator.of(context).pushNamed(
               //   '/',
               // );
@@ -54,8 +55,10 @@ class _MyDrawerState extends State<MyDrawer> {
             // selected: _selectedDestination == 1,
             // onTap: () => selectDestination(1),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ListAppointment())),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ListAppointment())),
             },
           ),
           ListTile(
@@ -64,8 +67,10 @@ class _MyDrawerState extends State<MyDrawer> {
             // selected: _selectedDestination == 1,
             // onTap: () => selectDestination(1),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const profilPasien())),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const profilPasien())),
             },
           ),
           ListTile(
@@ -74,8 +79,10 @@ class _MyDrawerState extends State<MyDrawer> {
             // selected: _selectedDestination == 1,
             // onTap: () => selectDestination(1),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TopupSaldoPage())),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const TopupSaldoPage())),
             },
           ),
           ListTile(
@@ -84,8 +91,10 @@ class _MyDrawerState extends State<MyDrawer> {
             // selected: _selectedDestination == 1,
             // onTap: () => selectDestination(1),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TagihanListScreen())),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const TagihanListScreen())),
             },
           ),
           ListTile(
@@ -95,14 +104,12 @@ class _MyDrawerState extends State<MyDrawer> {
               if (LoginPage.roles != '') {
                 setState(() {
                   LoginPage.roles = "";
-                  LoginPage.username =  "";
-                  LoginPage.token =  "";
+                  LoginPage.username = "";
+                  LoginPage.token = "";
                 });
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const LoginPage()),
-                        (route) => false);
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    (route) => false);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Anda berhasil Logout')));

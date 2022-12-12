@@ -31,9 +31,9 @@
                 <td th:text="${obat.nama}"></td>
                 <td th:text="${obat.harga}"></td>
                 <td th:text="${obat.stok}"></td>
-				<td sec:authorize="hasRole('Apoteker')">
-					<a class="btn btn-primary my-1" th:href="@{/obat/stok(id=${obat.id})}">Update Stok</a>
-				</td>
+                <td sec:authorize="hasRole('Apoteker')">
+                    <a class="btn btn-primary my-1" th:href="@{/obat/stok(id=${obat.id})}">Update Stok</a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -42,9 +42,9 @@
 </div>
 
 <script>
-	$(document).ready(() => {
-		$('#obat-table').DataTable();
-	});
+    $(document).ready(() => {
+        $('#obat-table').DataTable();
+    });
 </script>
 
 </body>

@@ -1,8 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:rumah_sehat_mobile/appointment/model/appointment.dart';
 
-// ignore: non_constant_identifier_names
 AllTagihan AllTagihanFromJson(String str) =>
     AllTagihan.fromJson(json.decode(str));
 

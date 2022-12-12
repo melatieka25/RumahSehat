@@ -65,9 +65,9 @@ public class PageController {
                         Setting.CLIENT_LOGIN
                 )
         ).retrieve().bodyToMono(ServiceResponse.class).block();
-        		
+                
         if(serviceResponse == null)
-			return new ModelAndView("error/500-logged-out");
+            return new ModelAndView("error/500-logged-out");
 
         Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
         String username = serviceResponse.getAuthenticationSuccess().getUser();
@@ -83,9 +83,9 @@ public class PageController {
             return new ModelAndView("redirect:/login");
         }
 
-		AdminModel admin;
-		
-		if (userService.getUserByUsername(username) == null){
+        AdminModel admin;
+        
+        if (userService.getUserByUsername(username) == null){
             admin = new AdminModel();
             admin.setEmail(username + "@ui.ac.id");
             admin.setNama(attributes.getNama());
@@ -95,7 +95,7 @@ public class PageController {
             admin.setRole("Admin");
             adminService.addAdmin(admin);
         }
-		
+        
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, "tkapap");
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);

@@ -27,11 +27,11 @@ public class TagihanRestController {
     private TagihanRestService tagihanRestService;
 
     @GetMapping(value = "/tagihan/{username}")
-    private ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
-		log.info("Received request at retrieve tagihan endpoint for user " + username);
-		
+    public ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
+        log.info("Received request at retrieve tagihan endpoint for user " + username);
+        
         if(!username.equals(authentication.getName())) {
-			log.warn("Authentication failure occurred.");
+            log.warn("Authentication failure occurred.");
             return ResponseEntity.status(401).build();
         }
         try {
@@ -47,6 +47,7 @@ public class TagihanRestController {
             jsonMap.put("listTagihan", listTagihan);
             return ResponseEntity.ok(jsonMap);
         } catch(NoSuchElementException e) {
+            log.warn("Failed to retrieve tagihan, pasien username not found: " + username);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
         }
 
@@ -68,6 +69,7 @@ public class TagihanRestController {
             jsonMap.put("statusPembayaran", status);
             return ResponseEntity.ok(jsonMap);
         } catch(NoSuchElementException e) {
+            log.warn("Failed to update tagihan, tagihan code not found: " + kode);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tagihan with code " + kode + " not found.");
         }
 

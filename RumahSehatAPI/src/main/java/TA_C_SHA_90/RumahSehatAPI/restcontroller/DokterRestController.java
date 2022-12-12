@@ -20,7 +20,7 @@ public class DokterRestController {
 
     @GetMapping("/dokter")
     private List<DokterModel> getAllDokter() { 
-		log.info("Received request at retrieve all dokters endpoint");
-		return dokterRestService.getAllDokter();
-	}
+        log.info("Received request at retrieve all dokters endpoint");
+        return dokterRestService.getAllDokter();
+    }
 }
