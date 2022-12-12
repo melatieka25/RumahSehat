@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:rumah_sehat_mobile/profil/screen/profil_pasien.dart';
 import 'package:rumah_sehat_mobile/registrasi_pasien/screen/form_registrasi_pasien.dart';
 import 'package:rumah_sehat_mobile/widget/drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -156,7 +157,7 @@ class MyCardWidgetState extends State<MyCardWidget> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const HomePage(title: 'RumahSehat')));
+                                    const profilPasien()));
                       } else {
                         Navigator.pop(_context);
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
