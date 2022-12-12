@@ -36,3 +36,4 @@ logging:
   file:
     path: /log
     name: rumahsehat_api.log
+

@@ -33,7 +33,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    //hold dulu terus nanti coba cari cara biar pake logo RumahSehat
+    // ignore: unused_local_variable
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -42,19 +43,13 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Text(
-                    'RumahSehat',
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(0.8), fontSize: 32),
-                  ),
-                  SizedBox(height: 30),
-                ],
+              Hero(
+                tag: 'RumahSehat',
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 84.0,
+                  child: Image.asset('assets/images/logo.jpeg'),
+                ),
               ),
               Form(
                 key: _loginFormKey,
@@ -166,13 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       }
                     },
-                    // child: Text("LOGIN"),
-                    // style: ElevatedButton.styleFrom(
-                    //   primary: Colors.green,
-                    //   alignment: Alignment.center,
-                    //   shape: StadiumBorder(),
-                    //   padding: EdgeInsets.all(15),
-                    // ),
                     child:
                         Text('Log In', style: TextStyle(color: Colors.white)),
                     style: ElevatedButton.styleFrom(
@@ -180,21 +168,8 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(24),
                       ),
                       padding: EdgeInsets.all(12),
-                      primary: Colors.lightBlueAccent,
-                    )
-                    // padding: EdgeInsets.symmetric(vertical: 16.0), coba cari pake ini gmn
-                    // child: RaisedButton(
-                    //   shape: RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(24),
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.of(context).pushNamed(HomePage.tag);
-                    //   },
-                    //   padding: EdgeInsets.all(12),
-                    //   color: Colors.lightBlueAccent,
-                    //   child: Text('Log In', style: TextStyle(color: Colors.white)),
-                    // ),
-                    ),
+                      primary: Colors.green,
+                    )),
               ),
               SizedBox(
                 height: 15,
@@ -215,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       "Register",
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.green),
                     ),
                   )
                 ],
