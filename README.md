@@ -104,7 +104,7 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 |------------| --- |------------------------------|
 | 2006597216 | Ardelia Syahira Yudiva | 18 |                       
 | 2006523400 | Melisa Ayu Angelina | 17, 18, 19 |                    
-| 1906398894 | Alfred Prasetio | 14, 18 |
+| 1906398894 | Alfred Prasetio | 14, 18, 19 |
 | 2006464266 | Melati Eka Putri | 16, 18, 19 |                        
 | 2006597336 | Faris Haidar Zuhdi | 15, 18, 19, 22, 23 |
 
