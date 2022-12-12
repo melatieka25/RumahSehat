@@ -33,6 +33,100 @@ public class PasienRestController {
     @Autowired
     private PasienRestService pasienRestService;
 
+<<<<<<< HEAD
+	// Retrieve
+	@GetMapping(value = "/pasien/{uuid}")
+	private PasienModel retrievePasien(@PathVariable("uuid") String uuid) {
+		log.info("Received request at retrieve pasien endpoint for user with UUID " + uuid);
+		try {
+			return pasienRestService.getPasienByUuid(uuid);
+		} catch(NoSuchElementException e) {
+			log.warn("Failed to fetch user with UIUD " + uuid);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with UUID " + uuid + " not found.");
+		}
+	}
+	
+	// Retrieve all
+	@GetMapping(value = "/pasien")
+	private List<PasienModel> retrieveAllPasien() {
+		log.info("Received request at retrieve all pasien endpoint");
+		return pasienRestService.getPasienList();
+	}
+	
+	// Post 
+	@PostMapping(value = "/pasien/new")
+	private PasienModel createPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
+		log.info("Received request at create new pasien endpoint");
+		if(bindingResult.hasFieldErrors()) {
+			log.warn("Failed to create new pasien");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field.");
+		} else {
+			return pasienRestService.createPasien(pasien);
+		}
+	}
+	
+	// Delete
+	@DeleteMapping(value = "/pasien/{uuid}")
+	private ResponseEntity deletePasien(@PathVariable("uuid") String uuid) {
+		log.info("Received request at delete pasien endpoint");
+		try {
+			pasienRestService.deletePasien(uuid);
+			return ResponseEntity.ok("Pasien with UUID " + uuid + " has been deleted successfully");
+		} catch(NoSuchElementException e) {
+			log.warn("Failed to delete new pasien, UUID not found: " + uuid);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with UUID " + uuid + " not found.");
+		}
+	}
+	
+	// Update
+	@PutMapping(value = "/pasien/{uuid}")
+	private PasienModel updatePasien(@PathVariable("uuid") String uuid, @RequestBody PasienModel pasien) {
+		log.info("Received request at update pasien endpoint");
+		try {
+			return pasienRestService.updatePasien(uuid, pasien);
+		} catch(NoSuchElementException e) {
+			log.warn("Failed to update pasien, UUID not found: " + uuid);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with UUID " + uuid + " not found.");
+		}
+	}
+	
+	@PostMapping(value = "/pasien/saldo")
+	private ResponseEntity updateSaldo(Authentication authentication, @RequestBody Map<String, String> params) {
+		log.info("Received request at update pasien saldo endpoint");
+		// Only allow to access one's own saldo
+		String username = params.get("username");
+		String saldo = params.get("saldo");
+		if(!username.equals(authentication.getName())) {
+			log.warn("Authentication error when updating saldo");
+			return ResponseEntity.status(401).build();
+		}
+		try {
+			PasienModel pasien = pasienRestService.getPasienByUsername(username);
+			pasien.setSaldo(pasien.getSaldo() + Integer.valueOf(saldo));
+			pasienRestService.updatePasien(pasien.getUuid(), pasien);
+			return ResponseEntity.ok("Saldo for pasien " + username + " has been updated successfully");
+		} catch(NoSuchElementException e) {
+			log.warn("Failed to update pasien saldo, username not found: " + username);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
+		}
+	}
+	@GetMapping(value = "/pasien/profil/{username}")
+	private ResponseEntity getProfilPasien(Authentication authentication, @PathVariable("username") String username) {
+		log.info("Received request at profil pasien endpoint");
+		if(!username.equals(authentication.getName())) {
+			log.warn("Authentication error occurred");
+			return ResponseEntity.status(401).build();
+		}
+		try {
+			log.info("Received request at profil pasien endpoint");
+			PasienModel pasien = pasienRestService.getPasienByUsername(username);
+			return ResponseEntity.ok(pasien);
+		} catch (NoSuchElementException e) {
+			log.warn("Failed to update pasien saldo, username not found: " + username);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
+		}
+	}
+=======
     // Retrieve
     @GetMapping(value = "/pasien/{uuid}")
     private PasienModel retrievePasien(@PathVariable("uuid") String uuid) {
@@ -124,4 +218,5 @@ public class PasienRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
         }
     }
+>>>>>>> a2fa2d9eca86682cfeede8babd19145a6396d512
 }
