@@ -53,7 +53,7 @@ class MyCardWidgetState extends State<MyCardWidget> {
 
   Future<List<Tagihan>> _fetchData() async {
     var url = Uri.parse(
-        'http://10.0.2.2:8081/api/v1/tagihan/' + LoginPage.username);
+        'https://apap-090.cs.ui.ac.id/api/v1/tagihan/' + LoginPage.username);
     var response =
     await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
 
@@ -79,8 +79,9 @@ class MyCardWidgetState extends State<MyCardWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("RumahSehat"),
-          backgroundColor: Colors.blueGrey,
+          title:  Image.asset('assets/images/long-logo.png', width: 200),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.green),
         ),
         backgroundColor: Colors.white,
         //https://api.flutter.dev/flutter/material/FloatingActionButton-class.html

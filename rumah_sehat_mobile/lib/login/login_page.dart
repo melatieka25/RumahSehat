@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
   static String username = "";
   static String token = "";
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => new _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -33,11 +33,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("RumahSehat"),
-          backgroundColor: Colors.blueGrey,
-      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
@@ -45,134 +43,144 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Login ke Akunmu',
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(0.8), fontSize: 32),
-                  ),
-                  SizedBox(height:30),
-                ],
-              ),
-              ////FORM
-              Form(
-                key: _loginFormKey,
-                child: Column(
-                  children: [
-                    //Username
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextFormField(
-                        onChanged: (String value) {
-                          username = value;
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Username',
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Username Harus di Isi";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-
-                    //Password
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextFormField(
-                        onChanged: (String value) {
-                          password1 = value;
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          suffixIcon: IconButton(
-                            onPressed: toggleVisibility,
-                            icon: Icon(isVisible
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined),
-                          ),
-                        ),
-                        obscureText: !isVisible,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Password Harus di Isi";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+              Hero(
+                tag: 'RumahSehat',
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 84.0,
+                  child: Image.asset('assets/images/logo.jpeg'),
                 ),
               ),
+              Form(
+                key: _loginFormKey,
+                child: Column(children: [
+                  //Username
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextFormField(
+                      onChanged: (String value) {
+                        username = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Username',
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Username Harus di Isi";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+
+                  //Password
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextFormField(
+                      onChanged: (String value) {
+                        password1 = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                        suffixIcon: IconButton(
+                          onPressed: toggleVisibility,
+                          icon: Icon(isVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined),
+                        ),
+                      ),
+                      obscureText: !isVisible,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password Harus di Isi";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                ]),
+              ),
               SizedBox(
-                height: 50,
+                height: 20,
               ),
               Container(
                 child: ElevatedButton(
-                  onPressed: () async {
-                    print(username);
-                    print(password1);
-                    if (_loginFormKey.currentState!.validate()) {
-                      final response = await http.post(
-                        Uri.parse(
-                            "http://10.0.2.2:8081/api/v1/authenticate"),
-                        headers: <String, String>{
-                          "Content-Type": "application/json;charset=UTF-8",
-                        },
-                        body: jsonEncode(<String, String>{
-                          'username': username,
-                          'password': password1,
-                        }),
-                      );
+                    onPressed: () async {
+                      print(username);
+                      print(password1);
+                      if (_loginFormKey.currentState!.validate()) {
+                        final response = await http.post(
+                          Uri.parse(
+                              "https://apap-090.cs.ui.ac.id/api/v1/authenticate"),
+                          headers: <String, String>{
+                            "Content-Type": "application/json;charset=UTF-8",
+                          },
+                          body: jsonEncode(<String, String>{
+                            'username': username,
+                            'password': password1,
+                          }),
+                        );
 
-                      if (response.statusCode == 200) {
-                        setState(() {
-                          LoginPage.roles = "Pasien";
-                          LoginPage.username = username;
-                          LoginPage.token = jsonDecode(response.body)['token'];
-                        });
-                        //pindah halaman
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                          builder: (context) => const HomePage(title: "RumahSehat")));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Username dan password tidak valid")));
+                        if (response.statusCode == 200) {
+                          setState(() {
+                            LoginPage.roles = "Pasien";
+                            LoginPage.username = username;
+                            LoginPage.token =
+                                jsonDecode(response.body)['token'];
+                          });
+                          //pindah halaman
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const HomePage(title: "RumahSehat")));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "Username dan password tidak valid")));
+                        }
                       }
-                    }
-                  },
-                  child: Text("LOGIN"),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    alignment: Alignment.center,
-                    shape: StadiumBorder(),
-                    padding: EdgeInsets.all(15),
-                  ),
-                ),
+                    },
+                    child:
+                        Text('Log In', style: TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      padding: EdgeInsets.all(12),
+                      primary: Colors.green,
+                    )),
               ),
               SizedBox(
-                height: 50,
+                height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Doesn't have an Account?"),
+                  Text(
+                    "Doesn't have an Account?",
+                    style: TextStyle(color: Colors.black54),
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -182,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       "Register",
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.green),
                     ),
                   )
                 ],

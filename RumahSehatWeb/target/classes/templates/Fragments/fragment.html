@@ -60,9 +60,6 @@
 			<a sec:authorize="hasAnyRole('Admin', 'Apoteker')" class="nav-item nav-link" th:classappend="${onevar == 'obat'} ? active : ''" th:href="@{/obat}">
                 Obat
             </a>
-			<a sec:authorize="hasRole('Admin')" class="nav-item nav-link" th:classappend="${onevar == 'stats'} ? active : ''" th:href="@{/statistics}">
-                Statistik
-            </a>
         </ul>
         <ul class= "navbar-nav pull-right">
             <a class="nav-item nav-link text-text-secondary" th:href="@{/logout-sso}">Logout</a>

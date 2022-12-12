@@ -9,27 +9,40 @@ import '../../main.dart';
 
 // https://docs.flutter.dev/cookbook/forms/validation
 class Dialog extends StatelessWidget {
-
   String title;
   String content;
   VoidCallback continueCallBack;
+  int statusCode;
 
-  Dialog(this.title, this.content, this.continueCallBack);
-  TextStyle textStyle = TextStyle (color: Colors.black);
+  Dialog(this.title, this.content, this.continueCallBack, this.statusCode);
+  TextStyle textStyle = TextStyle(color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child:  AlertDialog(
-          title: new Text(title,style: textStyle,),
-          content: new Text(content, style: textStyle,),
+        child: AlertDialog(
+          title: new Text(
+            title,
+            style: textStyle,
+          ),
+          content: new Text(
+            content,
+            style: textStyle,
+          ),
           actions: <Widget>[
             TextButton(
               child: Text("Kembali"),
               onPressed: () {
-                continueCallBack();
-                Navigator.of(context).pop();
+                if (statusCode == 200) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const HomePage(title: "RumahSehat")));
+                } else {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],
@@ -59,11 +72,33 @@ class PasienFormState extends State<PasienForm> {
   String finalResponse = "";
   final _formKey = GlobalKey<FormState>();
 
-  _showDialog(BuildContext context) {
-
-    continueCallBack() => {};
-    Dialog alert = Dialog("Hore akun tersimpan!", "Selamat datang " + _controllerNama.text + "!",continueCallBack);
-
+  _showDialog(BuildContext context, int statusCode, String reason) {
+    VoidCallback continueCallBack = () => {
+          Navigator.of(context).pop(),
+          // code on continue comes here
+        };
+    Dialog alert = Dialog("", "", continueCallBack, statusCode);
+    if (statusCode == 200) {
+      alert = Dialog(
+          "Success!", "Akun berhasil dibuat!", continueCallBack, statusCode);
+    } else {
+      if (reason.contains("email")) {
+        alert = Dialog(
+            "Gagal!",
+            "Akun dengan email yang sama sudah pernah dibuat!",
+            continueCallBack,
+            statusCode);
+      } else if (reason.contains("username")) {
+        alert = Dialog(
+            "Gagal!",
+            "Akun dengan username yang sama sudah pernah dibuat!",
+            continueCallBack,
+            statusCode);
+      } else {
+        alert = Dialog(
+            "Gagal!", "Akun gagal dibuat!", continueCallBack, statusCode);
+      }
+    }
 
     showDialog(
       context: context,
@@ -73,12 +108,21 @@ class PasienFormState extends State<PasienForm> {
     );
   }
 
-  Future<Pasien> createPasien(String nama, String role, String username, String password, String email, int saldo, int umur) async {
-
-    Pasien newPasien = Pasien(nama: nama, role: role, username: username, password: password, email: email, saldo: saldo, umur: umur, isSso: false);
+  Future<Pasien>? createPasien(String nama, String role, String username,
+      String password, String email, int saldo, int umur) async {
+    Pasien newPasien = Pasien(
+        nama: nama,
+        role: role,
+        username: username,
+        password: password,
+        email: email,
+        saldo: saldo,
+        umur: umur,
+        isSso: false);
 
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
+      Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/pasien/new'),
+      //Uri.parse('http://10.0.2.2:8081/api/v1/pasien/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -87,7 +131,8 @@ class PasienFormState extends State<PasienForm> {
 
     final tokenResponse = await http.post(
       Uri.parse(
-          "http://10.0.2.2:8081/api/v1/authenticate"),
+          //"http://10.0.2.2:8081/api/v1/authenticate"),
+          "https://apap-090.cs.ui.ac.id/api/v1/authenticate"),
       headers: <String, String>{
         "Content-Type": "application/json;charset=UTF-8",
       },
@@ -100,7 +145,13 @@ class PasienFormState extends State<PasienForm> {
     if (response.statusCode == 200 && tokenResponse.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
-      _showDialog(context);
+      _showDialog(context, response.statusCode, response.body);
+
+      setState(() {
+        LoginPage.token = jsonDecode(tokenResponse.body)['token'];
+        LoginPage.roles = "Pasien";
+        LoginPage.username = _controllerUsername.text;
+      });
 
       setState(() {
         LoginPage.token = jsonDecode(tokenResponse.body)['token'];
@@ -115,21 +166,25 @@ class PasienFormState extends State<PasienForm> {
       _controllerUmur.clear();
 
       FocusScope.of(context).unfocus();
-      Navigator.of(context).pushNamed("home");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const HomePage(title: "RumahSehat")));
 
       return Pasien.fromJson(jsonDecode(response.body));
     } else {
-      // If the server did not return a 201 CREATED response,
+      // If the server did not return a 200 CREATED response,
       // then throw an exception.
+      print(response.body);
+      _showDialog(context, response.statusCode, response.body);
       throw Exception('Pembuatan akun gagal');
     }
   }
 
-  Future<void> _savingData() async{
-
+  Future<void> _savingData() async {
     final validation = _formKey.currentState!.validate();
 
-    if (!validation){
+    if (!validation) {
       return;
     }
 
@@ -144,11 +199,7 @@ class PasienFormState extends State<PasienForm> {
           _controllerEmail.text,
           0,
           int.parse(_controllerUmur.text));
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const HomePage(title: "RumahSehat")));
-    } catch (exception){
+    } catch (exception) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Maaf, pembuatan akun gagal")));
     }
@@ -157,7 +208,7 @@ class PasienFormState extends State<PasienForm> {
   //Referensi: https://stackoverflow.com/questions/56253787/how-to-handle-textfield-validation-in-password-in-flutter
   String? validatePassword(String value) {
     RegExp regex =
-    RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 
     if (!regex.hasMatch(value)) {
       return 'Password tidak valid!';
@@ -166,58 +217,7 @@ class PasienFormState extends State<PasienForm> {
     }
   }
 
-  var responseEmail;
-  var responseUsername;
-
-  Future<String?> getEmail() async {
-    var url = Uri.parse(
-        'http://10.0.2.2:8081/api/v1/user/email');
-    var response =
-        await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
-    setState(() {
-      responseEmail = response.body;
-    });
-  }
-
-  Future<String?> getUsername() async {
-    var url = Uri.parse(
-        'http://10.0.2.2:8081/api/v1/user/username');
-    var response =
-    await http.get(url, headers: {"Access-Control_Allow_Origin": "*"});
-    setState(() {
-      responseUsername = response.body;
-    });
-  }
-
-
-  String? validateEmail(String value) {
-
-    if (responseEmail.contains(value)) {
-      return "Email sudah digunakan!";
-    } else {
-      return null;
-    }
-  }
-
-  String? validateUsername(String value) {
-
-    if (responseUsername.contains(value)) {
-      return "Username sudah digunakan!";
-    } else {
-      return null;
-    }
-  }
-
   final ScrollController _firstController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      getEmail();
-      getUsername();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +225,7 @@ class PasienFormState extends State<PasienForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registrasi Pasien'),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.green,
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -234,8 +234,7 @@ class PasienFormState extends State<PasienForm> {
           child: Scrollbar(
             isAlwaysShown: true,
             controller: _firstController,
-            child:
-            ListView(
+            child: ListView(
               controller: _firstController,
               children: [
                 SizedBox(height: 30),
@@ -244,8 +243,7 @@ class PasienFormState extends State<PasienForm> {
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                   ),
-                  onSaved: (value) {
-                  },
+                  onSaved: (value) {},
                   controller: _controllerNama,
                   // The validator receives the text that the user has entered.
                   validator: (value) {
@@ -267,7 +265,6 @@ class PasienFormState extends State<PasienForm> {
                     if (value == null || value.isEmpty) {
                       return 'Masukkan Email!';
                     }
-                    return validateEmail(value);
                   },
                 ),
                 SizedBox(height: 30),
@@ -282,8 +279,6 @@ class PasienFormState extends State<PasienForm> {
                     if (value == null || value.isEmpty) {
                       return 'Masukkan Username!';
                     }
-
-                    return validateUsername(value);
                   },
                   onSaved: (value) {
                     // price = int.parse(value!);
@@ -305,13 +300,12 @@ class PasienFormState extends State<PasienForm> {
                       return 'Masukkan Password!';
                     }
                     String? valResult = validatePassword(value);
-                    if (valResult != null){
+                    if (valResult != null) {
                       return valResult;
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                  },
+                  onSaved: (value) {},
                 ),
                 SizedBox(height: 30),
                 const Text('Umur'),
@@ -326,18 +320,17 @@ class PasienFormState extends State<PasienForm> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                  },
+                  onSaved: (value) {},
                   // The validator receives the text that the user has entered.
                 ),
-                  // The validator receives the text that the user has entered.
+                // The validator receives the text that the user has entered.
                 SizedBox(height: 40),
                 ElevatedButton(
-                  onPressed: () async {
-                    _savingData();
-                  },
-                  child: const Text('Register'),
-                ),
+                    onPressed: () async {
+                      _savingData();
+                    },
+                    child: const Text('Register'),
+                    style: ElevatedButton.styleFrom(primary: Colors.green)),
               ],
             ),
           ),

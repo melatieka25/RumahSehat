@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface TagihanDb extends JpaRepository<TagihanModel, Long> {
     Optional<TagihanModel> findByAppointment(AppointmentModel appointment);
+    Optional<TagihanModel> findByKode(String kode);
 }

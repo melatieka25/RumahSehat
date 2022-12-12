@@ -30,9 +30,12 @@ public class ResepController {
 
     @Autowired
     private AppointmentService appointmentService;
-
+    
     @GetMapping("/create-resep")
-    public String addResepFormPage(@RequestParam(value = "kodeApp") String kodeApp, Model model) {
+    public String addResepFormPage(@RequestParam(value = "kodeApp", required = false) String kodeApp, Model model) {
+        if(kodeApp == null)
+            return "error/500";
+        
         ResepModel resep = new ResepModel();
         List<ObatModel> listObat = obatService.getListObat();
         List<JumlahModel> listJumlah = new ArrayList<>();
@@ -64,8 +67,7 @@ public class ResepController {
     }
 
     @PostMapping(value = "/create-resep", params = { "deleteRow" })
-    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRow") Integer row, @RequestParam(value = "kodeApp") String kodeApp, Model model) {
-        final Integer rowId = Integer.valueOf(row);
+    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRow") Integer rowId, @RequestParam(value = "kodeApp") String kodeApp, Model model) {
         resep.getListJumlah().remove(rowId.intValue());
 
         List<JumlahModel> listJumlah = jumlahService.getListJumlah();
@@ -80,9 +82,17 @@ public class ResepController {
     }
 
     @PostMapping(value = "/create-resep", params = { "save" })
-    public String addResepSubmitPage(@ModelAttribute ResepModel resep, @RequestParam(value = "kodeApp") String kodeApp, Model model, RedirectAttributes redirectAttrs) {
+    public String addResepSubmitPage(@ModelAttribute ResepModel resep, @RequestParam(value = "kodeApp", required = false) String kodeApp, Model model, RedirectAttributes redirectAttrs) {
+        if (kodeApp == null) {
+            redirectAttrs.addFlashAttribute("error", "Resep harus terasosiasi dengan satu appointment.");
+            return "redirect:/resep/create-resep";
+        }
+        
         List<JumlahModel> listJumlah = resep.getListJumlah();
         AppointmentModel appointment = appointmentService.getDetailAppointment(kodeApp);
+
+        if(appointment.getResep() != null)
+            return "error/401";
 
         if (listJumlah == null) {
             redirectAttrs.addFlashAttribute("error", "Resep harus memiliki setidaknya 1 obat.");
@@ -129,6 +139,7 @@ public class ResepController {
     @GetMapping("/confirm")
     public String confirmResep(@RequestParam(value = "id") Long id, Model model, RedirectAttributes redirectAttrs) {
         ResepModel resep = resepService.getResepById(id);
+        if (resep.getIsDone()) return "redirect:/resep/detail?id=" + id;
 
         Boolean confirmed = resepService.confirmResep(resep);
 

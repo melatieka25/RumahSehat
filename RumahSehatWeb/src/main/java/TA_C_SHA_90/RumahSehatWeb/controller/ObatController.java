@@ -14,26 +14,26 @@ import java.util.List;
 public class ObatController {
     @Autowired
     private ObatService obatService;
-	
-	@GetMapping
+    
+    @GetMapping
     public String listObat(Model model) {
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("listObat", listObat);
         return "obat/list-obat";
     }
-	
-	@GetMapping("stok")
+    
+    @GetMapping("stok")
     public String formStokObat(@RequestParam(value = "id") String id, Model model) {
         ObatModel obat = obatService.getObatById(id);
         model.addAttribute("obat", obat);
         return "obat/form-update-stok-obat";
     }
-	
-	@PostMapping("stok")
+    
+    @PostMapping("stok")
     public String updateStokObat(@RequestParam("id") String id, @RequestParam("stok") String stok, Model model) {
         ObatModel obat = obatService.getObatById(id);
-		obat.setStok(Integer.valueOf(stok));
-		obatService.updateObat(obat);
+        obat.setStok(Integer.valueOf(stok));
+        obatService.updateObat(obat);
         return "redirect:/obat";
     }
 }

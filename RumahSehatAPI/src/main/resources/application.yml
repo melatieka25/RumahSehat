@@ -1,6 +1,12 @@
 server:
   address: 0.0.0.0
   port: 8081
+  error:
+    include-message: always
+
+jwt:
+  header: Authorization
+  secret: javainuse
 
 jwt:
   header: Authorization

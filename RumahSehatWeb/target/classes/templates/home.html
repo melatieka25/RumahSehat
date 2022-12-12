@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="UTF-8">
+  <title>Beranda</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(beranda)"></nav>
+<div class="d-flex justify-content-center">
+  <div class="m-4">
+    <div class="d-flex justify-content-center">
+      <h2 sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'">Login as Admin, Apoteker</h2>
+      <h2 sec:authorize="hasRole('Dokter')" th:text="'Hello dr.'+${#httpServletRequest.remoteUser}+'!'">Login as Dokter</h2>
+    </div>
+    <a ><img src="https://i.ibb.co/qM7ZQjj/Group-1.png" class="img-fluid" /></a>
+    <br>
+    <br>
+    <div class="d-flex justify-content-center">
+      <a sec:authorize="hasAnyRole('Admin', 'Dokter')" th:href="@{/appointment}" class="mx-2 btn btn-primary" style="background-color:#258a85" >Jadwal Appointment</a>
+      <a sec:authorize="hasRole('Admin')" th:href="@{/tagihan}" class="mx-2 btn btn-primary" style="background-color:#258a85">Tagihan</a>
+      <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:href="@{/resep}" class="mx-2 btn btn-primary" style="background-color:#258a85">Daftar Resep</a>
+      <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:href="@{/obat}" class="mx-2 btn btn-primary" style="background-color:#258a85">Daftar Obat</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
