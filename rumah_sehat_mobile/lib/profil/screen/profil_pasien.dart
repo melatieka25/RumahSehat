@@ -25,8 +25,6 @@ class profilPasienState extends State<profilPasien> {
       "Access-Control_Allow_Origin": "*",
       "Authorization": "Bearer " + LoginPage.token
     });
-    print(response.body);
-    //var data = jsonDecode(response.body);
     Pasien pasien = PasienFromJson(response.body);
     setState(() {
       _pasien = pasien;

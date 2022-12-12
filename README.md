@@ -109,7 +109,30 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 | 2006597336 | Faris Haidar Zuhdi | 15, 18, 19, 22, 23 |
 
 ## Dokumentasi API RumahSehat
-Base URL: `http://<domain>/api/v1`
+Base URL: `http://<domain>/api/v1`. Semua *request* terhadap *endpoints* berikut, kecuali untuk autentikasi, memerlukan *bearer token* yang didapatkan dari *endpoint* autentikasi.
+
+Dokumentasi API juga tersedia pada https://ristek.link/DokumentasiAPI-TK-APAP-90.
+
+### createAuthenticationToken
+---
+**Method**: `POST` \
+**Endpoint**: `/authenticate` \
+Mengautentikasi pasien dan mengembalikan *bearer token*.
+
+#### Body Params
+```
+{
+    "username": "suatuUsernameDariSeorangUser",
+    "password": "passwordIniDalamPlaintextYuh"
+}
+```
+
+#### Success Response
+```
+{
+    "token": "iniBukanTokenBeneran"
+}
+```
 
 ### retrievePasien
 ---
@@ -295,6 +318,50 @@ Mengembalikan profil pasien berdasarkan *username*, tidak seperti `retrievePasie
 }
 ```
 
+### retrieveAllTagihanByUsername
+---
+**Method**: `GET` \
+**Endpoint**: `/tagihan/{username}` \
+Mengembalikan semua tagihan dari seorang *user* berdasarkan usernamenya.
+
+#### Success Response
+```
+{
+  "listTagihan": [
+    {
+      "kode": "BILL-1",
+      "tanggalTerbuat": "2022-12-11T13:34:52",
+      "tanggalBayar": "2022-12-11T13:35:30",
+      "isPaid": true,
+      "jumlahTagihan": 100000,
+      "appointment": {
+        "kode": "APT-1",
+        "waktuAwal": "2022-12-11 20:32",
+        "isDone": true,
+        "resep": null,
+        "namaDokter": null,
+        "namaPasien": null
+      }
+    },
+    {
+      "kode": "BILL-3",
+      "tanggalTerbuat": "2022-12-11T14:25:09",
+      "tanggalBayar": "2022-12-11T14:25:51",
+      "isPaid": true,
+      "jumlahTagihan": 100000,
+      "appointment": {
+        "kode": "APT-6",
+        "waktuAwal": "2022-12-13 02:24",
+        "isDone": true,
+        "resep": null,
+        "namaDokter": null,
+        "namaPasien": null
+      }
+    }
+  ]
+}
+```
+
 ### payTagihanByKode
 ---
 **Method**: `GET` \
@@ -334,4 +401,89 @@ Mengembalikan suatu resep berdasarkan ID.
   ],
   "namaPasien": "Pasien"
 }
+```
+
+### retrieveAllAppointment
+---
+**Method**: `GET` \
+**Endpoint**: `/appointment/{username}` \
+Mengembalikan semua *appointment* berdasarkan *username*.
+
+#### Success Response
+```
+{
+  "listAppointment": [
+    {
+      "kode": "APT-1",
+      "waktuAwal": "2022-12-11 20:32",
+      "isDone": true,
+      "resep": null,
+      "namaDokter": "Dokter",
+      "namaPasien": "pasien"
+    },
+    {
+      "kode": "APT-6",
+      "waktuAwal": "2022-12-13 02:24",
+      "isDone": true,
+      "resep": null,
+      "namaDokter": "Dokter",
+      "namaPasien": "pasien"
+    }
+  ]
+}
+```
+
+### createAppointment
+---
+**Method**: `POST` \
+**Endpoint**: `/appointment/create` \
+Membuat suatu *appointment* baru.
+
+#### Body Params
+```
+{
+    "kode": null,
+    "waktuAwal": "2022-12-12 17:00:00",
+    "isDone": false,
+    "resep": null,
+    "tagihan": null,
+    "pasien": "pasien",
+    "dokter": "sayadokter",
+    "namaDokter": null,
+    "namaPasien": null
+}
+```
+
+### getAllDokter
+---
+**Method**: `GET` \
+**Endpoint**: `/dokter` \
+Mengembalikan semua *dokter*.
+
+#### Success Response
+```
+[
+    {
+        "uuid": "402890848505e1cb0185060001bb0000",
+        "nama": "Dokter Butuh Uang",
+        "role": "Dokter",
+        "username": "dokter.mau.uang",
+        "password": "$2a$10$9htYN0DYUoAxqKgUhG8iLec6eMvAjIW2wQlEhwU2V57ULC/ImxCbu",
+        "email": "dokter.mau.duit@protonmail.ch",
+        "isSso": false,
+        "tarif": 999999999,
+        "listAppointment": []
+    },
+    {
+        "uuid": "8ae3068384ec8fd70184ec951d630000",
+        "nama": "Seorang Dokter",
+        "role": "Dokter",
+        "username": "dokter.1",
+        "password": "$2a$10$vsZJWnF2zsXiftou1u0yDOUPGcWIu3j8khOn6OQvbBBk3JhUoLUxO",
+        "email": "dokter@dokter.com",
+        "isSso": false,
+        "tarif": 12345,
+        "listAppointment": []
+    }
+]
 ```

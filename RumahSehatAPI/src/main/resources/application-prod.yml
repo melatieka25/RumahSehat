@@ -32,3 +32,8 @@ spring:
     resources:
       static-locations: file:src/main/resources/static/
       
+logging:
+  file:
+    path: /log
+    name: rumahsehat_api.log
+
