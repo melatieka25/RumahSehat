@@ -219,7 +219,7 @@ class PasienFormState extends State<PasienForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registrasi Pasien'),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.green,
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -320,11 +320,11 @@ class PasienFormState extends State<PasienForm> {
                 // The validator receives the text that the user has entered.
                 SizedBox(height: 40),
                 ElevatedButton(
-                  onPressed: () async {
-                    _savingData();
-                  },
-                  child: const Text('Register'),
-                ),
+                    onPressed: () async {
+                      _savingData();
+                    },
+                    child: const Text('Register'),
+                    style: ElevatedButton.styleFrom(primary: Colors.green)),
               ],
             ),
           ),
