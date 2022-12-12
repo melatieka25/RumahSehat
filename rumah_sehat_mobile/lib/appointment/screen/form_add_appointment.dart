@@ -181,8 +181,9 @@ class AppointmentFormState extends State<AppointmentForm> {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Membuat Appointment'),
-        backgroundColor: Colors.blueGrey,
+        title:  Image.asset('assets/images/long-logo.png', width: 200),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.green),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),

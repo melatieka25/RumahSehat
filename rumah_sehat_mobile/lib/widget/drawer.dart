@@ -21,13 +21,9 @@ class _MyDrawerState extends State<MyDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           // Nama Web
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('RumahSehat',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
+            child: Image.asset('assets/images/long-logo.png', width: 320),
           ),
           const Divider(
             height: 1,

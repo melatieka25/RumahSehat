@@ -14,7 +14,7 @@ class detailAppointment extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("RumahSehat"),
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Colors.green,
         ),
         body: Column(children: <Widget>[
           const SizedBox(height: 20),

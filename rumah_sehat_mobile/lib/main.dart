@@ -55,7 +55,9 @@ class _HomePageState extends State<HomePage> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title:  Image.asset('assets/images/long-logo.png', width: 200),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.green),
         ),
         body: Center(
           child: Column(
@@ -63,8 +65,31 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Text(
                 'Halo ' +
-                    LoginPage.username +
-                    '! Selamat datang di RumahSehat!',
+                    LoginPage.username + '!',
+                style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Selamat datang di RumahSehat!',
+                style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700),
+              ),
+              Hero(
+                tag: 'RumahSehat',
+                child: Image.asset('assets/images/long-logo.png', width: 320),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                ),
+                child: Image.network("https://arsitagx-master.s3.ap-southeast-1.amazonaws.com/img-medium/13685/9721/muhammad-imaaduddin-rumah-sakit-imc-bintaro1539051152-m.jpeg",
+                    width: 300, height: 200, fit: BoxFit.cover),
               ),
               const SizedBox(height: 30),
               const Text('Ketuk drawer untuk menjelajahi aplikasi'),
