@@ -27,34 +27,34 @@ import TA_C_SHA_90.RumahSehatAPI.service.JwtUserDetailsService;
 @RequestMapping("/api/v1")
 public class JwtAuthenticationController {
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-	@Autowired
-	private JwtUserDetailsService userDetailsService;
+    @Autowired
+    private JwtUserDetailsService userDetailsService;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequestModel authenticationRequest) throws Exception {
-		log.info("Received request at authentication endpoint");
-		
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponseModel(token));
-	}
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequestModel authenticationRequest) throws Exception {
+        log.info("Received request at authentication endpoint");
+        
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String token = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new JwtResponseModel(token));
+    }
 
-	private void authenticate(String username, String password) throws Exception {
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		} catch (DisabledException e) {
-			log.warn("Unable to authenticate, user has been disabled");
-			throw new Exception("USER_DISABLED", e);
-		} catch (BadCredentialsException e) {
-			log.warn("nable to authenticate, invalid credentials have been provided");
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	}
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            log.warn("Unable to authenticate, user has been disabled");
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            log.warn("nable to authenticate, invalid credentials have been provided");
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+    }
 }

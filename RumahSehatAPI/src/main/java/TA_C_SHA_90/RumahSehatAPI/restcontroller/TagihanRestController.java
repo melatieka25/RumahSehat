@@ -4,6 +4,7 @@ import TA_C_SHA_90.RumahSehatAPI.model.AppointmentModel;
 import TA_C_SHA_90.RumahSehatAPI.model.PasienModel;
 import TA_C_SHA_90.RumahSehatAPI.model.TagihanModel;
 import TA_C_SHA_90.RumahSehatAPI.service.PasienRestService;
+import TA_C_SHA_90.RumahSehatAPI.service.TagihanRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.extern.slf4j.Slf4j;
-
-import javax.validation.Valid;
 import java.util.*;
 
 @Slf4j
@@ -24,12 +23,15 @@ public class TagihanRestController {
     @Autowired
     private PasienRestService pasienRestService;
 
+    @Autowired
+    private TagihanRestService tagihanRestService;
+
     @GetMapping(value = "/tagihan/{username}")
-    private ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
-		log.info("Received request at retrieve tagihan endpoint for user " + username);
-		
+    public ResponseEntity retrieveAllTagihanByUsername(Authentication authentication, @PathVariable("username") String username) {
+        log.info("Received request at retrieve tagihan endpoint for user " + username);
+        
         if(!username.equals(authentication.getName())) {
-			log.warn("Authentication failure occurred.");
+            log.warn("Authentication failure occurred.");
             return ResponseEntity.status(401).build();
         }
         try {
@@ -45,7 +47,30 @@ public class TagihanRestController {
             jsonMap.put("listTagihan", listTagihan);
             return ResponseEntity.ok(jsonMap);
         } catch(NoSuchElementException e) {
+            log.warn("Failed to retrieve tagihan, pasien username not found: " + username);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pasien with username " + username + " not found.");
+        }
+
+    }
+
+    @GetMapping(value = "/tagihan/{username}/bayar/{kode}")
+    private ResponseEntity payTagihanByKode(Authentication authentication, @PathVariable("username") String username, @PathVariable("kode") String kode) {
+        log.info("Received request at pay tagihan endpoint for user " + username);
+
+        if(!username.equals(authentication.getName())) {
+            log.warn("Authentication failure occurred.");
+            return ResponseEntity.status(401).build();
+        }
+        try {
+            PasienModel pasien = pasienRestService.getPasienByUsername(username);
+            TagihanModel tagihan = tagihanRestService.getTagihanByKode(kode);
+            Boolean status = tagihanRestService.payTagihan(tagihan, pasien);
+            Map<String, Boolean> jsonMap = new HashMap<>();
+            jsonMap.put("statusPembayaran", status);
+            return ResponseEntity.ok(jsonMap);
+        } catch(NoSuchElementException e) {
+            log.warn("Failed to update tagihan, tagihan code not found: " + kode);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tagihan with code " + kode + " not found.");
         }
 
     }

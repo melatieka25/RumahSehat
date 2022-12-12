@@ -9,9 +9,9 @@ public interface TagihanService {
     TagihanModel createTagihan(TagihanModel tagihan);
     List<TagihanModel> getTagihanList();
     TagihanModel getTagihanByAppointment(AppointmentModel appointment);
-	
-	List<List<Integer>> getMonthlyStats(Integer year);
-	List<List<Integer>> getDailyStats(Integer year, Integer month);
-	List<Integer> getAgeRangeStats(Integer[] ageRange);
-	List<Integer> getPaidAgeRangeStats(Integer[] ageRange);
+    
+    List<List<Integer>> getMonthlyStats(Integer year);
+    List<List<Integer>> getDailyStats(Integer year, Integer month);
+    List<Integer> getAgeRangeStats(Integer[] ageRange);
+    List<Integer> getPaidAgeRangeStats(Integer[] ageRange);
 }

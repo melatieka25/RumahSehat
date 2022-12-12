@@ -8,4 +8,8 @@ public interface UserService {
     UserModel getUserByUsername(String username);
 
     UserModel getUserByEmail(String email);
+//
+//    UserModel addUser(UserModel user);
+//
+//    String encrypt(String password);
 }

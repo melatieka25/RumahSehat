@@ -99,7 +99,7 @@ class AppointmentFormState extends State<AppointmentForm> {
     print(AppointmentToJson(newAppointment));
 
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8081/api/v1/appointment/create'),
+      Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/appointment/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer " + LoginPage.token,
@@ -147,7 +147,7 @@ class AppointmentFormState extends State<AppointmentForm> {
   List _dataDokter = [];
 
   void getDokter() async {
-    var url = Uri.parse('http://10.0.2.2:8081/api/v1/dokter');
+    var url = Uri.parse('https://apap-090.cs.ui.ac.id/api/v1/dokter');
     final response = await http.get(url, headers: {"Access-Control_Allow_Origin": "*", "Authorization": "Bearer " + LoginPage.token});
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -181,8 +181,9 @@ class AppointmentFormState extends State<AppointmentForm> {
     // Build a Form widget using the _formKey created above.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Membuat Appointment'),
-        backgroundColor: Colors.blueGrey,
+        title:  Image.asset('assets/images/long-logo.png', width: 200),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.green),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),

@@ -23,6 +23,9 @@ public class ResepServiceImpl implements ResepService {
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private ObatService obatService;
+
     @Override
     public void addResep(ResepModel resep) {
         LocalDateTime now = LocalDateTime.now();
@@ -47,12 +50,18 @@ public class ResepServiceImpl implements ResepService {
     @Override
     public Boolean confirmResep(ResepModel resep) {
         Integer hargaResep = 0;
-
+		
         for (JumlahModel jumlah : resep.getListJumlah()) {
             if (jumlah.getObat().getStok() < jumlah.getKuantitas()) {
                 return false;
             }
-            hargaResep += jumlah.getObat().getHarga() * jumlah.getKuantitas();
+        }
+
+        for (JumlahModel jumlah : resep.getListJumlah()) {
+            ObatModel obat = jumlah.getObat();
+            hargaResep += obat.getHarga() * jumlah.getKuantitas();
+            obat.setStok(obat.getStok() - jumlah.getKuantitas());
+            obatService.updateObat(obat);
         }
         resep.setIsDone(true);
 

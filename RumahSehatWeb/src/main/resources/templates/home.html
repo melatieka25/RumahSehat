@@ -11,16 +11,17 @@
 <div class="d-flex justify-content-center">
   <div class="m-4">
     <div class="d-flex justify-content-center">
-      <h2 th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'">Login as</h2>
+      <h2 sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'">Login as Admin, Apoteker</h2>
+      <h2 sec:authorize="hasRole('Dokter')" th:text="'Hello dr.'+${#httpServletRequest.remoteUser}+'!'">Login as Dokter</h2>
     </div>
-    <h2>Selamat datang di RumahSehat</h2>
+    <a ><img src="https://i.ibb.co/qM7ZQjj/Group-1.png" class="img-fluid" /></a>
+    <br>
+    <br>
     <div class="d-flex justify-content-center">
-      <a th:href="@{/appointment}" class="mx-2 btn btn-primary" style="background-color:#258a85" >Lihat Jadwal Appointment</a>
-      <a th:href="@{/tagihan}" class="mx-2 btn btn-outline-success">Lihat Tagihan</a>
-    </div>
-    <div class="my-3 d-flex justify-content-center">
-      <a th:href="@{/resep}" class="mx-2 btn btn-primary" style="background-color:#258a85">Lihat Daftar Resep</a>
-      <a th:href="@{/obat}" class="mx-2 btn btn-outline-success">Lihat Daftar Obat</a>
+      <a sec:authorize="hasAnyRole('Admin', 'Dokter')" th:href="@{/appointment}" class="mx-2 btn btn-primary" style="background-color:#258a85" >Daftar Appointment</a>
+      <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:href="@{/resep}" class="mx-2 btn btn-primary" style="background-color:#258a85">Daftar Resep</a>
+      <a sec:authorize="hasAnyRole('Admin', 'Apoteker')" th:href="@{/obat}" class="mx-2 btn btn-primary" style="background-color:#258a85">Daftar Obat</a>
+      <a sec:authorize="hasRole('Admin')" th:href="@{/statistics}" class="mx-2 btn btn-primary" style="background-color:#258a85"> Chart Tagihan </a>
     </div>
   </div>
 </div>
