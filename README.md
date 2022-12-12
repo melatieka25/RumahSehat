@@ -103,7 +103,7 @@ Untuk menggunakan analisis kode dengan SonarQube, kita dapat menggunakan *comman
 | NPM        | Nama Lengkap | Fitur yang akan diselesaikan |
 |------------| --- |------------------------------|
 | 2006597216 | Ardelia Syahira Yudiva | 18 |                       
-| 2006523400 | Melisa Ayu Angelina | 17, 18 |                    
+| 2006523400 | Melisa Ayu Angelina | 17, 18, 19 |                    
 | 1906398894 | Alfred Prasetio | 14, 18 |
 | 2006464266 | Melati Eka Putri | 16, 18, 19 |                        
 | 2006597336 | Faris Haidar Zuhdi | 15, 18, 19, 22, 23 |
@@ -292,5 +292,46 @@ Mengembalikan profil pasien berdasarkan *username*, tidak seperti `retrievePasie
     "umur": 42,
     "isSso": false,
     "listAppointment": []
+}
+```
+
+### payTagihanByKode
+---
+**Method**: `GET` \
+**Endpoint**: `/tagihan/{username}/bayar/{kode}` \
+Membayar tagihan berdasarkan username dan kode tagihan serta mengembalikan status pembayaran.
+
+#### Success Response
+```
+{
+  "statusPembayaran": true
+}
+```
+
+### retrieveResep
+---
+**Method**: `GET` \
+**Endpoint**: `/resep/{id}` \
+Mengembalikan suatu resep berdasarkan ID.
+
+#### Success Response
+```
+{
+  "createdAt": "2022-12-10T18:18:10",
+  "namaDokter": "Dokter",
+  "id": 1,
+  "namaApoteker": "Apoteker",
+  "isDone": true,
+  "listJumlah": [
+    {
+      "kuantitas": 2,
+      "namaObat": "Alum Hydrox_Cap 475mg"
+    },
+    {
+      "kuantitas": 10,
+      "namaObat": "Alu-Cap_Cap 475mg"
+    }
+  ],
+  "namaPasien": "Pasien"
 }
 ```
