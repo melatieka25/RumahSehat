@@ -19,8 +19,9 @@ class detailTagihan extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("RumahSehat"),
-          backgroundColor: Colors.blueGrey,
+          title:  Image.asset('assets/images/long-logo.png', width: 200),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.green),
         ),
         body: Column(children: <Widget>[
           const SizedBox(height: 20),

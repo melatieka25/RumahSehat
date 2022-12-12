@@ -57,8 +57,9 @@ class profilPasienState extends State<profilPasien> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("RumahSehat"),
-          backgroundColor: Colors.blueGrey,
+          title:  Image.asset('assets/images/long-logo.png', width: 200),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.green),
         ),
         backgroundColor: Colors.white,
         drawer: const MyDrawer(),

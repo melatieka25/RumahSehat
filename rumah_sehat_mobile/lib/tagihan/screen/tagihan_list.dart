@@ -79,8 +79,9 @@ class MyCardWidgetState extends State<MyCardWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("RumahSehat"),
-          backgroundColor: Colors.blueGrey,
+          title:  Image.asset('assets/images/long-logo.png', width: 200),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.green),
         ),
         backgroundColor: Colors.white,
         //https://api.flutter.dev/flutter/material/FloatingActionButton-class.html
